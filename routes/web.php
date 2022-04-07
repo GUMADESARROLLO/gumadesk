@@ -65,4 +65,17 @@ Route::post('cambiar_estado', 'HomeController@cambiarEstado')->name('cambiar_est
 
 
 
+
+// RUTA DE TICKET
+
+
+Route::get('dashboard', 'TicketsController@dashboard')->name('dashboard');
+Route::get('TicketDetalles', 'TicketsController@getTicketDetalles')->name('TicketDetalles');
+Route::get('nuevo_ticket', 'TicketsController@Nuevo')->name('nuevo_ticket');
+Route::get('tickets', 'TicketsController@getTickets')->name('tickets');
+Route::get('categorias', 'TicketsController@getcategorias')->name('categorias');
+Route::get('Usuarios', 'TicketsController@getUsuarios')->name('Usuarios');
+Route::get('Departamentos', 'TicketsController@getDepartamentos')->name('Departamentos');
+Route::get('UnidadNegocio', 'TicketsController@getUnidadNegocio')->name('UnidadNegocio');
+
 Auth::routes();

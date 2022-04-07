@@ -37,14 +37,13 @@ class LoginController extends Controller
         // Redireccionando a pagina segun rol
         switch ($role) {
             case '1':
-                return 'home';
+                return 'dashboard';
             break;
+
             case '3':
-                return 'home';
+                return 'tickets';
             break;
-            case '5':
-                return 'home';
-                break;
+            
             default:
                 return '/login';
             break;
