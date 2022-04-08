@@ -136,6 +136,14 @@
                 </div>
                 <div class="modal-body p-card">
                   <div class="mb-3">
+                    <label class="fs-0" for="eventTitle">Nombre Completo</label>
+                    <input class="form-control" id="eventTitle" type="text" name="title" required="required" />
+                  </div>
+                  <div class="mb-3">
+                    <label class="fs-0" for="eventTitle">Email</label>
+                    <input class="form-control" id="eventTitle" type="text" name="title" required="required" />
+                  </div>
+                  <div class="mb-3">
                     <label class="fs-0" for="eventTitle">Usuario</label>
                     <input class="form-control" id="eventTitle" type="text" name="title" required="required" />
                   </div>

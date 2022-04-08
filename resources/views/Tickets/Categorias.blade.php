@@ -110,13 +110,13 @@
                     </select>
                   </div>
                   <div class="mb-3">
-                    <label class="fs-0" for="eventLabel">Categoria</label>
+                    <label class="fs-0" for="eventLabel">Categoria Padre</label>
                     <select class="form-select" id="eventLabel" name="label">
                       <option value="" selected="selected">None</option>
                     </select>
                   </div>
                   <div class="mb-3">
-                    <label class="fs-0" for="eventLabel">Sub Categoria</label>
+                    <label class="fs-0" for="eventLabel">Prioridad</label>
                     <select class="form-select" id="eventLabel" name="label">
                       <option value="" selected="selected">None</option>
                       
