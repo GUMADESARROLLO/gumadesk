@@ -78,4 +78,8 @@ Route::get('Usuarios', 'TicketsController@getUsuarios')->name('Usuarios');
 Route::get('Departamentos', 'TicketsController@getDepartamentos')->name('Departamentos');
 Route::get('UnidadNegocio', 'TicketsController@getUnidadNegocio')->name('UnidadNegocio');
 
+
+Route::get('stats', 'EstadisticasController@getStats')->name('stats');
+Route::get('api', 'EstadisticasController@getData')->name('api');
+
 Auth::routes();

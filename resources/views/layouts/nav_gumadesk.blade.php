@@ -3,7 +3,7 @@
 
 <button class="btn navbar-toggler-humburger-icon navbar-toggler me-1 me-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
 <a class="navbar-brand me-1 me-sm-3" href="dashboard">
-  <div class="d-flex align-items-center"><span class="font-sans-serif">GumaDesk</span>
+  <div class="d-flex align-items-center"><span class="font-sans-serif">GumaStats</span>
   </div>
 </a>
 <ul class="navbar-nav align-items-center d-none d-lg-block">
@@ -231,6 +231,7 @@
       <a class="dropdown-item fw-bold text-warning" href="#!"><span class="fas fa-crown me-1"></span><span>Nombre Usuario</span></a>
       <div class="dropdown-divider"></div>
       <a class="dropdown-item" href="tickets">Vista Usuario</a>
+      <a class="dropdown-item" href="stats">eSTADISTICAS</a>
         <a class="dropdown-item" href="UnidadNegocio">Unidades de Negocio</a>
         <a class="dropdown-item" href="Departamentos">Departamentos</a>
         <a class="dropdown-item" href="categorias">Categorias</a>

@@ -9,7 +9,7 @@ var CONFIG = {
   isNavbarVerticalCollapsed: false,
   theme: 'light',
   isRTL: false,
-  isFluid: false,
+  isFluid: true,
   navbarStyle: 'transparent',
   navbarPosition: 'vertical'
 };

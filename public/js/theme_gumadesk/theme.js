@@ -6318,9 +6318,11 @@ var candleChartInit = function candleChartInit() {
     });
   }
 };
+
+
 /* -------------------------------------------------------------------------- */
 
-/*                             Echarts Total Sales                            */
+/*                             Grafica de barra para Mercados                 */
 
 /* -------------------------------------------------------------------------- */
 
@@ -6487,134 +6489,7 @@ var closedVsGoalInit = function closedVsGoalInit() {
 /* -------------------------------------------------------------------------- */
 
 
-var revenueChartInit = function revenueChartInit() {
-  var data = {
-    dates: utils.getDates(new Date('5-6-2019'), new Date('5-6-2021'), 1000 * 60 * 60 * 24 * 30),
-    dataset: {
-      revenue: [[645, 500, 550, 550, 473, 405, 286, 601, 743, 450, 604, 815, 855, 722, 700, 896, 866, 952, 719, 558, 737, 885, 972, 650, 600], [440, 250, 270, 400, 175, 180, 200, 400, 600, 380, 340, 550, 650, 450, 400, 688, 650, 721, 500, 300, 445, 680, 568, 400, 371]],
-      users: [[545, 500, 650, 727, 773, 705, 686, 501, 643, 580, 604, 615, 755, 722, 727, 816, 836, 952, 719, 758, 937, 785, 872, 850, 800], [340, 360, 230, 250, 410, 430, 450, 200, 220, 540, 500, 250, 355, 320, 500, 630, 680, 500, 520, 550, 750, 720, 700, 780, 750]],
-      deals: [[545, 400, 450, 627, 473, 450, 460, 780, 770, 800, 504, 550, 500, 530, 727, 716, 736, 820, 719, 758, 737, 885, 872, 850, 800], [245, 300, 450, 427, 273, 250, 260, 580, 570, 500, 402, 450, 400, 330, 527, 516, 536, 620, 519, 558, 537, 483, 472, 250, 300]],
-      profit: [[545, 400, 450, 627, 673, 605, 686, 501, 843, 518, 504, 715, 955, 622, 627, 716, 736, 952, 619, 558, 937, 785, 872, 550, 400], [340, 360, 330, 300, 410, 380, 450, 400, 420, 240, 200, 250, 355, 320, 500, 630, 680, 400, 420, 450, 650, 620, 700, 450, 340]]
-    }
-  };
 
-  var tooltipFormatter = function tooltipFormatter(params) {
-    return "<div class=\"card\">\n                <div class=\"card-header bg-light py-2\">\n                  <h6 class=\"text-600 mb-0\">".concat(params[0].axisValue, "</h6>\n                </div>\n              <div class=\"card-body py-2\">\n                <h6 class=\"text-600 fw-normal\">\n                  <span class=\"fas fa-circle text-primary me-2\"></span>Revenue: \n                  <span class=\"fw-medium\">$").concat(params[0].data, "</span></h6>\n                <h6 class=\"text-600 mb-0 fw-normal\"> \n                  <span class=\"fas fa-circle text-warning me-2\"></span>Revenue Goal: \n                  <span class=\"fw-medium\">$").concat(params[1].data, "</span></h6>\n              </div>\n            </div>");
-  };
-
-  var getDefaultOptions = function getDefaultOptions(data1, data2) {
-    return function () {
-      return {
-        color: utils.getGrays().white,
-        tooltip: {
-          trigger: 'axis',
-          padding: 0,
-          backgroundColor: 'transparent',
-          borderWidth: 0,
-          transitionDuration: 0,
-          position: function position(pos, params, dom, rect, size) {
-            return getPosition(pos, params, dom, rect, size);
-          },
-          axisPointer: {
-            type: 'none'
-          },
-          formatter: tooltipFormatter
-        },
-        xAxis: {
-          type: 'category',
-          data: utils.getPastDates(25).map(function (date) {
-            return window.dayjs(date).format('DD MMM, YYYY');
-          }),
-          axisLabel: {
-            color: utils.getGrays()['600'],
-            formatter: function formatter(value) {
-              return window.dayjs(value).format('MMM DD');
-            },
-            align: 'left',
-            fontSize: 11,
-            padding: [0, 0, 0, 5],
-            showMaxLabel: false
-          },
-          axisLine: {
-            show: false
-          },
-          axisTick: {
-            show: false
-          },
-          boundaryGap: true
-        },
-        yAxis: {
-          position: 'right',
-          axisPointer: {
-            type: 'none'
-          },
-          axisTick: 'none',
-          splitLine: {
-            show: false
-          },
-          axisLine: {
-            show: false
-          },
-          axisLabel: {
-            show: false
-          }
-        },
-        series: [{
-          type: 'bar',
-          name: 'Revenue',
-          data: data1,
-          lineStyle: {
-            color: utils.getColor('primary')
-          },
-          itemStyle: {
-            barBorderRadius: [4, 4, 0, 0],
-            color: utils.getGrays()['100'],
-            borderColor: utils.getGrays()['300'],
-            borderWidth: 1
-          },
-          emphasis: {
-            itemStyle: {
-              color: utils.getColor('primary')
-            }
-          }
-        }, {
-          type: 'line',
-          name: 'Revenue Goal',
-          data: data2,
-          symbol: 'circle',
-          symbolSize: 6,
-          animation: false,
-          itemStyle: {
-            color: utils.getColor('warning')
-          },
-          lineStyle: {
-            type: 'dashed',
-            width: 2,
-            color: utils.getColor('warning')
-          }
-        }],
-        grid: {
-          right: 5,
-          left: 5,
-          bottom: '8%',
-          top: '5%'
-        }
-      };
-    };
-  };
-
-  var initChart = function initChart(el, options) {
-    var userOptions = utils.getData(el, 'options');
-    var chart = window.echarts.init(el);
-    echartSetOption(chart, userOptions, options);
-  };
-
-  var chartKeys = ['revenue', 'users', 'deals', 'profit'];
-  chartKeys.forEach(function (key) {
-    var el = document.querySelector(".echart-crm-".concat(key));
-    el && initChart(el, getDefaultOptions(data.dataset[key][0], data.dataset[key][1]));
-  });
-};
 /* -------------------------------------------------------------------------- */
 
 /*                             Echarts Bounce Rate                            */
@@ -6813,7 +6688,21 @@ var grossRevenueChartInit = function grossRevenueChartInit() {
       return utils.getDates(window.dayjs().month(month).date(1), window.dayjs().month(Number(month) + 1).date(0), 1000 * 60 * 60 * 24 * 3);
     };
 
-    var monthsnumber = [[20, 40, 20, 80, 50, 80, 120, 80, 50, 120, 110, 110], [60, 80, 60, 80, 65, 130, 120, 100, 30, 40, 30, 70], [100, 70, 80, 50, 120, 100, 130, 140, 90, 100, 40, 50], [80, 50, 60, 40, 60, 120, 100, 130, 60, 80, 50, 60], [70, 80, 100, 70, 90, 60, 80, 130, 40, 60, 50, 80], [90, 40, 80, 80, 100, 140, 100, 130, 90, 60, 70, 50], [80, 60, 80, 60, 40, 100, 120, 100, 30, 40, 30, 70], [20, 40, 20, 50, 70, 60, 110, 80, 90, 30, 50, 50], [60, 70, 30, 40, 80, 140, 80, 140, 120, 130, 100, 110], [90, 90, 40, 60, 40, 110, 90, 110, 60, 80, 60, 70], [50, 80, 50, 80, 50, 80, 120, 80, 50, 120, 110, 110], [60, 90, 60, 70, 40, 70, 100, 140, 30, 40, 30, 70], [20, 40, 20, 50, 30, 80, 120, 100, 30, 40, 30, 70]];
+    var monthsnumber = [
+      [20, 40, 20, 80, 50, 80, 120, 80, 50, 120, 110, 110], 
+      [60, 80, 60, 80, 65, 130, 120, 100, 30, 40, 30, 70], 
+      [100, 70, 80, 50, 120, 100, 130, 140, 90, 100, 40, 50], 
+      [80, 50, 60, 40, 60, 120, 100, 130, 60, 80, 50, 60], 
+      [70, 80, 100, 70, 90, 60, 80, 130, 40, 60, 50, 80], 
+      [90, 40, 80, 80, 100, 140, 100, 130, 90, 60, 70, 50], 
+      [80, 60, 80, 60, 40, 100, 120, 100, 30, 40, 30, 70], 
+      [20, 40, 20, 50, 70, 60, 110, 80, 90, 30, 50, 50], 
+      [60, 70, 30, 40, 80, 140, 80, 140, 120, 130, 100, 110], 
+      [90, 90, 40, 60, 40, 110, 90, 110, 60, 80, 60, 70], 
+      [50, 80, 50, 80, 50, 80, 120, 80, 50, 120, 110, 110], 
+      [60, 90, 60, 70, 40, 70, 100, 140, 30, 40, 30, 70], 
+      [20, 40, 20, 50, 30, 80, 120, 100, 30, 40, 30, 70]
+    ];
 
     var _tooltipFormatter2 = function _tooltipFormatter2(params) {
       var currentDate = window.dayjs(params[0].axisValue);
@@ -8085,98 +7974,7 @@ var marketShareInit = function marketShareInit() {
     echartSetOption(chart, userOptions, getDefaultOptions);
   }
 };
-/* -------------------------------------------------------------------------- */
 
-/*                                Market Share                                */
-
-/* -------------------------------------------------------------------------- */
-
-
-var mostLeadsInit = function mostLeadsInit() {
-  var ECHART_MOST_LEADS = '.echart-most-leads';
-  var $echartMostLeads = document.querySelector(ECHART_MOST_LEADS);
-
-  if ($echartMostLeads) {
-    var userOptions = utils.getData($echartMostLeads, 'options');
-    var chart = window.echarts.init($echartMostLeads);
-
-    var getDefaultOptions = function getDefaultOptions() {
-      return {
-        color: [utils.getColors().primary, utils.getColors().info, utils.getColors().warning, utils.getColors().info // utils.getGrays()[300],
-        ],
-        tooltip: {
-          trigger: 'item',
-          padding: [7, 10],
-          backgroundColor: utils.getGrays()['100'],
-          borderColor: utils.getGrays()['300'],
-          textStyle: {
-            color: utils.getColors().dark
-          },
-          borderWidth: 1,
-          transitionDuration: 0,
-          formatter: function formatter(params) {
-            return "<strong>".concat(params.data.name, ":</strong> ").concat(params.percent, "%");
-          }
-        },
-        position: function position(pos, params, dom, rect, size) {
-          return getPosition(pos, params, dom, rect, size);
-        },
-        legend: {
-          show: false
-        },
-        series: [{
-          type: 'pie',
-          radius: ['100%', '67%'],
-          avoidLabelOverlap: false,
-          hoverAnimation: false,
-          itemStyle: {
-            borderWidth: 2,
-            borderColor: utils.getColor('card-bg')
-          },
-          label: {
-            normal: {
-              show: false,
-              position: 'center',
-              textStyle: {
-                fontSize: '20',
-                fontWeight: '500',
-                color: utils.getGrays()['700']
-              }
-            },
-            emphasis: {
-              show: false
-            }
-          },
-          labelLine: {
-            normal: {
-              show: false
-            }
-          },
-          data: [{
-            value: 60,
-            name: 'Email'
-          }, {
-            value: 30,
-            name: 'Social'
-          }, {
-            value: 10,
-            name: 'Call'
-          }, {
-            value: 120,
-            name: 'Other'
-          }]
-        }]
-      };
-    };
-
-    echartSetOption(chart, userOptions, getDefaultOptions);
-  }
-};
-/* -------------------------------------------------------------------------- */
-
-/*                             Echarts Real Time Users                        */
-
-/* -------------------------------------------------------------------------- */
 
 
 var realTimeUsersChartInit = function realTimeUsersChartInit() {
@@ -9618,7 +9416,16 @@ var topProductsInit = function topProductsInit() {
   var $echartBarTopProducts = document.querySelector(ECHART_BAR_TOP_PRODUCTS);
 
   if ($echartBarTopProducts) {
-    var data = [['product', '2019', '2018'], ['Boots4', 43, 85], ['Reign Pro', 83, 73], ['Slick', 86, 62], ['Falcon', 72, 53], ['Sparrow', 80, 50], ['Hideway', 50, 70], ['Freya', 80, 90]];
+    var data = [
+      ['product', '2019', '2018'], 
+      ['Boots4', 43, 85], 
+      ['Reign Pro', 83, 73], 
+      ['Slick', 86, 62], 
+      ['Falcon', 72, 53], 
+      ['Sparrow', 80, 50], 
+      ['Hideway', 50, 70], 
+      ['Freya', 80, 90]
+    ];
     var userOptions = utils.getData($echartBarTopProducts, 'options');
     var chart = window.echarts.init($echartBarTopProducts);
 
@@ -10681,11 +10488,11 @@ docReady(trafficChannelChartInit);
 docReady(bounceRateChartInit);
 docReady(usersByTimeChartInit);
 docReady(sessionByCountryMapInit);
-docReady(mostLeadsInit);
+
 docReady(closedVsGoalInit);
 docReady(leadConversionInit);
 docReady(dealStorageFunnelInit);
-docReady(revenueChartInit);
+
 docReady(locationBySessionInit);
 docReady(realTimeUsersChartInit);
 docReady(linePaymentChartInit);
