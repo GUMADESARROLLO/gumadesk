@@ -12,12 +12,12 @@
               <div class="col-md-5 text-center bg-card-gradient">
                 <div class="position-relative p-4 pt-md-5 pb-md-7 light">
                   <div class="bg-holder bg-auth-card-shape" style="background-image:url({{ asset('images/theme_gumadesk/half-circle.png') }});"></div>
-                  <div class="z-index-1 position-relative"><a class="link-light mb-4 font-sans-serif fs-4 d-inline-block fw-bolder" href="./">GumaDesk</a>
-                    <p class="opacity-75 text-white">Genere sus solicitudes de manera practica y directa hacia las personas correspondientes</p>
+                  <div class="z-index-1 position-relative"><a class="link-light mb-4 font-sans-serif fs-4 d-inline-block fw-bolder" href="./">GumaStats</a>
+                    <p class="opacity-75 text-white">Estadisticas generalas de los segmentos de mercado de la empresa.</p>
                   </div>
                 </div>
                 <div class="mt-3 mb-4 mt-md-4 mb-md-5 light">
-                  <p class="text-white">¿No tiene cuenta?<br><a class="text-decoration-underline link-light" href="../../../pages/authentication/card/register.html">Solicita </a></p>
+                  <!--<p class="text-white">¿No tiene cuenta?<br><a class="text-decoration-underline link-light" href="../../../pages/authentication/card/register.html">Solicita </a></p>-->
                   <p class="mb-0 mt-4 mt-md-5 fs--1 fw-semi-bold text-white opacity-75">Todos los Derechos Reservados </a></p>
                 </div>
               </div>
