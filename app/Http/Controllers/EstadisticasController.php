@@ -16,8 +16,8 @@ class EstadisticasController extends Controller{
         return view('Estadisticas.index');
     }
 
-    public function getData(){
-        $obj = Reporteria::getData();
+    public function getData($d1,$d2){
+        $obj = Reporteria::getData($d1,$d2);
         return response()->json($obj);
     }
 }

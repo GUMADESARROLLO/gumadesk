@@ -309,407 +309,442 @@ $('#id_table_proyecto_02').DataTable({
 });
 
 
-var table_header    = '';
-var table_headerPro02    = '';
 
-var table_column    = '';
-var table_column_Pro02    = '';
-var row_codigo      = [];
-var row_proyect02   = [];
-
-var tt_CuotaFarmacia = 0;
-var tt_VentaFarmacia = 0;
-var tt_prom = 0;
-var tt_optimo = 0;
-
-var tt_Clientes = 0;
-var tt_Clientes_meta = 0;
-var tt_Clientes_opti = 0;
-
-var tt_tendencia = 0
-var tt_diasHabiles = 0
-var tt_diasFactura = 0
-
-var tt_ds = 0
-var tt_sku = 0
-
-var isToday ='';
-
-var tt_isToday = 0
-var tt_eject = 0
-var tt_sac = 0
-
-
-var tt_CuotaFarmacia_Pro02 = 0;
-var tt_VentaFarmacia_Pro02 = 0;
-var tt_prom_Pro02= 0;
-
-var tt_Clientes_Pro02 = 0;
-var tt_Clientes_meta_Pro02 = 0;
-var tt_Clientes_opti_Pro02 = 0;
-
-var tt_tendencia_pro02 = 0;
-
-var tt_ds_pro02 = 0
-
-var tt_sku_pro02 = 0
-
-var tt_eject_pro02 = 0
-
-var tt_real_cuota   = 0
-var tt_real_real    = 0
-var tt_cumplimiento    = 0
-
-var tt_resumen_cliente = 0
-var tt_resumen_cliente_meta = 0
-var tt_resumen_cliente_pro = 0
-var tt_resumen_tendencia = 0
-var tt_resumen_DS = 0
-var tt_resumen_SKU = 666;
-var tt_resumen_isToday_val = 0;
-var tt_only_inst_priva = 0;
-var tt_only_mayorista= 0;
-var tt_only_venta_gerencia= 0;
-
-var tt_bar_privado = 0;
-var tt_bar_mayorista = 0;
-
-
-var dta_ventas_mercados = {
-    dataset: {
-        CanalFarmacia: [
-            [], 
-            [],
-            []
-        ],
-        ProyectoDos: [
-            [], 
-            [],
-            ["F02","MAYORISTA"]
-        ],
-        Alacanse: [
-            [], 
-            [],
-            ["FARMACIA","INST. PRIVADA","MAYORISTA"]
-        ],
-    }
-};
-
-var dta_aportes_mercados = []
 
 const CAMPOS = ["","NOMBRE","CODIGO", "ZONA", "CUOTA","VENTA","% CUMPL X EJEC","OPTIMO", "CLIENTES", "METAS CLIENTES","% COBERTURA","TENDENCIA","DS", "SKU", "FECHA_ACTUAL", "EJEC", "SAC"];
 const CAMPOS_PRO02 = ["","NOMBRE","CODIGO", "ZONA", "CUOTA","VENTA","% CUMPL X EJEC","OPTIMO", "CLIENTES", "METAS CLIENTES","% COBERTURA","TENDENCIA","DS", "SKU", "FECHA_ACTUAL"];
 
+const startOfMonth = moment().startOf('month').format('YYYY-MM-DD');
+const endOfMonth   = moment().subtract(1, "days").format("YYYY-MM-DD");
 
-$.getJSON("api/", function(json) {
-    table_header += '<th colspan="13"> FERNANDO</th>';   
-    table_headerPro02 += '<th colspan="4"> PROYECTO 02</th>';   
-    $.each(json, function(i, item) {
-        if(jQuery.type(item.VENDEDOR) !== "undefined"){
+var labelRange = startOfMonth + " to " + endOfMonth;
 
-            tt_optimo = json.Dias_porcent
-            tt_diasHabiles = json.Dias_Habiles
-            tt_diasFactura = json.Dias_Facturados
-
-            $('#id_dias_habiles').html(tt_diasHabiles);
-            $('#id_dias_facturados').html(tt_diasFactura );
-            $('#id_dias_porcent').html(tt_optimo);
-
-            isToday  = json.isToDay
-
-            CAMPOS[CAMPOS.indexOf("FECHA_ACTUAL")] = isToday ;
-
-            if (item.VENDEDOR != 'F02' && item.VENDEDOR != 'F15'&& item.VENDEDOR != 'F04' ) {            
-                
-                row_codigo[0]    += '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap"><a class="text-900 stretched-link" href="#!">'+item.NOMBRE_SAC+'</a></h6></div></td>';
-                row_codigo[1]    += '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap"><a class="text-900 stretched-link" href="#!">'+item.NOMBRE+'</a></h6></div></td>';
-                
-                row_codigo[2]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.VENDEDOR+'</label></td>';
-                row_codigo[3]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >zona '+item.VENDEDOR+'</label></td>';                    
-                row_codigo[4]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.META_RUTA+'</label></td>';
-                row_codigo[5]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.MesActual+'</label></td>';
-
-                row_codigo[6]    += '<td><span class="badge rounded-pill ms-3 badge-soft-warning ">'+item.RUTA_CUMPLI+'</span></td>';
-
-                row_codigo[7]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+json.Dias_porcent+'</label></td>';
-                row_codigo[8]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.CLIENTE+'</label></td>';
-                row_codigo[9]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.META_CLIENTE+'</label></td>';
-                row_codigo[10]    += '<td><span class="badge rounded-pill ms-3 badge-soft-warning ">'+item.CLIENTE_COBERTURA+'</span></td>';
-                row_codigo[11]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.TENDENCIA+'</label></td>';
-                row_codigo[12]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.DS+'</label></td>';
-                row_codigo[13]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.SKU+'</label></td>';
-                row_codigo[14]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.DiaActual+'</label></td>';
-                row_codigo[15]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.EJEC+'</label></td>';
-                row_codigo[16]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.SAC+'</label></td>';
-
-                
-                dta_ventas_mercados.dataset['CanalFarmacia'][0].push(intVal(item.RUTA_CUMPLI))
-                dta_ventas_mercados.dataset['CanalFarmacia'][1].push(intVal(json.Dias_porcent))
-                dta_ventas_mercados.dataset['CanalFarmacia'][2].push(item.VENDEDOR )
-
-                tt_CuotaFarmacia += intVal(item.META_RUTA);
-                tt_VentaFarmacia += intVal(item.MesActual);
-                tt_Clientes += intVal(item.CLIENTE);
-                tt_Clientes_meta += intVal(item.META_CLIENTE);
-                tt_isToday += intVal(item.DiaActual);
-                tt_eject += intVal(item.EJEC);
-                tt_sac += intVal(item.SAC);
+$('#id_range_select').val(labelRange);
 
 
+RangeStat(startOfMonth,endOfMonth)
 
-                
-            }else{
-                row_proyect02[0]    += '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap"><a class="text-900 stretched-link" href="#!">'+item.NOMBRE_SAC+'</a></h6></div></td>';
-                row_proyect02[1]    += '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap"><a class="text-900 stretched-link" href="#!">'+item.NOMBRE+'</a></h6></div></td>';
-                
-                row_proyect02[2]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.VENDEDOR+'</label></td>';
-                row_proyect02[3]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >zona '+item.VENDEDOR+'</label></td>';                    
-                row_proyect02[4]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.META_RUTA+'</label></td>';
-                row_proyect02[5]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.MesActual+'</label></td>';
+$('#id_range_select').change(function () {
+    Fechas = $(this).val().split("to");
+    if(Object.keys(Fechas).length >= 2 ){
+        RangeStat(Fechas[0],Fechas[1]);
+    } 
+});
 
-                row_proyect02[6]    += '<td><span class="badge rounded-pill ms-3 badge-soft-warning ">'+item.RUTA_CUMPLI+'</span></td>';
+function RangeStat(D1,D2){
+    var table_header    = '';
+    var table_headerPro02    = '';
 
-                row_proyect02[7]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+json.Dias_porcent+'</label></td>';
-                row_proyect02[8]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.CLIENTE+'</label></td>';
-                row_proyect02[9]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.META_CLIENTE+'</label></td>';
-                row_proyect02[10]    += '<td><span class="badge rounded-pill ms-3 badge-soft-warning ">'+item.CLIENTE_COBERTURA+'</span></td>';
-                row_proyect02[11]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.TENDENCIA+'</label></td>';
-                row_proyect02[12]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.DS+'</label></td>';
-                row_proyect02[13]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.SKU+'</label></td>';
-                row_proyect02[14]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.DiaActual+'</label></td>';
+    var table_column    = '';
+    var table_column_Pro02    = '';
+    var row_codigo      = [];
+    var row_proyect02   = [];
 
-                if(item.VENDEDOR != "F15"){
-                    tt_CuotaFarmacia_Pro02 += intVal(item.META_RUTA);
-                    tt_VentaFarmacia_Pro02 += intVal(item.MesActual);
+    var tt_CuotaFarmacia = 0;
+    var tt_VentaFarmacia = 0;
+    var tt_prom = 0;
+    var tt_optimo = 0;
+
+    var tt_Clientes = 0;
+    var tt_Clientes_meta = 0;
+    var tt_Clientes_opti = 0;
+
+    var tt_tendencia = 0
+    var tt_diasHabiles = 0
+    var tt_diasFactura = 0
+
+    var tt_ds = 0
+    var tt_sku = 0
+
+    var isToday ='';
+
+    var tt_isToday = 0
+    var tt_eject = 0
+    var tt_sac = 0
+
+
+    var tt_CuotaFarmacia_Pro02 = 0;
+    var tt_VentaFarmacia_Pro02 = 0;
+    var tt_prom_Pro02= 0;
+
+    var tt_Clientes_Pro02 = 0;
+    var tt_Clientes_meta_Pro02 = 0;
+    var tt_Clientes_opti_Pro02 = 0;
+
+    var tt_tendencia_pro02 = 0;
+
+    var tt_ds_pro02 = 0
+
+    var tt_sku_pro02 = 0
+
+    var tt_eject_pro02 = 0
+
+    var tt_real_cuota   = 0
+    var tt_real_real    = 0
+    var tt_cumplimiento    = 0
+
+    var tt_resumen_cliente = 0
+    var tt_resumen_cliente_meta = 0
+    var tt_resumen_cliente_pro = 0
+    var tt_resumen_tendencia = 0
+    var tt_resumen_DS = 0
+    var tt_resumen_SKU = 0;
+    var tt_resumen_isToday_val = 0;
+    var tt_only_inst_priva = 0;
+    var tt_only_mayorista= 0;
+    var tt_only_venta_gerencia= 0;
+
+    var tt_bar_privado = 0;
+    var tt_bar_mayorista = 0;
+
+    if ( $("#id_spinner_load").hasClass('invisible') ) {
+        $("#id_spinner_load").removeClass('invisible');
+        $("#id_spinner_load").addClass('visible');
+    }
+
+
+    var dta_aportes_mercados = []
+        var dta_ventas_mercados = {
+            dataset: {
+                CanalFarmacia: [
+                    [], 
+                    [],
+                    []
+                ],
+                ProyectoDos: [
+                    [], 
+                    [],
+                    ["F02","MAYORISTA"]
+                ],
+                Alacanse: [
+                    [], 
+                    [],
+                    ["FARMACIA","INST. PRIVADA","MAYORISTA"]
+                ],
+            }
+        };
+    $.getJSON("api/"+D1 + "/"+D2, function(json) {
+        table_header += '<th colspan="13"> FERNANDO</th>';   
+        table_headerPro02 += '<th colspan="4"> PROYECTO 02</th>';   
+        $.each(json, function(i, item) {
+            if(jQuery.type(item.VENDEDOR) !== "undefined"){
+    
+                tt_optimo = json.Dias_porcent
+                tt_diasHabiles = json.Dias_Habiles
+                tt_diasFactura = json.Dias_Facturados
+    
+                tt_resumen_SKU = json.SKU_TODOS
+                tt_sku = json.SKU_Farmacia;
+                tt_sku_pro02 = json.SKU_Proyect02
+    
+    
+                $('#id_dias_habiles').html(tt_diasHabiles);
+                $('#id_dias_facturados').html(tt_diasFactura );
+                $('#id_dias_porcent').html(tt_optimo);
+    
+                isToday  = moment().subtract(1, "days").format("DD-MMMM");
+    
+                CAMPOS[CAMPOS.indexOf("FECHA_ACTUAL")] = isToday ;
+    
+                if (item.VENDEDOR != 'F02' && item.VENDEDOR != 'F15'&& item.VENDEDOR != 'F04' ) {            
                     
-                    tt_Clientes_Pro02 += intVal(item.CLIENTE);
-                    tt_Clientes_meta_Pro02 += intVal(item.META_CLIENTE);
+                    row_codigo[0]    += '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap"><a class="text-900 stretched-link" href="#!">'+item.NOMBRE_SAC+'</a></h6></div></td>';
+                    row_codigo[1]    += '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap"><a class="text-900 stretched-link" href="#!">'+item.NOMBRE+'</a></h6></div></td>';
+                    
+                    row_codigo[2]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.VENDEDOR+'</label></td>';
+                    row_codigo[3]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >zona '+item.VENDEDOR+'</label></td>';                    
+                    row_codigo[4]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.META_RUTA+'</label></td>';
+                    row_codigo[5]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.MesActual+'</label></td>';
+    
+                    row_codigo[6]    += '<td><span class="badge rounded-pill ms-3 badge-soft-warning ">'+item.RUTA_CUMPLI+'</span></td>';
+    
+                    row_codigo[7]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+json.Dias_porcent+'</label></td>';
+                    row_codigo[8]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.CLIENTE+'</label></td>';
+                    row_codigo[9]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.META_CLIENTE+'</label></td>';
+                    row_codigo[10]    += '<td><span class="badge rounded-pill ms-3 badge-soft-warning ">'+item.CLIENTE_COBERTURA+'</span></td>';
+                    row_codigo[11]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.TENDENCIA+'</label></td>';
+                    row_codigo[12]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.DS+'</label></td>';
+                    row_codigo[13]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.SKU+'</label></td>';
+                    row_codigo[14]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.DiaActual+'</label></td>';
+                    row_codigo[15]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.EJEC+'</label></td>';
+                    row_codigo[16]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.SAC+'</label></td>';
+    
+                    dta_ventas_mercados.dataset['CanalFarmacia'][0].push(intVal(item.RUTA_CUMPLI))
+                    dta_ventas_mercados.dataset['CanalFarmacia'][1].push(intVal(json.Dias_porcent))
+                    dta_ventas_mercados.dataset['CanalFarmacia'][2].push(item.VENDEDOR )
 
-                    tt_eject_pro02 += intVal(item.DiaActual);
+
+    
+                    tt_CuotaFarmacia += intVal(item.META_RUTA);
+                    tt_VentaFarmacia += intVal(item.MesActual);
+                    tt_Clientes += intVal(item.CLIENTE);
+                    tt_Clientes_meta += intVal(item.META_CLIENTE);
+                    tt_isToday += intVal(item.DiaActual);
+                    tt_eject += intVal(item.EJEC);
+                    tt_sac += intVal(item.SAC);
+    
+    
+    
+                    
+                }else{
+                    row_proyect02[0]    += '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap"><a class="text-900 stretched-link" href="#!">'+item.NOMBRE_SAC+'</a></h6></div></td>';
+                    row_proyect02[1]    += '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap"><a class="text-900 stretched-link" href="#!">'+item.NOMBRE+'</a></h6></div></td>';
+                    
+                    row_proyect02[2]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.VENDEDOR+'</label></td>';
+                    row_proyect02[3]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >zona '+item.VENDEDOR+'</label></td>';                    
+                    row_proyect02[4]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.META_RUTA+'</label></td>';
+                    row_proyect02[5]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.MesActual+'</label></td>';
+    
+                    row_proyect02[6]    += '<td><span class="badge rounded-pill ms-3 badge-soft-warning ">'+item.RUTA_CUMPLI+'</span></td>';
+    
+                    row_proyect02[7]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+json.Dias_porcent+'</label></td>';
+                    row_proyect02[8]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.CLIENTE+'</label></td>';
+                    row_proyect02[9]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.META_CLIENTE+'</label></td>';
+                    row_proyect02[10]    += '<td><span class="badge rounded-pill ms-3 badge-soft-warning ">'+item.CLIENTE_COBERTURA+'</span></td>';
+                    row_proyect02[11]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.TENDENCIA+'</label></td>';
+                    row_proyect02[12]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.DS+'</label></td>';
+                    row_proyect02[13]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.SKU+'</label></td>';
+                    row_proyect02[14]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.DiaActual+'</label></td>';
+    
+                    if(item.VENDEDOR != "F15"){
+                        tt_CuotaFarmacia_Pro02 += intVal(item.META_RUTA);
+                        tt_VentaFarmacia_Pro02 += intVal(item.MesActual);
+                        
+                        tt_Clientes_Pro02 += intVal(item.CLIENTE);
+                        tt_Clientes_meta_Pro02 += intVal(item.META_CLIENTE);
+    
+                        tt_eject_pro02 += intVal(item.DiaActual);
+                    }
+                    
+                }
+    
+                if(item.VENDEDOR == "F02"){
+                    tt_only_inst_priva += intVal(item.MesActual);
+                    tt_bar_privado += intVal(item.RUTA_CUMPLI);
+    
+                }
+    
+                if(item.VENDEDOR == "F04"){
+                    tt_only_mayorista += intVal(item.MesActual);
+                    tt_bar_mayorista += intVal(item.RUTA_CUMPLI);
+                }
+    
+                if(item.VENDEDOR == "F15"){
+                    tt_only_venta_gerencia += intVal(item.MesActual);
                 }
                 
+    
+                
+                
+                
+                tt_real_cuota += intVal(item.META_RUTA);
+                tt_real_real += intVal(item.MesActual);
+    
+                tt_resumen_cliente += intVal(item.CLIENTE);
+                tt_resumen_cliente_meta += intVal(item.META_CLIENTE);
+    
+                tt_resumen_isToday_val += intVal(item.DiaActual);
+                
+    
+    
             }
-
-            if(item.VENDEDOR == "F02"){
-                tt_only_inst_priva += intVal(item.MesActual);
-                tt_bar_privado += intVal(item.RUTA_CUMPLI);
-
-            }
-
-            if(item.VENDEDOR == "F04"){
-                tt_only_mayorista += intVal(item.MesActual);
-                tt_bar_mayorista += intVal(item.RUTA_CUMPLI);
-            }
-
-            if(item.VENDEDOR == "F15"){
-                tt_only_venta_gerencia += intVal(item.MesActual);
-            }
-            
-
-            
-            
-            
-            tt_real_cuota += intVal(item.META_RUTA);
-            tt_real_real += intVal(item.MesActual);
-
-            tt_resumen_cliente += intVal(item.CLIENTE);
-            tt_resumen_cliente_meta += intVal(item.META_CLIENTE);
-
-            tt_resumen_isToday_val += intVal(item.DiaActual);
-            
-
-
-        }
-
-    });
-
-
-    $.each(CAMPOS, function(i, item) {
-        table_column += '<tr class="border-bottom border-200">'+
-                '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap"><a class="text-900 stretched-link" href="#!">'+CAMPOS[i]+'</a></h6></div></td>'+   
-                row_codigo[i]
-            '</tr>';
-    });
-
-    $.each(CAMPOS_PRO02, function(i, item) {
-        table_column_Pro02 += '<tr class="border-bottom border-200">'+
-                '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap"><a class="text-900 stretched-link" href="#!">'+CAMPOS[i]+'</a></h6></div></td>'+   
-                row_proyect02[i]
-            '</tr>';
-    });
     
-    /* -------------------------------------------------------------------------- */
-    /*                           INICIO RESUMEN FARMACIA                          */
-    /* -------------------------------------------------------------------------- */
-
-    $('#id_table_header').html(table_header);
-    $('#id_table_body').html(table_column);
-
-    $("#id_table_length").hide();
-    $("#id_table_filter").hide();
-    $("#id_table_paginate").hide();
-    
-    $('#id_tt_farmacia').html("C$ " + numeral(tt_CuotaFarmacia).format('0,0.00'));
-    $('#id_tt_VentaFarmacia').html("C$ " + numeral(tt_VentaFarmacia).format('0,0.00'));
-
-    tt_prom = (tt_VentaFarmacia / tt_CuotaFarmacia) * 100;
-    $('#id_tt_promo').html(numeral(tt_prom).format('0.00') + " %");
-    $('#id_tt_optimo').html(tt_optimo);
-    $('#id_tt_lbl_optimo').html(tt_optimo);
-
-
-    tt_Clientes_opti = numeral((tt_Clientes / tt_Clientes_meta ) * 100).format('0,00');
-    $('#id_tt_cliente').html(tt_Clientes);
-    $('#id_tt_cliente_meta').html(tt_Clientes_meta);
-    $('#id_tt_cliente_optimo').html(tt_Clientes_opti + " %");
-
-    tt_tendencia = numeral((tt_prom / tt_diasHabiles) * tt_diasFactura).format('0,00');   
-
-    $('#id_tt_tendencia').html(tt_tendencia + " %");
-
-    tt_ds = numeral((tt_VentaFarmacia / tt_Clientes)).format('0,0,00');    
-    $('#id_tt_ds').html(tt_ds + " %");
-
-    tt_sku = 0;
-
-    $('#id_tt_sku').html(tt_sku + " %");
-
-    $('#id_tt_lbl_isToday').html(isToday);
-
-    $('#id_tt_isToday').html("C$ " + numeral(tt_isToday).format('0,0.00'));
-    $('#id_tt_eject').html("C$ " + numeral(tt_eject).format('0,0.00'));
-    $('#id_tt_sac').html("C$ " + numeral(tt_sac).format('0,0.00'));
-
-
-    /* -------------------------------------------------------------------------- */
-    /*                             FIN RESUMEN FARMACIA                           */
-    /* -------------------------------------------------------------------------- */
-
-    /* -------------------------------------------------------------------------- */
-    /*                           INICIO RESUMEN PROECT02                          */
-    /* -------------------------------------------------------------------------- */
-
-
-    
-    $('#id_table_header_proyecto_02').html(table_headerPro02);
-    $('#id_table_body_proyecto_02').html(table_column_Pro02);
-   
-    $("#id_table_proyecto_02_length").hide();
-    $("#id_table_proyecto_02_filter").hide();
-    $("#id_table_proyecto_02_paginate").hide();
-
-
-    
-    $('#id_tt_farmacia_Pro02').html("C$ " + numeral(tt_CuotaFarmacia_Pro02).format('0,0.00'));
-    $('#id_tt_VentaFarmacia_Pro02').html("C$ " + numeral(tt_VentaFarmacia_Pro02).format('0,0.00'));
-
-    tt_prom_Pro02 = (tt_VentaFarmacia_Pro02 / tt_CuotaFarmacia_Pro02) * 100;
-    $('#id_tt_promo_pro02').html(numeral(tt_prom_Pro02).format('0') + " %");
-
-    $('#id_tt_optimo_pro02').html(tt_optimo);
-    $('#id_tt_lbl_optimo_pro02').html(tt_optimo);
-
-    tt_Clientes_opti_Pro02 = numeral((tt_Clientes_Pro02 / tt_Clientes_meta_Pro02 ) * 100).format('0,00');
-    $('#id_tt_cliente_pro02').html(tt_Clientes_Pro02);
-    $('#id_tt_cliente_meta_pro02').html(tt_Clientes_meta_Pro02);
-    $('#id_tt_cliente_optimo_pro02').html(tt_Clientes_opti_Pro02 + " %");
-
-    tt_tendencia_pro02 = numeral((tt_prom_Pro02 / tt_diasHabiles) * tt_diasFactura).format('0,00');   
-    $('#id_tt_tendencia_pro02').html(tt_tendencia_pro02 + " %");
-
-    tt_ds_pro02 = numeral((tt_VentaFarmacia_Pro02 / tt_Clientes_Pro02)).format('0,0,00');    
-    $('#id_tt_ds_pro02').html(tt_ds_pro02 + " %");
-
-    tt_sku_pro02 = 0;
-
-    $('#id_tt_sku_pro02').html(tt_sku_pro02 + " %");
-
-    $('#id_tt_eject_pro02').html("C$ " + numeral(tt_eject_pro02).format('0,0.00'));
-    $('#id_tt_eject_pro02_lbl').html(isToday);
-
+        });
     
     
+        $.each(CAMPOS, function(i, item) {
+            table_column += '<tr class="border-bottom border-200">'+
+                    '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap"><a class="text-900 stretched-link" href="#!">'+CAMPOS[i]+'</a></h6></div></td>'+   
+                    row_codigo[i]
+                '</tr>';
+        });
     
-    /* -------------------------------------------------------------------------- */
-    /*                            FIN RESUMEN PROECT02                            */
-    /* -------------------------------------------------------------------------- */
-
-    tt_cumplimiento = (tt_real_real / tt_real_cuota) * 100;
-    $('#id_tt_real_cuota').html("C$ " + numeral(tt_real_cuota).format('0,0.00'));
-    $('#id_tt_real_real').html("C$ " + numeral(tt_real_real).format('0,0.00'));
-    $('#id_tt_cumplimiento').html(numeral(tt_cumplimiento).format('0,0') + "  % ");
-
-    tt_resumen_cliente_pro = numeral((tt_resumen_cliente / tt_resumen_cliente_meta ) * 100).format('0,00');
-    $('#id_tt_resumen_cliente').html(tt_resumen_cliente);
-    $('#id_tt_resumen_cliente_meta').html(tt_resumen_cliente_meta);
-    $('#id_tt_resumen_cliente_pro').html(tt_resumen_cliente_pro + " %");
-
-    tt_resumen_tendencia = numeral((tt_cumplimiento / tt_diasHabiles) * tt_diasFactura).format('0,00');   
-
-    $('#id_tt_resumen_tendencia').html(numeral(tt_resumen_tendencia).format('0,0') + "  % ");
-
-    tt_resumen_DS = numeral((tt_real_real / tt_resumen_cliente)).format('0,0,00');    
-    
-    $('#id_tt_resumen_DS').html(numeral(tt_resumen_DS).format('0,0'));
-
-    $('#id_tt_resumen_SKU').html(numeral(tt_resumen_SKU).format('0,0'));
-    $('#id_tt_resumen_lbl_isToday').html("Corte: " + isToday );
-
-    $('#id_tt_resumen_lbl_isToday_val').html(numeral(tt_resumen_isToday_val).format('0,0'));
-
-
-
-    
-
-    tt_pie_aporte_farmacia      = ( tt_VentaFarmacia * 100 ) / tt_real_real;
-    tt_pie_aporte_inst_privada  = ( tt_only_inst_priva * 100 ) / tt_real_real;
-    tt_pie_aporte_mayorista     = ( tt_only_mayorista * 100 ) / tt_real_real;
-    tt_pie_aporte_gerencia      = ( tt_only_venta_gerencia * 100 ) / tt_real_real;
-
-
-    $('#id_pie_tt_farmacia').html("C$ " + numeral(tt_CuotaFarmacia).format('0,0.00'));
-    $('#id_tt_pie_aporte_farmacia').html(numeral(tt_pie_aporte_farmacia).format('0,00') + " %");
-
-
-    $('#id_tt_only_inst_priva_val').html("C$ " + numeral(tt_only_inst_priva).format('0,0.00'));
-    $('#id_tt_only_inst_priva').html(numeral(tt_pie_aporte_inst_privada).format('0,00') + " %");
-
-    $('#id_tt_only_mayorista').html("C$ " + numeral(tt_only_mayorista).format('0,0.00'));
-    $('#id_tt_pie_mayorista').html(numeral(tt_pie_aporte_mayorista).format('0,00') + " %");
-
-    $('#id_tt_only_venta_gerencia').html("C$ " + numeral(tt_only_venta_gerencia).format('0,0.00'));
-    $('#id_tt_pie_aporte_gerencia').html(numeral(tt_pie_aporte_gerencia).format('0,00') + " %");
-
-
-    tt_final_pie = tt_VentaFarmacia + tt_only_inst_priva + tt_only_mayorista + tt_only_venta_gerencia;
-    $('#id_tt_final_pie').html("C$ " + numeral(tt_final_pie).format('0,0.00'));
-    $('#id_val_pie').html(abbrNum(tt_final_pie,2));
-    
-
-    dta_ventas_mercados.dataset['Alacanse'][0].push(
-        numeral(tt_prom).format('0,0'),
-        numeral(tt_bar_privado).format('0,0'),
-        numeral(tt_bar_mayorista).format('0,0')        
+        $.each(CAMPOS_PRO02, function(i, item) {
+            table_column_Pro02 += '<tr class="border-bottom border-200">'+
+                    '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap"><a class="text-900 stretched-link" href="#!">'+CAMPOS[i]+'</a></h6></div></td>'+   
+                    row_proyect02[i]
+                '</tr>';
+        });
         
-        )
-    dta_ventas_mercados.dataset['Alacanse'][1].push(intVal(tt_optimo),intVal(tt_optimo),intVal(tt_optimo))
-
-
-    dta_ventas_mercados.dataset['ProyectoDos'][0].push(tt_bar_privado,tt_bar_mayorista)
-    dta_ventas_mercados.dataset['ProyectoDos'][1].push(intVal(tt_optimo),intVal(tt_optimo),intVal(tt_optimo))
-
-
-
-    dta_aportes_mercados.push(
-        {value: tt_pie_aporte_farmacia,name: 'FARMACIA'}, 
-        {value: tt_pie_aporte_inst_privada,name: 'INST. PRIVADA '}, 
-        {value: tt_pie_aporte_mayorista,name: 'MAYORISTA '},
-        {value: tt_pie_aporte_gerencia,name: 'VENTA GERENCIA '}
-    )
+        /* -------------------------------------------------------------------------- */
+        /*                           INICIO RESUMEN FARMACIA                          */
+        /* -------------------------------------------------------------------------- */
     
+        $('#id_table_header').html(table_header);
+        $('#id_table_body').html(table_column);
+    
+        $("#id_table_length").hide();
+        $("#id_table_filter").hide();
+        $("#id_table_paginate").hide();
+        
+        $('#id_tt_farmacia').html("C$ " + numeral(tt_CuotaFarmacia).format('0,0.00'));
+        $('#id_tt_VentaFarmacia').html("C$ " + numeral(tt_VentaFarmacia).format('0,0.00'));
+    
+        tt_prom = (tt_VentaFarmacia / tt_CuotaFarmacia) * 100;
+        $('#id_tt_promo').html(numeral(tt_prom).format('0.00') + " %");
+        $('#id_tt_optimo').html(tt_optimo);
+        $('#id_tt_lbl_optimo').html(tt_optimo);
+    
+    
+        tt_Clientes_opti = numeral((tt_Clientes / tt_Clientes_meta ) * 100).format('0,00');
+        $('#id_tt_cliente').html(tt_Clientes);
+        $('#id_tt_cliente_meta').html(tt_Clientes_meta);
+        $('#id_tt_cliente_optimo').html(tt_Clientes_opti + " %");
+    
+        tt_tendencia = numeral((tt_prom / tt_diasHabiles) * tt_diasFactura).format('0,00');   
+    
+        $('#id_tt_tendencia').html(tt_tendencia + " %");
+    
+        tt_ds = numeral((tt_VentaFarmacia / tt_Clientes)).format('0,0,00');    
+        $('#id_tt_ds').html(tt_ds );
+    
+      
+    
+        $('#id_tt_sku').html(tt_sku);
+    
+        $('#id_tt_lbl_isToday').html(isToday);
+    
+        $('#id_tt_isToday').html("C$ " + numeral(tt_isToday).format('0,0.00'));
+        $('#id_tt_eject').html("C$ " + numeral(tt_eject).format('0,0.00'));
+        $('#id_tt_sac').html("C$ " + numeral(tt_sac).format('0,0.00'));
+    
+    
+        /* -------------------------------------------------------------------------- */
+        /*                             FIN RESUMEN FARMACIA                           */
+        /* -------------------------------------------------------------------------- */
+    
+        /* -------------------------------------------------------------------------- */
+        /*                           INICIO RESUMEN PROECT02                          */
+        /* -------------------------------------------------------------------------- */
+    
+    
+        
+        $('#id_table_header_proyecto_02').html(table_headerPro02);
+        $('#id_table_body_proyecto_02').html(table_column_Pro02);
+       
+        $("#id_table_proyecto_02_length").hide();
+        $("#id_table_proyecto_02_filter").hide();
+        $("#id_table_proyecto_02_paginate").hide();
+    
+    
+        
+        $('#id_tt_farmacia_Pro02').html("C$ " + numeral(tt_CuotaFarmacia_Pro02).format('0,0.00'));
+        $('#id_tt_VentaFarmacia_Pro02').html("C$ " + numeral(tt_VentaFarmacia_Pro02).format('0,0.00'));
+    
+        tt_prom_Pro02 = (tt_VentaFarmacia_Pro02 / tt_CuotaFarmacia_Pro02) * 100;
+        $('#id_tt_promo_pro02').html(numeral(tt_prom_Pro02).format('0') + " %");
+    
+        $('#id_tt_optimo_pro02').html(tt_optimo);
+        $('#id_tt_lbl_optimo_pro02').html(tt_optimo);
+    
+        tt_Clientes_opti_Pro02 = numeral((tt_Clientes_Pro02 / tt_Clientes_meta_Pro02 ) * 100).format('0,00');
+        $('#id_tt_cliente_pro02').html(tt_Clientes_Pro02);
+        $('#id_tt_cliente_meta_pro02').html(tt_Clientes_meta_Pro02);
+        $('#id_tt_cliente_optimo_pro02').html(tt_Clientes_opti_Pro02 + " %");
+    
+        tt_tendencia_pro02 = numeral((tt_prom_Pro02 / tt_diasHabiles) * tt_diasFactura).format('0,00');   
+        $('#id_tt_tendencia_pro02').html(tt_tendencia_pro02 + " %");
+    
+        tt_ds_pro02 = numeral((tt_VentaFarmacia_Pro02 / tt_Clientes_Pro02)).format('0,0,00');    
+        $('#id_tt_ds_pro02').html(tt_ds_pro02 );
+    
+      
+        $('#id_tt_sku_pro02').html(tt_sku_pro02);
+    
+        $('#id_tt_eject_pro02').html("C$ " + numeral(tt_eject_pro02).format('0,0.00'));
+        $('#id_tt_eject_pro02_lbl').html(isToday);
+    
+        
+        
+        
+        /* -------------------------------------------------------------------------- */
+        /*                            FIN RESUMEN PROECT02                            */
+        /* -------------------------------------------------------------------------- */
+    
+        tt_cumplimiento = (tt_real_real / tt_real_cuota) * 100;
+        $('#id_tt_real_cuota').html("C$ " + numeral(tt_real_cuota).format('0,0.00'));
+        $('#id_tt_real_real').html("C$ " + numeral(tt_real_real).format('0,0.00'));
+        $('#id_tt_cumplimiento').html(numeral(tt_cumplimiento).format('0,0') + "  % ");
+    
+        tt_resumen_cliente_pro = numeral((tt_resumen_cliente / tt_resumen_cliente_meta ) * 100).format('0,00');
+        $('#id_tt_resumen_cliente').html(tt_resumen_cliente);
+        $('#id_tt_resumen_cliente_meta').html(tt_resumen_cliente_meta);
+        $('#id_tt_resumen_cliente_pro').html(tt_resumen_cliente_pro + " %");
+    
+        tt_resumen_tendencia = numeral((tt_cumplimiento / tt_diasHabiles) * tt_diasFactura).format('0,00');   
+    
+        $('#id_tt_resumen_tendencia').html(numeral(tt_resumen_tendencia).format('0,0') + "  % ");
+    
+        tt_resumen_DS = numeral((tt_real_real / tt_resumen_cliente)).format('0,0,00');    
+        
+        $('#id_tt_resumen_DS').html(numeral(tt_resumen_DS).format('0,0'));
+    
+        $('#id_tt_resumen_SKU').html(numeral(tt_resumen_SKU).format('0,0'));
+        $('#id_tt_resumen_lbl_isToday').html("Corte: " + isToday );
+    
+        $('#id_tt_resumen_lbl_isToday_val').html(numeral(tt_resumen_isToday_val).format('0,0'));
+    
+    
+    
+        
+    
+        tt_pie_aporte_farmacia      = ( tt_VentaFarmacia * 100 ) / tt_real_real;
+        tt_pie_aporte_inst_privada  = ( tt_only_inst_priva * 100 ) / tt_real_real;
+        tt_pie_aporte_mayorista     = ( tt_only_mayorista * 100 ) / tt_real_real;
+        tt_pie_aporte_gerencia      = ( tt_only_venta_gerencia * 100 ) / tt_real_real;
+    
+    
+        $('#id_pie_tt_farmacia').html("C$ " + numeral(tt_CuotaFarmacia).format('0,0.00'));
+        $('#id_tt_pie_aporte_farmacia').html(numeral(tt_pie_aporte_farmacia).format('0,00') + " %");
+    
+    
+        $('#id_tt_only_inst_priva_val').html("C$ " + numeral(tt_only_inst_priva).format('0,0.00'));
+        $('#id_tt_only_inst_priva').html(numeral(tt_pie_aporte_inst_privada).format('0,00') + " %");
+    
+        $('#id_tt_only_mayorista').html("C$ " + numeral(tt_only_mayorista).format('0,0.00'));
+        $('#id_tt_pie_mayorista').html(numeral(tt_pie_aporte_mayorista).format('0,00') + " %");
+    
+        $('#id_tt_only_venta_gerencia').html("C$ " + numeral(tt_only_venta_gerencia).format('0,0.00'));
+        $('#id_tt_pie_aporte_gerencia').html(numeral(tt_pie_aporte_gerencia).format('0,00') + " %");
+    
+    
+        tt_final_pie = tt_VentaFarmacia + tt_only_inst_priva + tt_only_mayorista + tt_only_venta_gerencia;
+        $('#id_tt_final_pie').html("C$ " + numeral(tt_final_pie).format('0,0.00'));
+        $('#id_val_pie').html(abbrNum(tt_final_pie,2));
+        
+    
+        dta_ventas_mercados.dataset['Alacanse'][0].push(
+            numeral(tt_prom).format('0,0'),
+            numeral(tt_bar_privado).format('0,0'),
+            numeral(tt_bar_mayorista).format('0,0')        
+            
+            )
+        dta_ventas_mercados.dataset['Alacanse'][1].push(intVal(tt_optimo),intVal(tt_optimo),intVal(tt_optimo))
+    
+    
+        dta_ventas_mercados.dataset['ProyectoDos'][0].push(tt_bar_privado,tt_bar_mayorista)
+        dta_ventas_mercados.dataset['ProyectoDos'][1].push(intVal(tt_optimo),intVal(tt_optimo),intVal(tt_optimo))
+    
+    
+    
+        dta_aportes_mercados.push(
+            {value: tt_pie_aporte_farmacia,name: 'FARMACIA'}, 
+            {value: tt_pie_aporte_inst_privada,name: 'INST. PRIVADA '}, 
+            {value: tt_pie_aporte_mayorista,name: 'MAYORISTA '},
+            {value: tt_pie_aporte_gerencia,name: 'VENTA GERENCIA '}
+        )
+        
+    
+        Echarts_Bar_Ventas_Mercados(dta_ventas_mercados)
+        Echarts_Pie_Aportes_Mercado(dta_aportes_mercados)
+    
+    
+        if ( $("#id_spinner_load").hasClass('visible') ) {
+            $("#id_spinner_load").removeClass('visible');
+            $("#id_spinner_load").addClass('invisible');
+        }
+    
+    });
+}
 
-    Echarts_Bar_Ventas_Mercados(dta_ventas_mercados)
-    Echarts_Pie_Aportes_Mercado(dta_aportes_mercados)
-
-});
 

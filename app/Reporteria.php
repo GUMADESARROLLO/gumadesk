@@ -10,7 +10,7 @@ class Reporteria extends Model
         $this->middleware('auth');
     }
 
-    public static function getData(){
+    public static function getData($d1,$d2){
         $sql_server = new \sql_server();        
         $data = array();
         $i=0;
@@ -18,23 +18,53 @@ class Reporteria extends Model
         $request = Request();
         
 
-        $sql_exec = 'SELECT * FROM rpt_informe_ventas_umk T0 ORDER BY T0.VENDEDOR ASC';
+        $sql_exec = "SELECT
+        T0.VENDEDOR,
+        ISNULL((SELECT META_RUTA FROM rpt_informe_ventas_metas_rutas T2 WHERE T2.RUTA = T0.VENDEDOR),0) META_RUTA,
+        ISNULL((SELECT COUNT(DISTINCT T1.CLIENTE) FROM Softland.UMK.PEDIDO AS T1 WHERE T1.ESTADO= 'F'AND T1.FECHA_PEDIDO BETWEEN '".$d1."'  AND '".$d2."' AND T1.VENDEDOR = T0.VENDEDOR ), 0) AS CLIENTE,
+        ISNULL((SELECT T3.META_CLIENTE FROM tbl_meta_cliente_rutas T3 WHERE T3.RUTA = T0.VENDEDOR AND T3.MES = MONTH(GETDATE()) AND T3.ANNIO= YEAR(GETDATE())),0) AS META_CLIENTE,
+        SUM(T0.TOTAL_LINEA) as MesActual,
+        ISNULL((SELECT  sum(T4.VentaNetaLocal) Venta FROM Softland.dbo.ANA_VentasTotales_MOD_Contabilidad_UMK T4  WHERE T4.Fecha_de_factura = '".$d2."' AND T4.LABORATORIO NOT IN ( 'GUMA PHARMA- USA' )AND T4.VENDEDOR=	 T0.VENDEDOR    ), 0) AS DiaActual,	
+        ISNULL((SELECT COUNT(DISTINCT T1.ARTICULO) FROM view_master_pedidos_umk AS T1 WHERE T1.FECHA_PEDIDO BETWEEN '".$d1."' AND '".$d2."'AND T1.VENDEDOR = T0.VENDEDOR ), 0) AS SKU,	
+        ISNULL((SELECT SUM(T1.TOTAL_LINEA) AS NoV FROM view_master_pedidos_umk AS T1 WHERE T1.FECHA_PEDIDO BETWEEN '".$d1."'  AND '".$d2."' AND T1.VENDEDOR = T0.VENDEDOR and   T1.PEDIDO NOT LIKE 'PT%'  ), 0) AS EJEC,
+        ISNULL((SELECT SUM(T1.TOTAL_LINEA) AS NoV FROM view_master_pedidos_umk AS T1 WHERE T1.FECHA_PEDIDO BETWEEN '".$d1."'  AND '".$d2."' AND T1.VENDEDOR = T0.VENDEDOR and   T1.PEDIDO LIKE 'PT%'  ), 0) AS SAC
+    
+    FROM
+        view_master_pedidos_umk T0 	
+        
+    WHERE
+        T0.FECHA_PEDIDO BETWEEN '".$d1."' AND '".$d2."'  AND T0.VENDEDOR NOT IN ( 'F01', 'F12' ) 
+    GROUP BY T0.VENDEDOR";
 
-        /*$sql_dias_facturados = 'SELECT COUNT (*) as Dias from ( SELECT DAY( T1.FECHA_PEDIDO ) DiasFacturados 
-        FROM view_master_pedidos_umk T1 WHERE T1.FECHA_PEDIDO 
-        BETWEEN DATEADD( m, DATEDIFF( m, 0, GETDATE( ) ), 0 )  
-        AND GETDATE( )  AND T1.Number_Week_Day NOT IN (7,1)  GROUP BY FECHA_PEDIDO ) as DiasFacturados';
-        $rDias_Facturados = $sql_server->fetchArray($sql_dias_facturados, SQLSRV_FETCH_ASSOC);*/
+        $sql_skus = "SELECT 	( 
+            SELECT COUNT(DISTINCT T0.ARTICULO) FROM	view_master_pedidos_umk T0 
+            WHERE T0.FECHA_PEDIDO BETWEEN DATEADD( m, DATEDIFF( m, 0, GETDATE( ) ), 0 ) AND dateadd( DD, - 1, CAST ( getdate( ) AS DATE ) ) 
+            AND T0.VENDEDOR NOT IN ( 'F01','F02', 'F04','F15','F12' ) 
+            ) SKU_Farmacia,
+            ( 
+                SELECT COUNT(DISTINCT T0.ARTICULO) FROM	view_master_pedidos_umk T0
+                WHERE T0.FECHA_PEDIDO BETWEEN DATEADD( m, DATEDIFF( m, 0, GETDATE( ) ), 0 ) AND dateadd( DD, - 1, CAST ( getdate( ) AS DATE ) ) 
+                AND T0.VENDEDOR IN ( 'F02', 'F04' ) 
+            ) SKU_Proyect02,
+            COUNT(DISTINCT T0.ARTICULO) SKU_TODOS
+            FROM
+            view_master_pedidos_umk T0
+            WHERE
+            T0.FECHA_PEDIDO BETWEEN '".$d1."' AND '".$d2."' AND T0.VENDEDOR NOT IN ( 'F01', 'F12' ) ";
+
+        $rSKU_Facturados = $sql_server->fetchArray($sql_skus, SQLSRV_FETCH_ASSOC);
 
         $sql_dias_habiles='SELECT T0.dias_facturados FROM DESARROLLO.dbo.metacuota_GumaNet T0 WHERE T0.ESTADO = 1';
         $rDiasHabiles = $sql_server->fetchArray($sql_dias_habiles, SQLSRV_FETCH_ASSOC);
 
-
-      
-
        //$var_dias_habiles = floatval($rDias_Facturados[0]['Dias']);
-       $var_dias_habiles = 16;
-       $var_dias_factura = floatval($rDiasHabiles[0]['dias_facturados']);
+
+        $data['SKU_Farmacia'] = floatval($rSKU_Facturados[0]['SKU_Farmacia']);
+        $data['SKU_Proyect02'] = floatval($rSKU_Facturados[0]['SKU_Proyect02']);
+        $data['SKU_TODOS'] = floatval($rSKU_Facturados[0]['SKU_TODOS']);
+
+        $var_dias_habiles = 17;
+        $var_dias_factura = floatval($rDiasHabiles[0]['dias_facturados']);
 
        $porcen_dias = ($var_dias_habiles / $var_dias_factura) * 100 ;
 

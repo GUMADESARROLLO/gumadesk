@@ -6,6 +6,7 @@
         <div class="content">
           
         <div class="row g-3 mb-3">
+          
             <div class="col-md-6 col-xxl-3">
               <div class="card h-md-100 ecommerce-card-min-width">
                 <div class="card-header pb-0">
@@ -123,11 +124,15 @@
             <div class="col-md-6 col-xxl-3">
               <div class="card h-md-100">
                 <div class="card-header pb-0">
-                  <h6 class="mb-0 mt-2 d-flex align-items-center" id="id_tt_resumen_lbl_isToday" >---- 
-                    <span class="ms-1 text-400" data-bs-toggle="tooltip" data-bs-placement="top" title="Muestra el procentaje de facturacion a la fecha juntos a los dias Habiles para facturar">
-                      <span class="far fa-question-circle" data-fa-transform="shrink-1"></span>
-                    </span>
-                  </h6>
+
+                <div class="d-flex  ">
+                  <div class="me-auto justify-content-end">Ala fecha de: </div>
+                  <div class="">
+                    <span class="fas fa-calendar-alt text-primary position-absolute translate-middle-y ms-2 mt-3"> </span>
+                    <input id="id_range_select" class="form-control form-control-sm datetimepicker ps-4" type="text" data-options='{"mode":"range","dateFormat":"Y-m-d","disableMobile":true}'/>
+                    
+                  </div>
+                </div>               
                 </div>
                 <div class="card-body d-flex flex-column justify-content-end">
                   <div class="row justify-content-between">
@@ -450,7 +455,7 @@
                         <div class="d-flex">
                           <h6 class="text-700 mb-0">TENDENCIA</h6>
                         </div>
-                        <h6 class="text-700 mb-0" id="id_tt_tendencia_pro02"> 0 %</h6>
+                        <h6 class="text-700 mb-0" id="id_tt_tendencia_pro02"> 0 </h6>
                       </div>
 
                       <div class="d-flex flex-between-center border-bottom py-3">
