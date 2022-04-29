@@ -443,8 +443,8 @@ function RangeStat(D1,D2){
                 $('#id_dias_porcent').html(tt_optimo);
     
                 isToday  = moment(D2).format("DD-MMMM");
-    
-                CAMPOS[CAMPOS.indexOf("FECHA_ACTUAL")] = isToday ;
+                
+                CAMPOS[CAMPOS.indexOf(CAMPOS[14])] = isToday ;
     
                 if (item.VENDEDOR != 'F02' && item.VENDEDOR != 'F15'&& item.VENDEDOR != 'F04' ) {            
                     
