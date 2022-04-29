@@ -214,7 +214,8 @@
                 </div>
                 <div class="card-body d-flex flex-column justify-content-between">
                   <div class="row align-items-center">
-                    <div class="col-md-5 col-xxl-12 mb-xxl-1">
+
+                    <div class="col-md-12 col-xxl-12 mb-xxl-1 ">
                       <div class="position-relative">
                         <div class="echart-most-leads my-2" data-echart-responsive="true"></div>
                         <div class="position-absolute top-50 start-50 translate-middle text-center">
@@ -223,7 +224,8 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-xxl-12 col-md-7">
+
+                    <div class="col-md-12 col-xxl-12 mb-xxl-1  ">
                       <hr class="mx-ncard mb-0 d-md-none d-xxl-block" />
                       <div class="d-flex flex-between-center border-bottom py-3 pt-md-0 pt-xxl-3">
                         <div class="d-flex">
@@ -254,6 +256,7 @@
                         <h6 class="text-700 mb-0" id="id_tt_pie_aporte_gerencia"> 00 %</h6>
                       </div>
                     </div>                    
+
                   </div>                  
                 </div>  
                 <div class="card-footer bg-light p-0"><a class="btn btn-sm btn-link d-block py-2" href="#!">TOTAL : <span id="id_tt_final_pie" > C$ 00.00</span> </a></div>                            
@@ -284,7 +287,7 @@
                 </div>
                 <div class="card-body d-flex flex-column justify-content-between">
                   <div class="row align-items-center">
-                    <div class="col-xxl-12 col-md-7">
+                    <div class="col-md-12 col-xxl-12 ">
 
                       <div class="d-flex flex-between-center border-bottom py-3 ">
                         <div class="d-flex">
@@ -403,7 +406,7 @@
                 </div>
                 <div class="card-body d-flex flex-column justify-content-between">
                   <div class="row align-items-center">
-                    <div class="col-xxl-12 col-md-7">
+                    <div class="col-md-12 col-xxl-12 ">
 
                       <div class="d-flex flex-between-center border-bottom py-3 ">
                         <div class="d-flex">
