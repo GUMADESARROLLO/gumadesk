@@ -121,7 +121,7 @@
                 <div class="card-header pb-0">
 
                 <div class="d-flex  ">
-                  <div class="me-auto justify-content-end">Periodo del: </div>
+                  <div class="me-auto justify-content-end">Periodo: </div>
                   <div class="">
                     <span class="fas fa-calendar-alt text-primary position-absolute translate-middle-y ms-2 mt-3"> </span>
                     <input id="id_range_select" class="form-control form-control-sm datetimepicker ps-4" type="text" data-options='{"mode":"range","dateFormat":"Y-m-d","disableMobile":true}'/>
