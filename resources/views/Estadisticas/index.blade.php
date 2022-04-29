@@ -5,9 +5,8 @@
       @include('layouts.nav_gumadesk')
         <div class="content">
           
-        <div class="row g-3 mb-3">
-          
-            <div class="col-md-6 col-xxl-3">
+        <div class="row g-3 mb-3">          
+            <div class="col-md-3 col-xxl-3">
               <div class="card h-md-100 ecommerce-card-min-width">
                 <div class="card-header pb-0">
                   <h6 class="mb-0 mt-2 d-flex align-items-center">Resumen de ventas
@@ -28,9 +27,8 @@
                   </div>
                 </div>
               </div>
-            </div>
-            
-            <div class="col-md-6 col-xxl-3">
+            </div>            
+            <div class="col-md-3 col-xxl-3">
               
               <div class="card h-md-100">
              
@@ -79,7 +77,7 @@
 
               </div>
             </div>
-            <div class="col-md-6 col-xxl-3">
+            <div class="col-md-3 col-xxl-3">
               <div class="card h-md-100">
                 <div class="card-header pb-0">
                   <h6 class="mb-0 mt-2 d-flex align-items-center">Dias Hábiles 
@@ -119,9 +117,8 @@
                   </div>
                 </div>
               </div>
-            </div>
-            
-            <div class="col-md-6 col-xxl-3">
+            </div>            
+            <div class="col-md-3 col-xxl-3">
               <div class="card h-md-100">
                 <div class="card-header pb-0">
 
@@ -176,7 +173,7 @@
             </div>            
           </div>
           <div class="row mb-3 g-3">
-            <div class="col-lg-12 col-xxl-9">
+            <div class="col-md-9 col-xxl-9">
               <div class="card">
                 <div class="card-header d-flex flex-between-center ps-0 py-0 border-bottom">
                   <ul class="nav nav-tabs border-0 flex-nowrap tab-active-caret" id="crm-revenue-chart-tab" role="tablist" data-tab-has-echarts="data-tab-has-echarts">
@@ -210,7 +207,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-xxl-3">
+            <div class="col-md-3 col-xxl-3">
               <div class="card">
                 <div class="card-header d-flex flex-between-center py-2 border-bottom">
                   <h6 class="mb-0">APORTE % POR CANAL</h6>                  
@@ -262,7 +259,8 @@
                 <div class="card-footer bg-light p-0"><a class="btn btn-sm btn-link d-block py-2" href="#!">TOTAL : <span id="id_tt_final_pie" > C$ 00.00</span> </a></div>                            
               </div>
             </div>
-            <div class="col-xxl-9">
+
+            <div class="col-md-9 col-xxl-9">
               <div class="card overflow-hidden">                
                 <div class="card-body p-0">
                   <div class="table-responsive scrollbar">
@@ -279,7 +277,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-xxl-3">
+            <div class="col-md-3 col-xxl-3">
               <div class="card">
                 <div class="card-header d-flex flex-between-center py-2 border-bottom">
                   <h6 class="mb-0">FARMACIA</h6>                  
@@ -381,7 +379,7 @@
               </div>
             </div>
 
-            <div class="col-xxl-9">
+            <div class="col-md-9 col-xxl-9">
               <div class="card overflow-hidden">                
                 <div class="card-body p-0">
                   <div class="table-responsive scrollbar">
@@ -398,7 +396,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-xxl-3">
+            <div class="col-md-3 col-xxl-3">
               <div class="card">
                 <div class="card-header d-flex flex-between-center py-2 border-bottom">
                   <h6 class="mb-0">PROYECTO 1. LIC. ESPERANZA</h6>                  
