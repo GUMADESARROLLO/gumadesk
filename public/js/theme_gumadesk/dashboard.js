@@ -442,7 +442,7 @@ function RangeStat(D1,D2){
                 $('#id_dias_facturados').html(tt_diasFactura );
                 $('#id_dias_porcent').html(tt_optimo);
     
-                isToday  = moment().subtract(1, "days").format("DD-MMMM");
+                isToday  = moment(D2).format("DD-MMMM");
     
                 CAMPOS[CAMPOS.indexOf("FECHA_ACTUAL")] = isToday ;
     
