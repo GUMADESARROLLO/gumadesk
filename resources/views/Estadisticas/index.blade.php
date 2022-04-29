@@ -28,7 +28,7 @@
                 </div>
               </div>
             </div>            
-            <div class="col-md-3 col-xxl-3">
+            <div class="col-md-2 col-xxl-2">
               
               <div class="card h-md-100">
              
@@ -40,12 +40,10 @@
                   </h6>
                 </div>
                 
-                <div class="card-body d-flex flex-column justify-content-end">
-
-                
-                  <div class="row justify-content-between">
+                <div class="card-body d-flex flex-column justify-content-end ">
+                  <div class="row justify-content-between ">
                   <div class="row g-5 g-sm-0">
-                    <div class="col-sm-4">
+                    <div class="col-md-4 col-sm-12 ">
                       <div class="border-sm-end border-300">
                         <div class="text-center">
                           <h6 class="fs--2 text-600 mb-1">FACT.</h6>
@@ -54,7 +52,7 @@
                         
                       </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-md-4">
                       <div class="border-sm-end border-300">
                         <div class="text-center">
                           <h6 class="fs--2 text-600 mb-1">META</h6>
@@ -62,7 +60,7 @@
                         </div>
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-md-4">
                       <div>
                         <div class="text-center">
                           <h6 class="fs--2 text-600 mb-1">% CUMPL</h6>                          
@@ -118,7 +116,7 @@
                 </div>
               </div>
             </div>            
-            <div class="col-md-3 col-xxl-3">
+            <div class="col-md-4 col-xxl-4">
               <div class="card h-md-100">
                 <div class="card-header pb-0">
 
