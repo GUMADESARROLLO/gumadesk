@@ -187,8 +187,6 @@
                   <div class="row g-1">                   
                     <div class="col-xxl-12">
                       <div class="tab-content">
-                        <!-- Find the JS file for the following chart at: src/js/charts/echarts/crm-revenue.js-->
-                        <!-- If you are not using gulp based workflow, you can find the transpiled code at: public/assets/js/theme.js-->
                         <div class="tab-pane" id="crm-revenue" role="tabpanel" aria-labelledby="crm-revenue-tab">
                           <div class="echart-sale-Alacanse" data-echart-responsive="true" data-echart-tab="data-echart-tab" style="height:320px;"></div>
                         </div>
@@ -230,28 +228,28 @@
                           <h6 class="text-700 mb-0">FARMACIA </h6>
                         </div>
                         <p class="fs--1 text-500 mb-0 fw-semi-bold" id="id_pie_tt_farmacia" > C$ 0.00 </p>
-                        <h6 class="text-700 mb-0" id="id_tt_pie_aporte_farmacia" >00 %</h6>
+                        <h6 class="text-700 mb-0" > <div class="d-flex align-items-center"><span class="fas fa-circle fs--2 me-2 text-primary"></span> <span id="id_tt_pie_aporte_farmacia" > 00 %</span></h6>
                       </div>
                       <div class="d-flex flex-between-center border-bottom py-3">
                         <div class="d-flex">
                           <h6 class="text-700 mb-0">INST. PRIVADA </h6>
                         </div>
                         <p class="fs--1 text-500 mb-0 fw-semi-bold" id="id_tt_only_inst_priva_val"> C$ 00.00 </p>
-                        <h6 class="text-700 mb-0" id="id_tt_only_inst_priva"> 00 %</h6>
+                        <h6 class="text-700 mb-0" > <div class="d-flex align-items-center"><span class="fas fa-circle fs--2 me-2 text-warning "></span> <span id="id_tt_only_inst_priva" > 00 %</span></h6>
                       </div>
                       <div class="d-flex flex-between-center border-bottom py-3">
                         <div class="d-flex">
                           <h6 class="text-700 mb-0">MAYORISTA </h6>
                         </div>
                         <p class="fs--1 text-500 mb-0 fw-semi-bold" id="id_tt_only_mayorista"> C$ 00.00 </p>
-                        <h6 class="text-700 mb-0" id="id_tt_pie_mayorista"> 00 %</h6>
+                        <h6 class="text-700 mb-0" > <div class="d-flex align-items-center"><span class="fas fa-circle fs--2 me-2 text-info  "></span> <span id="id_tt_pie_mayorista" > 00 %</span> </h6>
                       </div>
                       <div class="d-flex flex-between-center border-bottom py-3 border-bottom-0 pb-0">
                         <div class="d-flex">
                           <h6 class="text-700 mb-0">VENTA GERENCIA </h6>
                         </div>
                         <p class="fs--1 text-500 mb-0 fw-semi-bold" id = "id_tt_only_venta_gerencia"> C$ 00.00 </p>
-                        <h6 class="text-700 mb-0" id="id_tt_pie_aporte_gerencia"> 00 %</h6>
+                        <h6 class="text-700 mb-0" > <div class="d-flex align-items-center"><span class="fas fa-circle fs--2 me-2 text-secondary "></span> <span id="id_tt_pie_aporte_gerencia" > 00 %</span> </h6>
                       </div>
                     </div>                    
 
