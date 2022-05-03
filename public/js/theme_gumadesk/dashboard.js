@@ -424,8 +424,8 @@ function RangeStat(D1,D2){
             }
         };
     $.getJSON("api/"+D1 + "/"+D2, function(json) {
-        table_header += '<th colspan="13"> FERNANDO</th>';   
-        table_headerPro02 += '<th colspan="4"> PROYECTO 02</th>';   
+        table_header += '<th colspan="13" class="bg-linkedin text-100"> FERNANDO</th>';   
+        table_headerPro02 += '<th colspan="4" class="bg-linkedin text-100"> PROYECTO 1. LIC. ESPERANZA</th>';   
         $.each(json, function(i, item) {
             if(jQuery.type(item.VENDEDOR) !== "undefined"){
     
@@ -448,26 +448,27 @@ function RangeStat(D1,D2){
     
                 if (item.VENDEDOR != 'F02' && item.VENDEDOR != 'F15'&& item.VENDEDOR != 'F04' ) {            
                     
-                    row_codigo[0]    += '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap"><a class="text-900 stretched-link" href="#!">'+item.NOMBRE_SAC+'</a></h6></div></td>';
-                    row_codigo[1]    += '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap"><a class="text-900 stretched-link" href="#!">'+item.NOMBRE+'</a></h6></div></td>';
+                    row_codigo[0]    += '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap">'+item.NOMBRE_SAC+'</h6></div></td>';
+                    row_codigo[1]    += '<td class="bg-soft-primary"> <div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap">'+item.NOMBRE+'</h6></div></td>';
                     
-                    row_codigo[2]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.VENDEDOR+'</label></td>';
-                    row_codigo[3]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >zona '+item.VENDEDOR+'</label></td>';                    
+                    row_codigo[2]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0 " >'+item.VENDEDOR+'</label></td>';
+                    row_codigo[3]    += '<td class="bg-soft-primary"><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.RUTA_ZONA+'</label></td>';                    
                     row_codigo[4]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.META_RUTA+'</label></td>';
                     row_codigo[5]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.MesActual+'</label></td>';
     
                     row_codigo[6]    += '<td><span class="badge rounded-pill ms-3 badge-soft-warning ">'+item.RUTA_CUMPLI+'</span></td>';
+                    row_codigo[7]    += '<td><span class="badge rounded-pill ms-3 badge-soft-primary ">'+json.Dias_porcent+'</span></td>';
     
-                    row_codigo[7]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+json.Dias_porcent+'</label></td>';
+                    
                     row_codigo[8]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.CLIENTE+'</label></td>';
                     row_codigo[9]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.META_CLIENTE+'</label></td>';
                     row_codigo[10]    += '<td><span class="badge rounded-pill ms-3 badge-soft-warning ">'+item.CLIENTE_COBERTURA+'</span></td>';
                     row_codigo[11]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.TENDENCIA+'</label></td>';
                     row_codigo[12]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.DS+'</label></td>';
                     row_codigo[13]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.SKU+'</label></td>';
-                    row_codigo[14]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.DiaActual+'</label></td>';
-                    row_codigo[15]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.EJEC+'</label></td>';
-                    row_codigo[16]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.SAC+'</label></td>';
+                    row_codigo[14]    += '<td class="bg-soft-success"><label class="-label ps-2 fs--2 text-600 mb-0 " >'+item.DiaActual+'</label></td>';
+                    row_codigo[15]    += '<td class="bg-soft-primary"><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.EJEC+'</label></td>';
+                    row_codigo[16]    += '<td class="bg-soft-success"><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.SAC+'</label></td>';
     
                     dta_ventas_mercados.dataset['CanalFarmacia'][0].push(intVal(item.RUTA_CUMPLI))
                     dta_ventas_mercados.dataset['CanalFarmacia'][1].push(intVal(json.Dias_porcent))
@@ -487,24 +488,25 @@ function RangeStat(D1,D2){
     
                     
                 }else{
-                    row_proyect02[0]    += '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap"><a class="text-900 stretched-link" href="#!">'+item.NOMBRE_SAC+'</a></h6></div></td>';
-                    row_proyect02[1]    += '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap"><a class="text-900 stretched-link" href="#!">'+item.NOMBRE+'</a></h6></div></td>';
+                    row_proyect02[0]    += '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap">'+item.NOMBRE_SAC+'</h6></div></td>';
+                    row_proyect02[1]    += '<td class="bg-soft-primary"><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap">'+item.NOMBRE+'</h6></div></td>';
                     
                     row_proyect02[2]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.VENDEDOR+'</label></td>';
-                    row_proyect02[3]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >zona '+item.VENDEDOR+'</label></td>';                    
+                    row_proyect02[3]    += '<td class="bg-soft-primary"><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.RUTA_ZONA+'</label></td>';                    
                     row_proyect02[4]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.META_RUTA+'</label></td>';
                     row_proyect02[5]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.MesActual+'</label></td>';
     
                     row_proyect02[6]    += '<td><span class="badge rounded-pill ms-3 badge-soft-warning ">'+item.RUTA_CUMPLI+'</span></td>';
     
-                    row_proyect02[7]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+json.Dias_porcent+'</label></td>';
+                    
+                    row_proyect02[7]    += '<td><span class="badge rounded-pill ms-3 badge-soft-primary ">'+json.Dias_porcent+'</span></td>';
                     row_proyect02[8]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.CLIENTE+'</label></td>';
                     row_proyect02[9]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.META_CLIENTE+'</label></td>';
                     row_proyect02[10]    += '<td><span class="badge rounded-pill ms-3 badge-soft-warning ">'+item.CLIENTE_COBERTURA+'</span></td>';
                     row_proyect02[11]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.TENDENCIA+'</label></td>';
                     row_proyect02[12]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.DS+'</label></td>';
                     row_proyect02[13]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.SKU+'</label></td>';
-                    row_proyect02[14]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.DiaActual+'</label></td>';
+                    row_proyect02[14]    += '<td class="bg-soft-success"><label class="-label ps-2 fs--2 text-600 mb-0" >'+item.DiaActual+'</label></td>';
     
                     if(item.VENDEDOR != "F15"){
                         tt_CuotaFarmacia_Pro02 += intVal(item.META_RUTA);
@@ -554,14 +556,14 @@ function RangeStat(D1,D2){
     
         $.each(CAMPOS, function(i, item) {
             table_column += '<tr class="border-bottom border-200">'+
-                    '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap"><a class="text-900 stretched-link" href="#!">'+CAMPOS[i]+'</a></h6></div></td>'+   
+                    '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap">'+CAMPOS[i]+'</h6></div></td>'+   
                     row_codigo[i]
                 '</tr>';
         });
     
         $.each(CAMPOS_PRO02, function(i, item) {
             table_column_Pro02 += '<tr class="border-bottom border-200">'+
-                    '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap"><a class="text-900 stretched-link" href="#!">'+CAMPOS[i]+'</a></h6></div></td>'+   
+                    '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap">'+CAMPOS[i]+'</h6></div></td>'+   
                     row_proyect02[i]
                 '</tr>';
         });

@@ -85,20 +85,20 @@ class Reporteria extends Model
         $rVendedor = $sql_server->fetchArray($sql_vendedor, SQLSRV_FETCH_ASSOC);
 
         $SAC_into_vendedor = array(
-            ["RUTA" => "F03","SAC" => "ALEJANDRA"],
-            ["RUTA" => "F06","SAC" => "NADIESKA"],
-            ["RUTA" => "F07","SAC" => "YORLENI"],
-            ["RUTA" => "F08","SAC" => "REYNA"],
-            ["RUTA" => "F13","SAC" => "NADIESKA"],            
-            ["RUTA" => "F14","SAC" => "NADIESKA"],
-            ["RUTA" => "F05","SAC" => "MARISELA"],
-            ["RUTA" => "F09","SAC" => "YORLENI"],
-            ["RUTA" => "F10","SAC" => "REYNA"],
-            ["RUTA" => "F11","SAC" => "YORLENI"],
-            ["RUTA" => "F20","SAC" => "REYNA"],
-            ["RUTA" => "F02","SAC" => "ESPERANZA CASTILLO"],
-            ["RUTA" => "F04","SAC" => "FRANCISCO AVALOS"],
-            ["RUTA" => "F15","SAC" => "FERNADO DELCARMEN"],
+            ["RUTA" => "F03","SAC" => "ALEJANDRA","ZONA" => "MGA ABAJO NORTE"],
+            ["RUTA" => "F06","SAC" => "NADIESKA","ZONA" => "LEON"],
+            ["RUTA" => "F07","SAC" => "YORLENI","ZONA" => "MYA-GDA"],
+            ["RUTA" => "F08","SAC" => "REYNA","ZONA" => "CAR-RIV"],
+            ["RUTA" => "F13","SAC" => "NADIESKA","ZONA" => "MGA ABAJO SUR"],            
+            ["RUTA" => "F14","SAC" => "NADIESKA","ZONA" => "CHINANDEGA"],
+            ["RUTA" => "F05","SAC" => "MARISELA","ZONA" => "MGA ARRIBA"],
+            ["RUTA" => "F09","SAC" => "YORLENI","ZONA" => "EST-NS-MAD"],
+            ["RUTA" => "F10","SAC" => "REYNA","ZONA" => "MAT-JIN"],
+            ["RUTA" => "F11","SAC" => "YORLENI","ZONA" => "CHON-RSJ-RAAS"],
+            ["RUTA" => "F20","SAC" => "REYNA","ZONA" => "BOACO- RAAN"],
+            ["RUTA" => "F02","SAC" => "ESPERANZA CASTILLO","ZONA" => "INSTIT"],
+            ["RUTA" => "F04","SAC" => "FRANCISCO AVALOS","ZONA" => "MCDO/MAYORISTAS"],
+            ["RUTA" => "F15","SAC" => "FERNADO DELCARMEN","ZONA" => "VENTAS GERENCIA"],
         );
 
 
@@ -113,6 +113,7 @@ class Reporteria extends Model
                 $data[$i]['VENDEDOR']        = $key['VENDEDOR'];
                 $data[$i]['NOMBRE']          = $rVendedor[$index_key]['NOMBRE'];
                 $data[$i]['NOMBRE_SAC']      = $SAC_into_vendedor[$in_key]['SAC'];
+                $data[$i]['RUTA_ZONA']      = $SAC_into_vendedor[$in_key]['ZONA'];
                 
                 $data[$i]['META_RUTA']       = 'C$ ' . number_format($key['META_RUTA'],2);
                 $data[$i]['MesActual']       = 'C$ ' . number_format($key['MesActual'], 2);
