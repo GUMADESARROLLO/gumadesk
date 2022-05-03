@@ -171,8 +171,9 @@
         </div>            
       </div>
       <div class="row mb-3 g-3">
+        
         <div class="col-md-9 col-xxl-9">
-
+        @if( Session::get('rol')== '1' )
           <div class="card mb-3">
             <div class="card-header d-flex flex-between-center ps-0 py-0 border-bottom">
               <ul class="nav nav-tabs border-0 flex-nowrap tab-active-caret" id="crm-revenue-chart-tab" role="tablist" data-tab-has-echarts="data-tab-has-echarts">
@@ -386,13 +387,15 @@
               </div>
             </div>
           </div>
-
+          @endif
           <div class="card">
             <div class="card-header d-flex flex-between-center ps-0 py-0 border-bottom">
               <ul class="nav nav-tabs border-0 flex-nowrap tab-active-caret" id="crm-revenue-chart-tab" role="tablist" data-tab-has-echarts="data-tab-has-echarts">
                 <li class="nav-item" role="presentation"><a class="nav-link py-3 mb-0 active" id="crm-deals-tab" data-bs-toggle="tab" href="#crm-deals" role="tab" aria-controls="crm-deals" aria-selected="false">CANAL FARMACIA</a></li>  
+                @if( Session::get('rol')=='1' )
                 <li class="nav-item" role="presentation"><a class="nav-link py-3 mb-0" id="crm-revenue-tab" data-bs-toggle="tab" href="#crm-revenue" role="tab" aria-controls="crm-revenue" aria-selected="true">ALCANCE POR CANAL</a></li>
                 <li class="nav-item" role="presentation"><a class="nav-link py-3 mb-0" id="crm-users-tab" data-bs-toggle="tab" href="#crm-users" role="tab" aria-controls="crm-users" aria-selected="false">PY 1: Lic. ESPERANZA C.</a></li>
+                @endif
               </ul>
             </div>
             <div class="card-body">
@@ -442,6 +445,7 @@
                     <p class="fs--1 text-500 mb-0 fw-semi-bold" id="id_pie_tt_farmacia" > C$ 0.00 </p>
                     <h6 class="text-700 mb-0" > <div class="d-flex align-items-center"><span class="fas fa-circle fs--2 me-2 text-primary"></span> <span id="id_tt_pie_aporte_farmacia" > 00 %</span></h6>
                   </div>
+                  @if( Session::get('rol')=='1' )
                   <div class="d-flex flex-between-center border-bottom py-3">
                     <div class="d-flex">
                       <h6 class="text-700 mb-0">INST. PRIVADA </h6>
@@ -463,6 +467,7 @@
                     <p class="fs--1 text-500 mb-0 fw-semi-bold" id = "id_tt_only_venta_gerencia"> C$ 00.00 </p>
                     <h6 class="text-700 mb-0" > <div class="d-flex align-items-center"><span class="fas fa-circle fs--2 me-2 text-secondary "></span> <span id="id_tt_pie_aporte_gerencia" > 00 %</span> </h6>
                   </div>
+                  @endif
                 </div>                    
 
               </div>                  
@@ -488,7 +493,7 @@
             </div>
           </div>
         </div>
-
+        @if( Session::get('rol')=='1' )
         <div class="col-md-12 col-xxl-12">
           <div class="card overflow-hidden">                
             <div class="card-body p-0">
@@ -506,7 +511,7 @@
             </div>
           </div>
         </div>
-        
+        @endif
       </div>
       @include('layouts.footer_gumadesk')
     </div>

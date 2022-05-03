@@ -19,7 +19,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
 });
 
 //RUTAS MENUS
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'EstadisticasController@getStats')->name('home');
 Route::get('/usuario', 'Admin\usuarioController@index')->name('usuario');
 Route::get('/orden-produccion', 'User\orden_produccionController@index')->name('orden-produccion');
 Route::get('/configuracion', 'User\configuracionController@index')->name('configuracion');

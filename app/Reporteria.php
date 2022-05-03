@@ -3,14 +3,53 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Reporteria extends Model
 {
     public function __construct() {
         $this->middleware('auth');
     }
+    public static function get_rutas_group($Id)
+    {
+        $datos_rutas = DB::table('view_rutas')->where('id', $Id)->get();
 
+        $json = array();
+        $i = 0;
+
+        if (count($datos_rutas) > 0) {
+            foreach ($datos_rutas as $key => $value) {
+
+                $json['id']     = $value->id;
+                $json['ruta']   = $value->RUTA;
+                
+
+                $i++;
+            }
+        }
+
+        return $json;
+    }
     public static function getData($d1,$d2){
+
+        // rol de usuario
+        $role = Auth::User()->activeRole();
+        
+        
+        if($role==1){
+            $Rutas = '';
+        }else{
+            $id_user = Auth::id();
+            
+            $data_ruta = Reporteria::get_rutas_group($id_user);
+            $Rutas = " AND VENDEDOR IN ( ".$data_ruta['ruta']." ) ";
+
+            
+        }
+        
+        
+
         $sql_server = new \sql_server();        
         $data = array();
         $i=0;
@@ -27,14 +66,15 @@ class Reporteria extends Model
         ISNULL((SELECT  sum(T4.VentaNetaLocal) Venta FROM Softland.dbo.ANA_VentasTotales_MOD_Contabilidad_UMK T4  WHERE T4.Fecha_de_factura = '".$d2."' AND T4.LABORATORIO NOT IN ( 'GUMA PHARMA- USA' )AND T4.VENDEDOR=	 T0.VENDEDOR    ), 0) AS DiaActual,	
         ISNULL((SELECT COUNT(DISTINCT T1.ARTICULO) FROM view_master_pedidos_umk AS T1 WHERE T1.FECHA_PEDIDO BETWEEN '".$d1."' AND '".$d2."'AND T1.VENDEDOR = T0.VENDEDOR ), 0) AS SKU,	
         ISNULL((SELECT SUM(T1.TOTAL_LINEA) AS NoV FROM view_master_pedidos_umk AS T1 WHERE T1.FECHA_PEDIDO BETWEEN '".$d1."'  AND '".$d2."' AND T1.VENDEDOR = T0.VENDEDOR and   T1.PEDIDO NOT LIKE 'PT%'  ), 0) AS EJEC,
-        ISNULL((SELECT SUM(T1.TOTAL_LINEA) AS NoV FROM view_master_pedidos_umk AS T1 WHERE T1.FECHA_PEDIDO BETWEEN '".$d1."'  AND '".$d2."' AND T1.VENDEDOR = T0.VENDEDOR and   T1.PEDIDO LIKE 'PT%'  ), 0) AS SAC
+        ISNULL((SELECT SUM(T1.TOTAL_LINEA) AS NoV FROM view_master_pedidos_umk AS T1 WHERE T1.FECHA_PEDIDO BETWEEN '".$d1."'  AND '".$d2."' AND T1.VENDEDOR = T0.VENDEDOR and   T1.PEDIDO LIKE 'PT%'    ), 0) AS SAC
     
     FROM
         view_master_pedidos_umk T0 	
         
     WHERE
-        T0.FECHA_PEDIDO BETWEEN '".$d1."' AND '".$d2."'  AND T0.VENDEDOR NOT IN ( 'F01', 'F12' ) 
+        T0.FECHA_PEDIDO BETWEEN '".$d1."' AND '".$d2."'  AND T0.VENDEDOR NOT IN ( 'F01', 'F12' ) ".$Rutas."
     GROUP BY T0.VENDEDOR";
+
 
         $sql_skus = "SELECT 	( 
             SELECT COUNT(DISTINCT T0.ARTICULO) FROM	view_master_pedidos_umk T0 
@@ -96,9 +136,9 @@ class Reporteria extends Model
             ["RUTA" => "F10","SAC" => "REYNA","ZONA" => "MAT-JIN"],
             ["RUTA" => "F11","SAC" => "YORLENI","ZONA" => "CHON-RSJ-RAAS"],
             ["RUTA" => "F20","SAC" => "REYNA","ZONA" => "BOACO- RAAN"],
-            ["RUTA" => "F02","SAC" => "ESPERANZA CASTILLO","ZONA" => "INSTIT"],
-            ["RUTA" => "F04","SAC" => "FRANCISCO AVALOS","ZONA" => "MCDO/MAYORISTAS"],
-            ["RUTA" => "F15","SAC" => "FERNADO DELCARMEN","ZONA" => "VENTAS GERENCIA"],
+            ["RUTA" => "F02","SAC" => "MARISELA SEVILLA","ZONA" => "INSTIT"],
+            ["RUTA" => "F04","SAC" => "","ZONA" => "MCDO/MAYORISTAS"],
+            ["RUTA" => "F15","SAC" => "","ZONA" => "VENTAS GERENCIA"],
         );
 
 
