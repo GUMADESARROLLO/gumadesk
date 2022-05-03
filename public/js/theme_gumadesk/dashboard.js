@@ -582,7 +582,7 @@ function RangeStat(D1,D2){
     
         tt_prom = (tt_VentaFarmacia / tt_CuotaFarmacia) * 100;
         $('#id_tt_promo').html(numeral(tt_prom).format('0.00') + " %");
-        $('#id_tt_optimo').html(tt_optimo);
+        $('#id_tt_optimo').html(tt_optimo + " Optimo");
         $('#id_tt_lbl_optimo').html(tt_optimo);
     
     
@@ -593,7 +593,7 @@ function RangeStat(D1,D2){
     
         tt_tendencia = numeral((tt_prom / tt_diasHabiles) * tt_diasFactura).format('0,00');   
     
-        $('#id_tt_tendencia').html(tt_tendencia + " %");
+        $('#id_tt_tendencia').html(tt_tendencia + " % Tendencia");
     
         tt_ds = numeral((tt_VentaFarmacia / tt_Clientes)).format('0,0,00');    
         $('#id_tt_ds').html(tt_ds );
@@ -602,11 +602,11 @@ function RangeStat(D1,D2){
     
         $('#id_tt_sku').html(tt_sku);
     
-        $('#id_tt_lbl_isToday').html(isToday);
+        $('#id_tt_lbl_isToday').html(isToday+ " C$.");
     
-        $('#id_tt_isToday').html("C$ " + numeral(tt_isToday).format('0,0.00'));
-        $('#id_tt_eject').html("C$ " + numeral(tt_eject).format('0,0.00'));
-        $('#id_tt_sac').html("C$ " + numeral(tt_sac).format('0,0.00'));
+        $('#id_tt_isToday').html(numeral(tt_isToday).format('0,0.00'));
+        $('#id_tt_eject').html(numeral(tt_eject).format('0,0.00'));
+        $('#id_tt_sac').html(numeral(tt_sac).format('0,0.00'));
     
     
         /* -------------------------------------------------------------------------- */
@@ -635,7 +635,7 @@ function RangeStat(D1,D2){
         $('#id_tt_promo_pro02').html(numeral(tt_prom_Pro02).format('0') + " %");
     
         $('#id_tt_optimo_pro02').html(tt_optimo);
-        $('#id_tt_lbl_optimo_pro02').html(tt_optimo);
+        $('#id_tt_lbl_optimo_pro02').html(tt_optimo + " Optimo");
     
         tt_Clientes_opti_Pro02 = numeral((tt_Clientes_Pro02 / tt_Clientes_meta_Pro02 ) * 100).format('0,00');
         $('#id_tt_cliente_pro02').html(tt_Clientes_Pro02);
@@ -643,7 +643,7 @@ function RangeStat(D1,D2){
         $('#id_tt_cliente_optimo_pro02').html(tt_Clientes_opti_Pro02 + " %");
     
         tt_tendencia_pro02 = numeral((tt_prom_Pro02 / tt_diasHabiles) * tt_diasFactura).format('0,00');   
-        $('#id_tt_tendencia_pro02').html(tt_tendencia_pro02 + " %");
+        $('#id_tt_tendencia_pro02').html(tt_tendencia_pro02 + " % Optimo");
     
         tt_ds_pro02 = numeral((tt_VentaFarmacia_Pro02 / tt_Clientes_Pro02)).format('0,0,00');    
         $('#id_tt_ds_pro02').html(tt_ds_pro02 );
