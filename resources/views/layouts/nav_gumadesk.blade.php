@@ -28,8 +28,8 @@
       <a class="dropdown-item" href="stats">eSTADISTICAS</a>
         <a class="dropdown-item" href="UnidadNegocio">Unidades de Negocio</a>
         <a class="dropdown-item" href="Departamentos">Departamentos</a>
-        <a class="dropdown-item" href="categorias">Categorias</a>-->
-        <a class="dropdown-item" href="Usuarios">Usuarios</a>
+        <a class="dropdown-item" href="categorias">Categorias</a>
+        <a class="dropdown-item" href="Usuarios">Usuarios</a>-->
         <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
             document.getElementById('logout-form').submit()">Salir
                 <span class="pcoded-micon ml-2">

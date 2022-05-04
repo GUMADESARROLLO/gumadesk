@@ -210,13 +210,14 @@
                 <li class="nav-item" role="presentation">
                   <a class="nav-link py-3 mb-0 active" id="id_aportes_tab" data-bs-toggle="tab" href="#id_aportes" role="tab" aria-controls="id_aportes" aria-selected="false">APORTE <br>% POR CANAL</a>
                 </li>
-                
+                @if( Session::get('rol')[0] == '1' )
                 <li class="nav-item" role="presentation">
                   <a class="nav-link py-3 mb-0" id="resu_farmacia_tab" data-bs-toggle="tab" href="#resu_farmacia" role="tab" aria-controls="resu_farmacia" aria-selected="false">RESUMEN <br>FARMACIA</a>
                 </li> 
                 <li class="nav-item" role="presentation">
                   <a class="nav-link py-3 mb-0" id="resu_pro02_tab" data-bs-toggle="tab" href="#resu_pro02" role="tab" aria-controls="resu_pro02" aria-selected="false">RESUMEN <br>PY 1 C.</a>
-                </li>                    
+                </li>  
+                @endif                  
               </ul>
             </div>
             <div class="tab-content">
@@ -238,6 +239,7 @@
 
                 <div class="col-md-12 col-xxl-12 mb-xxl-1  ">
                   <hr class="mx-ncard mb-0 d-md-none d-xxl-block" />
+                  @if( Session::get('rol')[0] == '1' )
                   <div class="d-flex flex-between-center border-bottom py-3 pt-md-0 pt-xxl-3">
                     <div class="d-flex">
                       <h6 class="text-700 mb-0">FARMACIA </h6>
@@ -245,7 +247,7 @@
                     <p class="fs--1 text-500 mb-0 fw-semi-bold" id="id_pie_tt_farmacia" > C$ 0.00 </p>
                     <h6 class="text-700 mb-0" > <div class="d-flex align-items-center"><span class="fas fa-circle fs--2 me-2 text-primary"></span> <span id="id_tt_pie_aporte_farmacia" > 00 %</span></h6>
                   </div>
-                  @if( Session::get('rol')[0] == '1' )
+                  
                   <div class="d-flex flex-between-center border-bottom py-3">
                     <div class="d-flex">
                       <h6 class="text-700 mb-0">INST. PRIVADA </h6>
