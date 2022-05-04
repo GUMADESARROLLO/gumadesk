@@ -94,19 +94,26 @@ class Reporteria extends Model
 
         $rSKU_Facturados = $sql_server->fetchArray($sql_skus, SQLSRV_FETCH_ASSOC);
 
-        $sql_dias_habiles='SELECT T0.dias_facturados FROM DESARROLLO.dbo.metacuota_GumaNet T0 WHERE T0.ESTADO = 1';
-        $rDiasHabiles = $sql_server->fetchArray($sql_dias_habiles, SQLSRV_FETCH_ASSOC);
+        $Fecha_Periodo  = date('Y-m',strtotime($d1))."-01";
 
-       //$var_dias_habiles = floatval($rDias_Facturados[0]['Dias']);
+        
+
+        
+
+        $sql_dias_habiles="SELECT T0.dias_facturados,T0.dias_habiles FROM DESARROLLO.dbo.metacuota_GumaNet T0 WHERE T0.Fecha = '".$Fecha_Periodo."'";
+
+   
+
+        $rDiasHabiles = $sql_server->fetchArray($sql_dias_habiles, SQLSRV_FETCH_ASSOC);
 
         $data['SKU_Farmacia'] = floatval($rSKU_Facturados[0]['SKU_Farmacia']);
         $data['SKU_Proyect02'] = floatval($rSKU_Facturados[0]['SKU_Proyect02']);
         $data['SKU_TODOS'] = floatval($rSKU_Facturados[0]['SKU_TODOS']);
 
-        $var_dias_habiles = 19;
-        $var_dias_factura = floatval($rDiasHabiles[0]['dias_facturados']);
-
-       $porcen_dias = ($var_dias_habiles / $var_dias_factura) * 100 ;
+        $var_dias_habiles = (!isset($rDiasHabiles[0]['dias_habiles'])) ? 1 : floatval($rDiasHabiles[0]['dias_habiles']) ; 
+        $var_dias_factura =  (!isset($rDiasHabiles[0]['dias_facturados'])) ? 1 : floatval($rDiasHabiles[0]['dias_facturados']) ; 
+        
+        $porcen_dias = ($var_dias_habiles / $var_dias_factura) * 100 ;
 
 
         
@@ -147,45 +154,26 @@ class Reporteria extends Model
 
                 $index_key = array_search($key['VENDEDOR'], array_column($rVendedor, 'VENDEDOR'));
 
-                $in_key = array_search($key['VENDEDOR'], array_column($SAC_into_vendedor, 'RUTA'));
-                
+                $in_key = array_search($key['VENDEDOR'], array_column($SAC_into_vendedor, 'RUTA'));                
 
-                $data[$i]['VENDEDOR']        = $key['VENDEDOR'];
-                $data[$i]['NOMBRE']          = $rVendedor[$index_key]['NOMBRE'];
-                $data[$i]['NOMBRE_SAC']      = $SAC_into_vendedor[$in_key]['SAC'];
-                $data[$i]['RUTA_ZONA']      = $SAC_into_vendedor[$in_key]['ZONA'];
-                
-                $data[$i]['META_RUTA']       = 'C$ ' . number_format($key['META_RUTA'],2);
-                $data[$i]['MesActual']       = 'C$ ' . number_format($key['MesActual'], 2);
-
-
+                $data[$i]['VENDEDOR']           = $key['VENDEDOR'];
+                $data[$i]['NOMBRE']             = $rVendedor[$index_key]['NOMBRE'];
+                $data[$i]['NOMBRE_SAC']         = $SAC_into_vendedor[$in_key]['SAC'];
+                $data[$i]['RUTA_ZONA']          = $SAC_into_vendedor[$in_key]['ZONA'];                
+                $data[$i]['META_RUTA']          = 'C$ ' . number_format($key['META_RUTA'],2);
+                $data[$i]['MesActual']          = 'C$ ' . number_format($key['MesActual'], 2);
                 $CUMPL_EJECT = ($key['META_RUTA']=='0.00') ? number_format($key['META_RUTA'],2) :  number_format(($key['MesActual'] / $key['META_RUTA']) * 100,0) ;
-                $data[$i]['RUTA_CUMPLI']       = $CUMPL_EJECT.' %';
-                
-
-                $data[$i]['CLIENTE']       = $key['CLIENTE'];
-                $data[$i]['META_CLIENTE']             = $key['META_CLIENTE'];
-
-                
+                $data[$i]['RUTA_CUMPLI']        = $CUMPL_EJECT.' %';
+                $data[$i]['CLIENTE']            = $key['CLIENTE'];
+                $data[$i]['META_CLIENTE']       = $key['META_CLIENTE'];                
                 $TENDENCIA = ($CUMPL_EJECT / $var_dias_habiles ) * $var_dias_factura ;
-                $data[$i]['TENDENCIA']       = number_format($TENDENCIA,0) . " % ";
-
-                
-
-                if ($key['META_CLIENTE']=='0.00') {
-                    $data[$i]['CLIENTE_COBERTURA']       =  number_format($key['META_CLIENTE'],2);
-                } else {
-                    
-                    $data[$i]['CLIENTE_COBERTURA']       =  number_format(($key['CLIENTE'] / $key['META_CLIENTE']) * 100,0).' %';
-                }
-
-                $data[$i]['SKU']           = $key['SKU'];
-                $data[$i]['DS']           = 'C$ ' . number_format($key['MesActual'] / $key['CLIENTE'],2);
-                
-                $data[$i]['DiaActual']       = 'C$ ' . number_format($key['DiaActual'], 2);
-                
-                $data[$i]['EJEC']             = 'C$ ' . number_format($key['EJEC'], 2);
-                $data[$i]['SAC']           = 'C$ ' . number_format($key['SAC'], 2);
+                $data[$i]['TENDENCIA']          = number_format($TENDENCIA,0) . " % ";
+                $data[$i]['CLIENTE_COBERTURA']  = ($key['META_CLIENTE']=='0.00') ? number_format($key['META_CLIENTE'],2) : number_format(($key['CLIENTE'] / $key['META_CLIENTE']) * 100,0).' %' ;
+                $data[$i]['SKU']                = $key['SKU'];
+                $data[$i]['DS']                 = 'C$ ' . number_format($key['MesActual'] / $key['CLIENTE'],2);                
+                $data[$i]['DiaActual']          = 'C$ ' . number_format($key['DiaActual'], 2);                
+                $data[$i]['EJEC']               = 'C$ ' . number_format($key['EJEC'], 2);
+                $data[$i]['SAC']                = 'C$ ' . number_format($key['SAC'], 2);
                 
                 $i++;
             }
