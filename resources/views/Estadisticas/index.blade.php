@@ -4,12 +4,11 @@
       <div class="container-fluid" data-layout="container">
     @include('layouts.nav_gumadesk')
     <div class="content">
-      
-    <div class="row g-3 col-md-12 col-xxl-12 mb-3 border">          
+    <div class="row g-3 col-md-12 col-xxl-12 mb-3">          
         <div class="col-md-6 col-xxl-3">
           <div class="card h-md-100 ecommerce-card-min-width">
             <div class="card-header pb-0">
-              <h6 class="mb-0 mt-2 d-flex align-items-center">Resumen de ventas
+              <h6 class="mb-0 mt-2 d-flex align-items-center">Ventas
                 <span class="ms-1 text-400" data-bs-toggle="tooltip" data-bs-placement="top" title="Muestra ventas totales de todos los segmentos y meta de venta con  su respectivo porcentaje de cumplimiento">
                   <span class="far fa-question-circle" data-fa-transform="shrink-1"></span>
                 </span>
@@ -33,7 +32,7 @@
           <div class="card h-md-100">
           
             <div class="card-header pb-0">
-              <h6 class="mb-0 mt-2 d-flex align-items-center">Cobertura de Cliente
+              <h6 class="mb-0 mt-2 d-flex align-items-center">Clientes
                 <span class="ms-1 text-400" data-bs-toggle="tooltip" data-bs-placement="top" title="Calculo de numero de Clientes unicos que sean facturado junto a la meta de clientes de facturacion y cumplimiento ">
                   <span class="far fa-question-circle" data-fa-transform="shrink-1"></span>
                 </span>
