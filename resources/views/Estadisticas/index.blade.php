@@ -172,7 +172,7 @@
       </div>
       <div class="row mb-3 g-3">
         
-        <div class="col-md-12 col-xxl-8">
+        <div class="col-md-12 col-xxl-9">
      
           <div class="card">
             <div class="card-header d-flex flex-between-center ps-0 py-0 border-bottom">
@@ -204,11 +204,26 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-xxl-2">
+        <div class="col-md-12 col-xxl-3">
           <div class="card">
-            <div class="card-header d-flex flex-between-center py-2 border-bottom">
-              <h6 class="mb-0">APORTE % POR CANAL</h6>                  
+            <div class="card-header d-flex flex-between-center ps-0 py-0 border-bottom border">
+              <ul class="nav nav-tabs border-0 flex-nowrap tab-active-caret" id="crm-revenue-chart-tab" role="tablist" data-tab-has-echarts="data-tab-has-echarts">
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link py-3 mb-0 active" id="id_aportes_tab" data-bs-toggle="tab" href="#id_aportes" role="tab" aria-controls="id_aportes" aria-selected="false">APORTE <br>% POR CANAL</a>
+                </li>
+                
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link py-3 mb-0" id="resu_farmacia_tab" data-bs-toggle="tab" href="#resu_farmacia" role="tab" aria-controls="resu_farmacia" aria-selected="false">RESUMEN <br>FARMACIA</a>
+                </li> 
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link py-3 mb-0" id="resu_pro02_tab" data-bs-toggle="tab" href="#resu_pro02" role="tab" aria-controls="resu_pro02" aria-selected="false">RESUMEN <br>PY 1 C.</a>
+                </li>                    
+              </ul>
             </div>
+            <div class="tab-content">
+              <div class="tab-pane active" id="id_aportes" role="tabpanel" aria-labelledby="id_aportes_tab">  
+              <div class="card">
+                
             <div class="card-body d-flex flex-column justify-content-between">
               <div class="row align-items-center">
 
@@ -260,194 +275,177 @@
             </div>  
             <div class="card-footer bg-light p-0"><a class="btn btn-sm btn-link d-block py-2" href="#!">TOTAL : <span id="id_tt_final_pie" > C$ 00.00</span> </a></div>                            
           </div>
-        </div>
-        <div class="col-md-6 col-xxl-2">
-          <div class="card">
-          <div class="card-header d-flex flex-between-center ps-0 py-0 border-bottom border">
-              <ul class="nav nav-tabs border-0 flex-nowrap tab-active-caret" id="crm-revenue-chart-tab" role="tablist" data-tab-has-echarts="data-tab-has-echarts">
-                <li class="nav-item" role="presentation"><a class="nav-link py-3 mb-0 active" id="resu_farmacia_tab" data-bs-toggle="tab" href="#resu_farmacia" role="tab" aria-controls="resu_farmacia" aria-selected="false">RESUMEN <br>FARMACIA</a></li> 
-                <li class="nav-item" role="presentation"><a class="nav-link py-3 mb-0" id="resu_pro02_tab" data-bs-toggle="tab" href="#resu_pro02" role="tab" aria-controls="resu_pro02" aria-selected="false">RESUMEN <br>PY 1 C.</a></li>                    
-              </ul>
-              
-            </div>
-            <div class="tab-content">
-              
-              <div class="tab-pane active" id="resu_farmacia" role="tabpanel" aria-labelledby="resu_farmacia_tab">  
-              <div class="card-body d-flex flex-column justify-content-between">
-              <div class="row align-items-center">
 
-                
+              </div>
+              <div class="tab-pane" id="resu_farmacia" role="tabpanel" aria-labelledby="resu_farmacia_tab">  
+                <div class="card-body d-flex flex-column justify-content-between">
+                  <div class="row align-items-center">
+                    <div class="col-md-12 col-xxl-12 mb-xxl-1  ">
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">CUOTA </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id="id_tt_farmacia" > C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">VENTA</h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id="id_tt_VentaFarmacia"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">% CUMPL X EJEC </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id="id_tt_promo"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">OPTIMO </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_optimo"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">CLIENTES </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_cliente"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">META DE CLIENTES </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_cliente_meta"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">% COBERTURA </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_cliente_optimo"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">TENDENCIA </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_tendencia"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">DS </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_ds"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">SKU </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_sku"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0" id="id_tt_lbl_isToday">00-MES </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_isToday"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">EJEC </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_eject"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">SAC </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_sac"> C$ 00.00 </p>
+                      </div>
+                    </div>                    
 
-                <div class="col-md-12 col-xxl-12 mb-xxl-1  ">
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">CUOTA </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id="id_tt_farmacia" > C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">VENTA</h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id="id_tt_VentaFarmacia"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">% CUMPL X EJEC </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id="id_tt_promo"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">OPTIMO </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_optimo"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">CLIENTES </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_cliente"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">META DE CLIENTES </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_cliente_meta"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">% COBERTURA </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_cliente_optimo"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">TENDENCIA </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_tendencia"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">DS </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_ds"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">SKU </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_sku"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0" id="id_tt_lbl_isToday">00-MES </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_isToday"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">EJEC </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_eject"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">SAC </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_sac"> C$ 00.00 </p>
-                  </div>
-
-                </div>                    
-
-              </div>                  
-            </div>                         
+                  </div>                  
+                </div>                         
               </div>
               <div class="tab-pane " id="resu_pro02" role="tabpanel" aria-labelledby="resu_pro02_tab"> 
-              <div class="card-body d-flex flex-column justify-content-between">
-              <div class="row align-items-center">
+                <div class="card-body d-flex flex-column justify-content-between">
+                  <div class="row align-items-center">
+                    <div class="col-md-12 col-xxl-12 mb-xxl-1  ">
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">CUOTA </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id="id_tt_VentaFarmacia_Pro02" > C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">VENTA</h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id="id_tt_farmacia_Pro02"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">% CUMPL X EJEC </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id="id_tt_promo_pro02"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">OPTIMO </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_lbl_optimo_pro02"> C$ 00.00 </p>
+                      </div>
 
-                <div class="col-md-12 col-xxl-12 mb-xxl-1  ">
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">CUOTA </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id="id_tt_VentaFarmacia_Pro02" > C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">VENTA</h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id="id_tt_farmacia_Pro02"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">% CUMPL X EJEC </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id="id_tt_promo_pro02"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">OPTIMO </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_lbl_optimo_pro02"> C$ 00.00 </p>
-                  </div>
-
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">CLIENTES </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_cliente_pro02"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">META DE CLIENTES </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_cliente_meta_pro02"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">% COBERTURA </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_cliente_optimo_pro02"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">TENDENCIA </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_tendencia_pro02"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">DS </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_ds_pro02"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">SKU </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_sku_pro02"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0" id="id_tt_eject_pro02_lbl">00-MES </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_eject_pro02"> C$ 00.00 </p>
-                  </div>
-                  <div class="d-flex flex-between-center border-bottom py-1">
-                    <div class="d-flex">
-                      <h6 class="text-700 mb-0">EJEC </h6>
-                    </div>
-                    <p class="fs--4 text-800 mb-0 fw-semi-bold" id = ""> C$ 00.00 </p>
-                  </div>
-                  
-
-                </div>                    
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">CLIENTES </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_cliente_pro02"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">META DE CLIENTES </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_cliente_meta_pro02"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">% COBERTURA </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_cliente_optimo_pro02"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">TENDENCIA </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_tendencia_pro02"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">DS </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_ds_pro02"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">SKU </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_sku_pro02"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0" id="id_tt_eject_pro02_lbl">00-MES </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_eject_pro02"> C$ 00.00 </p>
+                      </div>
+                      <div class="d-flex flex-between-center border-bottom py-1">
+                        <div class="d-flex">
+                          <h6 class="text-700 mb-0">EJEC </h6>
+                        </div>
+                        <p class="fs--4 text-800 mb-0 fw-semi-bold" id = ""> C$ 00.00 </p>
+                      </div>
+                    </div>                    
 
               </div>                  
             </div>                        
-              </div>
+            </div>
             </div>
           </div>
         </div>
