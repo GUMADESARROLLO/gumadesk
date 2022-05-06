@@ -22,7 +22,9 @@ function abbrNum(number, decPlaces) {
 
     return number;
 }
-
+function PrintRow(){
+    Swal.fire('Aqui va la vainaPRo')
+}
 var getData = function getData(el, data) {
     try {
         return JSON.parse(el.dataset[camelize(data)]);
@@ -311,8 +313,8 @@ $('#id_table_proyecto_02').DataTable({
 
 
 
-const CAMPOS = ["","NOMBRE","CODIGO", "ZONA", "CUOTA","VENTA","% CUMPL X EJEC","OPTIMO", "CLIENTES", "METAS CLIENTES","% COBERTURA","TENDENCIA","DS", "SKU", "FECHA_ACTUAL", "EJEC", "SAC"];
-const CAMPOS_PRO02 = ["","NOMBRE","CODIGO", "ZONA", "CUOTA","VENTA","% CUMPL X EJEC","OPTIMO", "CLIENTES", "METAS CLIENTES","% COBERTURA","TENDENCIA","DS", "SKU", "FECHA_ACTUAL"];
+const CAMPOS = ["","NOMBRE","CODIGO", "ZONA", "CUOTA","VENTA","% CUMPL X EJEC","OPTIMO", "CLIENTES", "METAS CLIENTES","% COBERTURA","TENDENCIA","DS (Ticket Promedio)", "SKU Facturado", "FECHA_ACTUAL", "VENTA ACUMULADO EJECUTIVO", "VENTA ACUMULADO SAC"];
+const CAMPOS_PRO02 = ["","NOMBRE","CODIGO", "ZONA", "CUOTA","VENTA","% CUMPL X EJEC","OPTIMO", "CLIENTES", "METAS CLIENTES","% COBERTURA","TENDENCIA","DS (Ticket Promedio)", "SKU Facturado", "FECHA_ACTUAL"];
 
 const startOfMonth = moment().startOf('month').format('YYYY-MM-DD');
 const endOfMonth   = moment().subtract(1, "days").format("YYYY-MM-DD");
@@ -423,6 +425,7 @@ function RangeStat(D1,D2){
                 ],
             }
         };
+      
     $.getJSON("api/"+D1 + "/"+D2, function(json) {
         table_header += '<th colspan="13" class="bg-linkedin text-100"> FERNANDO</th>';   
         table_headerPro02 += '<th colspan="4" class="bg-linkedin text-100"> PROYECTO 1. LIC. ESPERANZA</th>';   
@@ -442,13 +445,15 @@ function RangeStat(D1,D2){
                 $('#id_dias_facturados').html(tt_diasFactura );
                 $('#id_dias_porcent').html(tt_optimo);
     
-                isToday  = moment(D2).format("DD-MMMM");
+                //isToday  = moment(D2).format("DD-MMMM");
+                isToday  = "Venta del Dia"
                 
                 CAMPOS[CAMPOS.indexOf(CAMPOS[14])] = isToday ;
     
                 if (item.VENDEDOR != 'F02' && item.VENDEDOR != 'F15'&& item.VENDEDOR != 'F04' ) {            
                     
                     row_codigo[0]    += '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap">'+item.NOMBRE_SAC+'</h6></div></td>';
+                    //row_codigo[1]    += '<td class="bg-soft-primary"> <div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap">'+item.NOMBRE+'</h6><span class="material-icons text-secondary fs-2" onclick="PrintRow()">email</span></div></td>';
                     row_codigo[1]    += '<td class="bg-soft-primary"> <div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap">'+item.NOMBRE+'</h6></div></td>';
                     
                     row_codigo[2]    += '<td><label class="-label ps-2 fs--2 text-600 mb-0 " >'+item.VENDEDOR+'</label></td>';
@@ -552,6 +557,8 @@ function RangeStat(D1,D2){
             }
     
         });
+
+       
     
     
         $.each(CAMPOS, function(i, item) {
@@ -567,7 +574,44 @@ function RangeStat(D1,D2){
                     row_proyect02[i]
                 '</tr>';
         });
-        
+
+   
+
+         /* $( "#id_dias_habiles" ).on( "click", function() {
+            //alert( $( this ).text() );
+            Swal.fire({
+                title: 'Dias Facturados',
+                input: 'text',
+                inputAttributes: {
+                  autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Actualizar',
+                showLoaderOnConfirm: true,
+                preConfirm: (login) => {
+                  return fetch(`//api.github.com/users/${login}`)
+                    .then(response => {
+                      if (!response.ok) {
+                        throw new Error(response.statusText)
+                      }
+                      return response.json()
+                    })
+                    .catch(error => {
+                      Swal.showValidationMessage(
+                        `Request failed: ${error}`
+                      )
+                    })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  Swal.fire({
+                    title: `${result.value.login}'s avatar`,
+                    imageUrl: result.value.avatar_url
+                  })
+                }
+              })
+          });*/
         /* -------------------------------------------------------------------------- */
         /*                           INICIO RESUMEN FARMACIA                          */
         /* -------------------------------------------------------------------------- */

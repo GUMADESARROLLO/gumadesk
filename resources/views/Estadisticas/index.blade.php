@@ -134,7 +134,7 @@
                 <div class="col-sm-3">
                   <div class="border-sm-end border-300">
                     <div class="text-center">
-                      <span class="text-700" >C$ </span>
+                      <span class="text-700" >Venta del Dia C$. </span>
                       <h4 class="fw-normal text-700" id="id_tt_resumen_lbl_isToday_val">00.00</h4>
                     </div>
                   </div>
@@ -150,7 +150,7 @@
                 <div class="col-sm-3">
                   <div class="border-sm-end border-300">
                     <div class="text-center">
-                      <h6 class="text-700">DS</h6>
+                      <h6 class="text-700">DS (Ticket Promedio)</h6>
                       <h3 class="fw-normal text-700" id="id_tt_resumen_DS" > 00.00</h3>
                     </div>
                     </div>
@@ -158,7 +158,7 @@
                 <div class="col-sm-3">
                   <div>
                     <div class="text-center">
-                      <h6 class="text-700">SKU</h6>                          
+                      <h6 class="text-700">SKU Facturado</h6>                          
                       <h4 class="fs-3 fw-normal text-primary" id="id_tt_resumen_SKU">00 </h4>                                           
                     </div>
                     </div>
