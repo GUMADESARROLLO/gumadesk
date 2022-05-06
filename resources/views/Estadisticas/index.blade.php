@@ -8,8 +8,8 @@
         <div class="col-md-6 col-xxl-3">
           <div class="card h-md-100 ecommerce-card-min-width">
             <div class="card-header pb-0">
-              <h6 class="mb-0 mt-2 d-flex align-items-center">Ventas
-                <span class="ms-1 text-400" data-bs-toggle="tooltip" data-bs-placement="top" title="Muestra ventas totales de todos los segmentos y meta de venta con  su respectivo porcentaje de cumplimiento">
+              <h6 class="mb-0 mt-2 d-flex align-items-center">Total Venta Acumulado
+                <span class="ms-1 text-400" data-bs-toggle="tooltip" data-bs-placement="top" title="-">
                   <span class="far fa-question-circle" data-fa-transform="shrink-1"></span>
                 </span>
               </h6>
@@ -33,7 +33,7 @@
           
             <div class="card-header pb-0">
               <h6 class="mb-0 mt-2 d-flex align-items-center">Clientes
-                <span class="ms-1 text-400" data-bs-toggle="tooltip" data-bs-placement="top" title="Calculo de numero de Clientes unicos que sean facturado junto a la meta de clientes de facturacion y cumplimiento ">
+                <span class="ms-1 text-400" data-bs-toggle="tooltip" data-bs-placement="top" title=" - ">
                   <span class="far fa-question-circle" data-fa-transform="shrink-1"></span>
                 </span>
               </h6>
@@ -74,11 +74,11 @@
 
           </div>
         </div>
-        <div class="col-md-6 col-xxl-3">
+        <div class="col-md-6 col-xxl-2">
           <div class="card h-md-100">
             <div class="card-header pb-0">
               <h6 class="mb-0 mt-2 d-flex align-items-center">Dias Hábiles 
-                <span class="ms-1 text-400" data-bs-toggle="tooltip" data-bs-placement="top" title="Muestra el procentaje de facturacion a la fecha juntos a los dias Habiles para facturar">
+                <span class="ms-1 text-400" data-bs-toggle="tooltip" data-bs-placement="top" title=" - ">
                   <span class="far fa-question-circle" data-fa-transform="shrink-1"></span>
                 </span>
               </h6>
@@ -115,7 +115,7 @@
             </div>
           </div>
         </div>            
-        <div class="col-md-6 col-xxl-4">
+        <div class="col-md-6 col-xxl-5">
           <div class="card h-md-100">
             <div class="card-header pb-0">
 
@@ -134,7 +134,8 @@
                 <div class="col-sm-3">
                   <div class="border-sm-end border-300">
                     <div class="text-center">
-                      <span class="text-700" >Venta del Dia C$. </span>
+                      
+                    <span class="text-700" >Ventas Totales del Dia.</span>
                       <h4 class="fw-normal text-700" id="id_tt_resumen_lbl_isToday_val">00.00</h4>
                     </div>
                   </div>
@@ -284,7 +285,7 @@
                     <div class="col-md-12 col-xxl-12 mb-xxl-1  ">
                       <div class="d-flex flex-between-center border-bottom py-1">
                         <div class="d-flex">
-                          <h6 class="text-700 mb-0">CUOTA </h6>
+                          <h6 class="text-700 mb-0">META </h6>
                         </div>
                         <p class="fs--4 text-800 mb-0 fw-semi-bold" id="id_tt_farmacia" > C$ 00.00 </p>
                       </div>
@@ -371,7 +372,7 @@
                     <div class="col-md-12 col-xxl-12 mb-xxl-1  ">
                       <div class="d-flex flex-between-center border-bottom py-1">
                         <div class="d-flex">
-                          <h6 class="text-700 mb-0">CUOTA </h6>
+                          <h6 class="text-700 mb-0">META </h6>
                         </div>
                         <p class="fs--4 text-800 mb-0 fw-semi-bold" id="id_tt_VentaFarmacia_Pro02" > C$ 00.00 </p>
                       </div>

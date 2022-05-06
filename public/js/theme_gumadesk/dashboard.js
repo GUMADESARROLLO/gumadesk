@@ -150,7 +150,7 @@ var getGrays = function getGrays(dom) {
 function Echarts_Bar_Ventas_Mercados(data) {
 
     var tooltipFormatter = function tooltipFormatter(params) {
-        return "<div class=\"card\">\n                <div class=\"card-header bg-light py-2\">\n                  <h6 class=\"text-600 mb-0\">".concat(params[0].axisValue, "</h6>\n                </div>\n              <div class=\"card-body py-2\">\n                <h6 class=\"text-600 fw-normal\">\n                  <span class=\"fas fa-circle text-primary me-2\"></span>Optimo: \n                  <span class=\"fw-medium\">").concat(params[1].data, " %</span></h6>\n                <h6 class=\"text-600 mb-0 fw-normal\"> \n                  <span class=\"fas fa-circle text-warning me-2\"></span>% CUMPL X EJEC: \n                  <span class=\"fw-medium\">").concat(params[0].data, " %</span></h6>\n              </div>\n            </div>");
+        return "<div class=\"card\">\n                <div class=\"card-header bg-light py-2\">\n                  <h6 class=\"text-600 mb-0\">".concat(params[0].axisValue, "</h6>\n                </div>\n              <div class=\"card-body py-2\">\n                <h6 class=\"text-600 fw-normal\">\n                  <span class=\"fas fa-circle text-warning me-2\"></span>Optimo: \n                  <span class=\"fw-medium\">").concat(params[1].data, " %</span></h6>\n                <h6 class=\"text-600 mb-0 fw-normal\"> \n                  <span class=\"fas fa-circle text-primary me-2\"></span>% CUMPL X EJEC: \n                  <span class=\"fw-medium\">").concat(params[0].data, " %</span></h6>\n              </div>\n            </div>");
     };
 
 
@@ -313,8 +313,8 @@ $('#id_table_proyecto_02').DataTable({
 
 
 
-const CAMPOS = ["","NOMBRE","CODIGO", "ZONA", "CUOTA","VENTA","% CUMPL X EJEC","OPTIMO", "CLIENTES", "METAS CLIENTES","% COBERTURA","TENDENCIA","DS (Ticket Promedio)", "SKU Facturado", "FECHA_ACTUAL", "VENTA ACUMULADO EJECUTIVO", "VENTA ACUMULADO SAC"];
-const CAMPOS_PRO02 = ["","NOMBRE","CODIGO", "ZONA", "CUOTA","VENTA","% CUMPL X EJEC","OPTIMO", "CLIENTES", "METAS CLIENTES","% COBERTURA","TENDENCIA","DS (Ticket Promedio)", "SKU Facturado", "FECHA_ACTUAL"];
+const CAMPOS = ["","NOMBRE","CODIGO", "ZONA", "META","VENTA","% CUMPL X EJEC","OPTIMO", "CLIENTES", "METAS CLIENTES","% COBERTURA","TENDENCIA","DS (Ticket Promedio)", "SKU Facturado", "FECHA_ACTUAL", "VENTA ACUMULADO EJECUTIVO", "VENTA ACUMULADO SAC"];
+const CAMPOS_PRO02 = ["","NOMBRE","CODIGO", "ZONA", "META","VENTA","% CUMPL X EJEC","OPTIMO", "CLIENTES", "METAS CLIENTES","% COBERTURA","TENDENCIA","DS (Ticket Promedio)", "SKU Facturado", "FECHA_ACTUAL"];
 
 const startOfMonth = moment().startOf('month').format('YYYY-MM-DD');
 const endOfMonth   = moment().subtract(1, "days").format("YYYY-MM-DD");
@@ -674,8 +674,8 @@ function RangeStat(D1,D2){
     
     
         
-        $('#id_tt_farmacia_Pro02').html("C$ " + numeral(tt_CuotaFarmacia_Pro02).format('0,0.00'));
-        $('#id_tt_VentaFarmacia_Pro02').html("C$ " + numeral(tt_VentaFarmacia_Pro02).format('0,0.00'));
+        $('#id_tt_farmacia_Pro02').html("C$ " + numeral(tt_VentaFarmacia_Pro02).format('0,0.00'));
+        $('#id_tt_VentaFarmacia_Pro02').html("C$ " + numeral(tt_CuotaFarmacia_Pro02).format('0,0.00'));
     
         tt_prom_Pro02 = (tt_VentaFarmacia_Pro02 / tt_CuotaFarmacia_Pro02) * 100;
         $('#id_tt_promo_pro02').html(numeral(tt_prom_Pro02).format('0') + " %");
@@ -728,7 +728,7 @@ function RangeStat(D1,D2){
         $('#id_tt_resumen_SKU').html(numeral(tt_resumen_SKU).format('0,0'));
         $('#id_tt_resumen_lbl_isToday').html("Corte: " + isToday );
     
-        $('#id_tt_resumen_lbl_isToday_val').html(numeral(tt_resumen_isToday_val).format('0,0'));
+        $('#id_tt_resumen_lbl_isToday_val').html("C$ " + numeral(tt_resumen_isToday_val).format('0,0'));
     
     
     
