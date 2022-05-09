@@ -5,7 +5,6 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
 class Reporteria extends Model
 {
     public function __construct() {
@@ -30,6 +29,19 @@ class Reporteria extends Model
         }
 
         return $json;
+    }
+    public static function ActualizarDiaHabiles($val){
+    
+        $sql_server = new \sql_server(); 
+        $sql_exec = '';
+        $request = Request();
+        
+
+        $sql_exec = "UPDATE DESARROLLO.dbo.metacuota_GumaNet set dias_habiles = ".$val." WHERE Estado= 1 ";
+    
+
+        $rSKU_Facturados = $sql_server->fetchArray($sql_exec, SQLSRV_FETCH_ASSOC);
+        $sql_server->close();
     }
     public static function getData($d1,$d2){
 
@@ -91,6 +103,7 @@ class Reporteria extends Model
             view_master_pedidos_umk T0
             WHERE
             T0.FECHA_PEDIDO BETWEEN '".$d1."' AND '".$d2."' AND T0.VENDEDOR NOT IN ( 'F01', 'F12' ) ";
+            
 
         $rSKU_Facturados = $sql_server->fetchArray($sql_skus, SQLSRV_FETCH_ASSOC);
 

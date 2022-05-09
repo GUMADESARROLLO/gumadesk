@@ -333,13 +333,13 @@
                       </div>
                       <div class="d-flex flex-between-center border-bottom py-1">
                         <div class="d-flex">
-                          <h6 class="text-700 mb-0">DS </h6>
+                          <h6 class="text-700 mb-0">DS (Ticket Promedio) </h6>
                         </div>
                         <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_ds"> C$ 00.00 </p>
                       </div>
                       <div class="d-flex flex-between-center border-bottom py-1">
                         <div class="d-flex">
-                          <h6 class="text-700 mb-0">SKU </h6>
+                          <h6 class="text-700 mb-0">SKU Facturado </h6>
                         </div>
                         <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_sku"> C$ 00.00 </p>
                       </div>
@@ -351,13 +351,13 @@
                       </div>
                       <div class="d-flex flex-between-center border-bottom py-1">
                         <div class="d-flex">
-                          <h6 class="text-700 mb-0">EJEC </h6>
+                          <h6 class="text-700 mb-0">VENTA ACUMULADO EJECUTIVO </h6>
                         </div>
                         <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_eject"> C$ 00.00 </p>
                       </div>
                       <div class="d-flex flex-between-center border-bottom py-1">
                         <div class="d-flex">
-                          <h6 class="text-700 mb-0">SAC </h6>
+                          <h6 class="text-700 mb-0">VENTA ACUMULADO SAC </h6>
                         </div>
                         <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_sac"> C$ 00.00 </p>
                       </div>
@@ -421,13 +421,13 @@
                       </div>
                       <div class="d-flex flex-between-center border-bottom py-1">
                         <div class="d-flex">
-                          <h6 class="text-700 mb-0">DS </h6>
+                          <h6 class="text-700 mb-0">DS (Ticket Promedio) </h6>
                         </div>
                         <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_ds_pro02"> C$ 00.00 </p>
                       </div>
                       <div class="d-flex flex-between-center border-bottom py-1">
                         <div class="d-flex">
-                          <h6 class="text-700 mb-0">SKU </h6>
+                          <h6 class="text-700 mb-0">SKU Facturado </h6>
                         </div>
                         <p class="fs--4 text-800 mb-0 fw-semi-bold" id = "id_tt_sku_pro02"> C$ 00.00 </p>
                       </div>
@@ -439,7 +439,7 @@
                       </div>
                       <div class="d-flex flex-between-center border-bottom py-1">
                         <div class="d-flex">
-                          <h6 class="text-700 mb-0">EJEC </h6>
+                          <h6 class="text-700 mb-0">VENTA ACUMULADO EJECUTIVO </h6>
                         </div>
                         <p class="fs--4 text-800 mb-0 fw-semi-bold" id = ""> C$ 00.00 </p>
                       </div>

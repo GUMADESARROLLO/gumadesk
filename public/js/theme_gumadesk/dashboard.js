@@ -32,7 +32,24 @@ var getData = function getData(el, data) {
         return el.dataset[camelize(data)];
     }
 };
-
+function soloNumeros(caracter, e, numeroVal) {
+    var numero = numeroVal;
+    if (String.fromCharCode(caracter) === "." && numero.length === 0) {
+        e.preventDefault();
+        swal.showValidationError('No se puede iniciar con un punto');
+    } else if (numero.includes(".") && String.fromCharCode(caracter) === ".") {
+        e.preventDefault();
+        swal.showValidationError('No puede haber mas de dos puntos');
+    } else {
+        const soloNumeros = new RegExp("^[0-9]+$");
+        if (!soloNumeros.test(String.fromCharCode(caracter)) && !(String.fromCharCode(caracter) === ".")) {
+            e.preventDefault();
+            swal.showValidationError(
+                'No se pueden escribir letras, solo se permiten datos númericos'
+            );
+        }
+    }
+}
 var intVal = function ( i ) {
     return typeof i === 'string' ?
     i.replace(/[^0-9.]/g, '')*1 :
@@ -577,41 +594,47 @@ function RangeStat(D1,D2){
 
    
 
-         /* $( "#id_dias_habiles" ).on( "click", function() {
-            //alert( $( this ).text() );
-            Swal.fire({
+          $( "#id_dias_habiles" ).on( "click", function() {
+              Swal.fire({
                 title: 'Dias Facturados',
+                text: "Ingrese la cantidad",
                 input: 'text',
+                inputPlaceholder: 'Digite la cantidad',
+                target: document.getElementById('mdlMatPrima'),
                 inputAttributes: {
-                  autocapitalize: 'off'
+                    id: 'cantidad',
+                    required: 'true',
+                    onkeypress: 'soloNumeros(event.keyCode, event, $(this).val())'
                 },
                 showCancelButton: true,
-                confirmButtonText: 'Actualizar',
+                confirmButtonText: 'Guardar',
                 showLoaderOnConfirm: true,
-                preConfirm: (login) => {
-                  return fetch(`//api.github.com/users/${login}`)
-                    .then(response => {
-                      if (!response.ok) {
-                        throw new Error(response.statusText)
-                      }
-                      return response.json()
-                    })
-                    .catch(error => {
-                      Swal.showValidationMessage(
-                        `Request failed: ${error}`
-                      )
-                    })
-                },
-                allowOutsideClick: () => !Swal.isLoading()
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  Swal.fire({
-                    title: `${result.value.login}'s avatar`,
-                    imageUrl: result.value.avatar_url
-                  })
+                inputValue: 0,
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Digita la cantidad por favor';
+                    }
+                    value = value.replace(/[',]+/g, '');
+                    if (isNaN(value)) {
+                        return 'Formato incorrecto';
+                    } else {
+                        $.ajax({
+                            url: "ActualizarDiaHabiles/"+value,
+                            type: 'get',
+                            async: true,
+                            success: function(response) {
+                                swal("Exito!", "Guardado exitosamente", "success");
+                            },
+                            error: function(response) {
+                                swal("Oops", "No se ha podido guardar!", "error");
+                            }
+                        }).done(function(data) {
+                            RangeStat(startOfMonth,endOfMonth)
+                        });
+                    }
                 }
-              })
-          });*/
+            })
+          });
         /* -------------------------------------------------------------------------- */
         /*                           INICIO RESUMEN FARMACIA                          */
         /* -------------------------------------------------------------------------- */

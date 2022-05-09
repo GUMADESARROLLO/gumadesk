@@ -20,4 +20,10 @@ class EstadisticasController extends Controller{
         $obj = Reporteria::getData($d1,$d2);
         return response()->json($obj);
     }
+    public function ActualizarDiaHabiles($val)
+    {
+        $response = Reporteria::ActualizarDiaHabiles($val);
+        return response()->json($response);
+    }
+   
 }
