@@ -762,8 +762,8 @@ function RangeStat(D1,D2){
         tt_pie_aporte_mayorista     = ( tt_only_mayorista * 100 ) / tt_real_real;
         tt_pie_aporte_gerencia      = ( tt_only_venta_gerencia * 100 ) / tt_real_real;
     
-    
-        $('#id_pie_tt_farmacia').html("C$ " + numeral(tt_CuotaFarmacia).format('0,0.00'));
+        
+        $('#id_pie_tt_farmacia').html("C$ " + numeral(tt_VentaFarmacia).format('0,0.00'));
         $('#id_tt_pie_aporte_farmacia').html(numeral(tt_pie_aporte_farmacia).format('0,00') + " %");
     
     

@@ -75,7 +75,7 @@ class Reporteria extends Model
         ISNULL((SELECT COUNT(DISTINCT T1.CLIENTE) FROM Softland.UMK.PEDIDO AS T1 WHERE T1.ESTADO= 'F'AND T1.FECHA_PEDIDO BETWEEN '".$d1."'  AND '".$d2."' AND T1.VENDEDOR = T0.VENDEDOR ), 0) AS CLIENTE,
         ISNULL((SELECT T3.META_CLIENTE FROM tbl_meta_cliente_rutas T3 WHERE T3.RUTA = T0.VENDEDOR AND T3.MES = MONTH( '".$d1."') AND T3.ANNIO= YEAR( '".$d1."')),0) AS META_CLIENTE,
         SUM(T0.TOTAL_LINEA) as MesActual,
-        ISNULL((SELECT  sum(T4.VentaNetaLocal) Venta FROM Softland.dbo.ANA_VentasTotales_MOD_Contabilidad_UMK T4  WHERE T4.Fecha_de_factura = '".$d2."' AND T4.LABORATORIO NOT IN ( 'GUMA PHARMA- USA' )AND T4.VENDEDOR=	 T0.VENDEDOR    ), 0) AS DiaActual,	
+        ISNULL((SELECT  sum(T4.VentaNetaLocal) Venta FROM Softland.dbo.ANA_VentasTotales_MOD_Contabilidad_UMK T4  WHERE T4.Fecha_de_factura = '".$d2."' AND T4.VENDEDOR=	 T0.VENDEDOR    ), 0) AS DiaActual,	
         ISNULL((SELECT COUNT(DISTINCT T1.ARTICULO) FROM view_master_pedidos_umk AS T1 WHERE T1.FECHA_PEDIDO BETWEEN '".$d1."' AND '".$d2."'AND T1.VENDEDOR = T0.VENDEDOR ), 0) AS SKU,	
         ISNULL((SELECT SUM(T1.TOTAL_LINEA) AS NoV FROM view_master_pedidos_umk AS T1 WHERE T1.FECHA_PEDIDO BETWEEN '".$d1."'  AND '".$d2."' AND T1.VENDEDOR = T0.VENDEDOR and   T1.PEDIDO NOT LIKE 'PT%'  ), 0) AS EJEC,
         ISNULL((SELECT SUM(T1.TOTAL_LINEA) AS NoV FROM view_master_pedidos_umk AS T1 WHERE T1.FECHA_PEDIDO BETWEEN '".$d1."'  AND '".$d2."' AND T1.VENDEDOR = T0.VENDEDOR and   T1.PEDIDO LIKE 'PT%'    ), 0) AS SAC
