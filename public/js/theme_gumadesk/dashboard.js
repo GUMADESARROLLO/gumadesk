@@ -334,7 +334,7 @@ const CAMPOS = ["","NOMBRE","CODIGO", "ZONA", "META","VENTA","% CUMPL X EJEC","O
 const CAMPOS_PRO02 = ["","NOMBRE","CODIGO", "ZONA", "META","VENTA","% CUMPL X EJEC","OPTIMO", "CLIENTES", "METAS CLIENTES","% COBERTURA","TENDENCIA","DS (Ticket Promedio)", "SKU Facturado", "FECHA_ACTUAL"];
 
 const startOfMonth = moment().startOf('month').format('YYYY-MM-DD');
-const endOfMonth   = moment().subtract(1, "days").format("YYYY-MM-DD");
+const endOfMonth   = moment().subtract(0, "days").format("YYYY-MM-DD");
 
 var labelRange = startOfMonth + " to " + endOfMonth;
 
