@@ -89,7 +89,7 @@
                 <div class="col-sm-4">
                   <div class="border-sm-end border-300">
                     <div class="text-center">
-                      <h6 class="text-700">HABILES</h6>
+                      <h6 class="text-700">FACT.</h6>
                       <h3 class="fw-normal text-700" id="id_dias_habiles">00</h3>
                     </div>
                   </div>
@@ -97,7 +97,7 @@
                 <div class="col-sm-4">
                   <div class="border-sm-end border-300">
                     <div class="text-center">
-                      <h6 class="text-700">FACT.</h6>
+                      <h6 class="text-700">HABILES</h6>
                       <h3 class="fw-normal text-700" id="id_dias_facturados" > 00 </h3>
                     </div>
                     </div>
