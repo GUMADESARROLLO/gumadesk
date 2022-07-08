@@ -158,7 +158,10 @@ class Reporteria extends Model
             ["RUTA" => "F20","SAC" => "REYNA","ZONA" => "BOACO- RAAN"],
             ["RUTA" => "F02","SAC" => "MARISELA SEVILLA","ZONA" => "INSTIT"],
             ["RUTA" => "F04","SAC" => "","ZONA" => "MCDO/MAYORISTAS"],
-            ["RUTA" => "F15","SAC" => "","ZONA" => "VENTAS GERENCIA"],
+            ["RUTA" => "F15","SAC" => "","ZONA" => "VENTAS GERENCIA"],            
+            ["RUTA" => "F19","SAC" => "N/D","ZONA" => "OCCIDENTE"],
+            ["RUTA" => "F23","SAC" => "N/A","ZONA" => "SUR ORIENTE"],
+            ["RUTA" => "F22","SAC" => "N/A","ZONA" => "N/D"],
         );
 
 
