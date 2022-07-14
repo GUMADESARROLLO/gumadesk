@@ -104,6 +104,7 @@ class Reporteria extends Model
             WHERE
             T0.FECHA_PEDIDO BETWEEN '".$d1."' AND '".$d2."' AND T0.VENDEDOR NOT IN ( 'F01', 'F12' ) ";
             
+            
 
         $rSKU_Facturados = $sql_server->fetchArray($sql_skus, SQLSRV_FETCH_ASSOC);
 
