@@ -11,7 +11,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>GumaStats | Estadisticas de Segmentos </title>
+    <title>Solcitudes | Lorem &amp; ipsum </title>
 
 
     <!-- ===============================================-->
@@ -28,18 +28,16 @@
     <link href="{{ asset('js/theme_gumadesk/vendors/leaflet.markercluster/MarkerCluster.css') }}" rel="stylesheet" >
     <link href="{{ asset('js/theme_gumadesk/vendors/leaflet.markercluster/MarkerCluster.Default.css') }}" rel="stylesheet" >
     <link href="{{ asset('js/theme_gumadesk/vendors/fullcalendar/main.min.css') }}" rel="stylesheet" >
+    <link href="{{ asset('js/theme_gumadesk/vendors/swiper/swiper-bundle.min.css') }}" rel="stylesheet" >
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet">
     <link href="{{ asset('js/theme_gumadesk/vendors/overlayscrollbars/OverlayScrollbars.min.css') }}" rel="stylesheet" >
     <link href="{{ asset('css/theme_gumadesk/css/theme-rtl.min.css') }}" rel="stylesheet" id="style-rtl">
     <link href="{{ asset('css/theme_gumadesk/css/theme.min.css') }}" rel="stylesheet" id="style-default">
     <link href="{{ asset('css/theme_gumadesk/css/user-rtl.min.css') }}" rel="stylesheet" id="user-style-rtl">
     <link href="{{ asset('css/theme_gumadesk/css/user.min.css') }}" rel="stylesheet" id="user-style-default">
-    <link href="{{ asset('css/theme_gumadesk/css/user.css') }}" rel="stylesheet" id="user-style-default">
-    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" >
-    <script src="{{ asset('js/moment.js') }}"></script>
-    <script src="{{ asset('js/sweetalert2.all.js') }}"></script>
+    <link href="{{ asset('js/theme_gumadesk/vendors/choices/choices.min.css') }}" rel="stylesheet" >
+    <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <script>
         var linkRTL = document.getElementById('style-rtl');
         var userLinkRTL = document.getElementById('user-style-rtl');
@@ -50,7 +48,6 @@
         .dBorder {
             border: 1px solid #ccc !important;
         }
-        
     </style>
 </head>
 <form id="logout-form" action="{{ route('logout') }}" method="post">
@@ -79,6 +76,7 @@
     <script src="{{ asset('js/theme_gumadesk/vendors/bootstrap/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/theme_gumadesk/vendors/anchorjs/anchor.min.js') }}"></script>
     <script src="{{ asset('js/theme_gumadesk/vendors/is/is.min.js') }}"></script>
+    <script src="{{ asset('js/theme_gumadesk/vendors/swiper/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('js/theme_gumadesk/vendors/glightbox/glightbox.min.js') }}"></script>    
     <script src="{{ asset('js/theme_gumadesk/flatpickr.js') }}"></script>
     <script src="{{ asset('js/theme_gumadesk/vendors/echarts/echarts.min.js') }}"></script>    
@@ -98,25 +96,37 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
     <script src="{{ asset('js/theme_gumadesk/vendors/list.js/list.min.js') }}"></script>
     <script src="{{ asset('js/theme_gumadesk/theme.js') }}"></script>
+    <script src="{{ asset('js/theme_gumadesk/vendors/choices/choices.min.js') }}"></script>
+    <script src="{{ asset('js/moment.js') }}"></script>
     <script src="{{ asset('js/Numeral.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.5.1.js') }}"></script>
+    
+    <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+    <script src="{{ asset('js/theme_gumadesk/dashboard.js') }}"></script>
+    @yield('metodosjs')
+    
+
+    <script type="text/javascript">
+
+        function isValue(value, def, is_return) {
+            if ( $.type(value) == 'null'
+                || $.type(value) == 'undefined'
+                || $.trim(value) == ''
+                || ($.type(value) == 'number' && !$.isNumeric(value))
+                || ($.type(value) == 'array' && value.length == 0)
+                || ($.type(value) == 'object' && $.isEmptyObject(value)) ) {
+                return ($.type(def) != 'undefined') ? def : false;
+            } else {
+                return ($.type(is_return) == 'boolean' && is_return === true ? value : true);
+            }
+        }
+    </script>
 
     
-    
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/jquery-3.5.1.js') }}"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="{{ asset('js/theme_gumadesk/dashboard.js') }}"></script>
-    <script>
-        $("#id_new_ticket").click(function(event) {
-            window.location = "nuevo_ticket" ;
-        });
-        
-        var navbarStyle = localStorage.getItem("navbarStyle");
-        if (navbarStyle && navbarStyle !== 'transparent') {
-            document.querySelector('.navbar-vertical').classList.add(`navbar-${navbarStyle}`);
-        }    
-        
-    </script>
 </body>
 
 </html>
