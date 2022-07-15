@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Proyeccion;
+use App\Models\Vendedores;
 
 class VentasController extends Controller {
     public function __construct()
@@ -11,7 +12,8 @@ class VentasController extends Controller {
     }
     public function getVentas()
     {
-        return view('Ventas.Home');
+        $Vendedores = Vendedores::getVendedor();
+        return view('Ventas.Home', compact('Vendedores'));      
     }
     public function getDataProyeccion(Request $request)
     {

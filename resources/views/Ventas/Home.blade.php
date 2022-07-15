@@ -126,194 +126,205 @@
           
           @include('layouts.nav_gumadesk')
 
-          <div class="row g-3 mb-3">
           
-            <div class="col-xxl-12 col-xl-12">
-              <div class="row g-3">
-                <div class="col-lg-12">
-                <div class="card z-index-1" id="recentPurchaseTable" data-list='{"valueNames":["name","email","product","payment","amount"],"page":7,"pagination":true}'>
-                <div class="card-header">
+
+          <div class="row g-3 mb-3">
+            
+            <div class="col-lg-6">
+              <div class="card">
+                <div class="card-header border-bottom">
                 <div class="row flex-between-center">
-                
-                <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
-                  <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0" >Articulos de Proyección</h5> 
-                  <span id="id_rol" class="invisible">{{Session::get('rol')}}</span>
-                  <span id="id_login_user" class="invisible">{{auth()->user()->id}}</span>
-                </div>
-                <div class="col-8 col-sm-auto ms-auto text-end ps-0">
+                  <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
+                    <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0" >Articulos para la RUTA: F00</h5> 
+                  </div>
+                  <div class="col-8 col-sm-auto ms-auto text-end ps-0">
                   <div id="orders-actions">
 
-                  <div class="btn btn-sm ">
-                      <select class="form-select" id="IdSelectMes">
-                          <?php                        
-                              $mes = date("m");
-
-                              $meses = array('none','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
-
-                              for ($i= 1; $i <= 12 ; $i++) {
-                                if ($i==$mes) {
-                                    echo'<option selected value="'.$i.'">'.$meses[$i].'</option>';
-                                }else {
-                                    echo'<option value="'.$i.'">'.$meses[$i].'</option>';
-                                }
-                              }
-                          ?>
-                      </select>
-                  </div>
-                  <div class="btn btn-sm">
-                      <select class="form-select" id="IdSelectAnnio">
-                        <?php
-                            $year = date("Y");
-                            for ($i= 2018; $i <= $year ; $i++) {
-                                if ($i==$year) {
-                                    echo'<option selected value="'.$i.'">'.$i.'</option>';
-                                }else {
-                                    echo'<option value="'.$i.'">'.$i.'</option>';
-                                }
-                            }
-                        ?>
-                      </select>
-                  </div>
                   
-                    <button class="btn btn-falcon-default btn-sm" type="button" id="id_send_filtros">
-                      <span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span>                      
-                    </button>
+
+                  <div class="btn btn-sm">
+                      <select class="form-select" id="IdSelectRuta">
+                        @foreach ($Vendedores as $vendedor)
+                          <option value="{{$vendedor->VENDEDOR}}">{{$vendedor->VENDEDOR}} | {{strtoupper($vendedor->NOMBRE)}}</option>
+                        @endforeach
+                      </select>
+                  </div>
+
                     
-                    <button class="btn btn-falcon-default btn-sm" type="button" id="id_add_multi_row">
-                      <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
-                      
+                    <button class="btn btn-falcon-default btn-sm" type="button" id="id_table_articulos_ruta">
+                      <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>                      
                     </button>
                   </div>
                 </div>
-              </div>
-                </div>
-                <div class="card-body px-0 py-0">
-                  <div class="table-responsive scrollbar">
-                    <table class="table table-sm fs--1 mb-0 overflow-hidden">
-                      <thead class="bg-200 text-900">
-                        <tr>
-                          
-                          <th class="sort pe-1 align-middle white-space-nowrap" >Producto</th>
-                          <th class="sort pe-1 align-middle white-space-nowrap" >Proy. Bolsones</th>
-                          <th class="sort pe-1 align-middle white-space-nowrap" >Proy. Kilos</th>
-                          <th class="sort pe-1 align-middle white-space-nowrap text-center">Real Bolsones</th>
-                          <th class="sort pe-1 align-middle white-space-nowrap text-end" >Real Kilos</th>
-                          <th class="sort pe-1 align-middle white-space-nowrap text-end" >% Cump Bolsones</th>
-                          <th class="sort pe-1 align-middle white-space-nowrap text-end" >% Cump Kilos</th>
-                          
-                        </tr>
-                      </thead>
-                      <tbody class="list"id="id_render_grid_html" >
-                        
-                        
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div class="card-footer">
-                  <div class="row align-items-center">
-                    <div class="pagination d-none"></div>
-                    <div class="col">
-                      <p class="mb-0 fs--1"><span class="d-none d-sm-inline-block me-2" data-list-info="data-list-info"> </span>
-                      </p>
+                      
                     </div>
-                    <div class="col-auto d-flex">
-                      <button class="btn btn-sm btn-primary" type="button" data-list-pagination="prev"><span>Previous</span></button>
-                      <button class="btn btn-sm btn-primary px-4 ms-2" type="button" data-list-pagination="next"><span>Next</span></button>
+                </div>
+                <div class="card-body pt-0">
+                  <div class="tab-content">
+                    <div class="tab-pane preview-tab-pane active" role="tabpanel" aria-labelledby="tab-dom-6fa4c848-cf7f-4ed7-bab0-9326a3ce9502" id="dom-6fa4c848-cf7f-4ed7-bab0-9326a3ce9502">
+                      <div class="table-responsive scrollbar">
+                        <table class="table" id="id_table_articulos">
+                          
+                        </table>
+                      </div>
+                    </div>
+                    <div class="tab-pane code-tab-pane" role="tabpanel" aria-labelledby="tab-dom-1588a2c2-ec0c-4296-a6aa-f7f6131ac1fc" id="dom-1588a2c2-ec0c-4296-a6aa-f7f6131ac1fc">
+                      
                     </div>
                   </div>
-                </div>
-              </div>
                 </div>
               </div>
             </div>
+            <div class="col-lg-6">
+              <div class="card z-index-1">
+                <div class="card-header border-bottom">
+                <div class="row flex-between-center">
+                
+                <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
+                  <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0" >ARTICULOS CON VIÑETAS</h5> 
+                </div>
+              <div class="col-8 col-sm-auto ms-auto text-end ps-0">
+                <div id="orders-actions">
+
+                <div class="btn btn-sm ">
+                    <select class="form-select" id="IdSelectMes">
+                        <?php                        
+                            $mes = date("m");
+
+                            $meses = array('none','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
+
+                            for ($i= 1; $i <= 12 ; $i++) {
+                              if ($i==$mes) {
+                                  echo'<option selected value="'.$i.'">'.$meses[$i].'</option>';
+                              }else {
+                                  echo'<option value="'.$i.'">'.$meses[$i].'</option>';
+                              }
+                            }
+                        ?>
+                    </select>
+                </div>
+                <div class="btn btn-sm">
+                    <select class="form-select" id="IdSelectAnnio">
+                      <?php
+                          $year = date("Y");
+                          for ($i= 2020; $i <= $year ; $i++) {
+                              if ($i==$year) {
+                                  echo'<option selected value="'.$i.'">'.$i.'</option>';
+                              }else {
+                                  echo'<option value="'.$i.'">'.$i.'</option>';
+                              }
+                          }
+                      ?>
+                    </select>
+                </div>
+
+                  <button class="btn btn-falcon-default btn-sm" type="button" id="id_send_filtros">
+                    <span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span>                      
+                  </button>
+                  
+                  <button class="btn btn-falcon-default btn-sm" type="button" id="id_add_item_vinneta">
+                    <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>                      
+                  </button>
+                </div>
+              </div>
+            </div>
+                </div>
+                <div class="card-body pt-0">
+                  <div class="tab-content">
+                    <div class="tab-pane preview-tab-pane active" role="tabpanel" aria-labelledby="tab-dom-f81ca2e4-6ec3-4ee6-b1d2-d931b9d71eac" id="dom-f81ca2e4-6ec3-4ee6-b1d2-d931b9d71eac">
+                      <div class="table-responsive scrollbar">
+                        <table class="table table-striped overflow-hidden" id="id_table_articulos_vinneta">
+                         
+                        </table>
+                      </div>
+                    </div>
+                    <div class="tab-pane code-tab-pane" role="tabpanel" aria-labelledby="tab-dom-0187137a-3aed-4b9d-972f-0a3c4ff9a5bb" id="dom-0187137a-3aed-4b9d-972f-0a3c4ff9a5bb">
+                      
+                    </div>
+                  </div>                  
+                </div>                
+              </div>
             
-         
+            </div>
+
+            <div class="content">
+          
+          <div class="card">
+            <div class="card-header bg-light">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h5 class="mb-0" id="followers">Rutas <span class="d-none d-sm-inline-block">(0)</span></h5>
+                </div>
+                
+              </div>
+            </div>
+            <div class="card-body bg-light px-1 py-0">
+              
+              <div class="row g-0 text-center fs--1">
+              @foreach ($Vendedores as $vendedor)
+                          
+                        
+               
+                <div class="kanban-items-container scrollbar col-6 col-md-4 col-lg-3 col-xxl-2">
+                  <div class="kanban-item">
+                    <div class="card kanban-item-card hover-actions-trigger">
+                      <div class="card-body">                      
+                        <div class="mb-2">
+                        <div class="d-flex align-items-start position-relative">
+                          <div class="avatar avatar-2xl status-online">
+                            <img class="rounded-circle" src="images/avatar.png" alt="" />
+
+                          </div>
+                          <div class="flex-1 ms-3">
+                            <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900" href="#!" onClick="mdlAsignar()">{{$vendedor->NOMBRE}}</a></h6>
+                            <p class="text-500 fs--2 mb-0">{{$vendedor->VENDEDOR}}</p>
+                          </div>
+                        </div>
+                        </div>
+                        <div class="kanban-item-footer cursor-default">
+                          <div class="text-500 z-index-2"><span class="me-2" data-bs-toggle="tooltip" title="You're assigned in this card"><span class="fas fa-eye"></span></span><span class="me-2" data-bs-toggle="tooltip" title="Checklist"><span class="fas fa-check me-1"></span><span>5/5</span></span>
+                          </div>
+                          <div class="z-index-2">
+                            <div class="avatar avatar-l align-top ms-n2" data-bs-toggle="tooltip" title="Sophie">
+                              <img class="rounded-circle" src="images/avatar.png" alt="" />
+
+                            </div>
+                            <div class="avatar avatar-l align-top ms-n2" data-bs-toggle="tooltip" title="Antony">
+                              <img class="rounded-circle" src="images/avatar.png" alt="" />
+
+                            </div>
+                            <div class="avatar avatar-l align-top ms-n2" data-bs-toggle="tooltip" title="Emma">
+                              <img class="rounded-circle" src="images/avatar.png" alt="" />
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                </div>
+                
+                @endforeach
+              </div>
+            </div>
           </div>
+        </div>
+
+              
+              
+            </div>
           @include('layouts.footer_gumadesk')
         </div>
             
 
-        <div class="modal fade" id="IdmdlComment" data-keyboard="false" tabindex="-1" aria-labelledby="scrollinglongcontentLabel" aria-hidden="true">
-          <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-            <div class="card-header bg-light">
-                  <div class="row justify-content-between">
-                    <div class="col">
-                      <div class="d-flex">
-                        <div class="avatar avatar-2xl">
-                          <img class="rounded-circle" src="{{ asset('images/item.png') }}" alt="" />
-
-                        </div>
-                        <div class="flex-1 align-self-center ms-2">
-                          <p class="mb-1 lh-1"><a class="fw-semi-bold" href="!#" id="id_modal_name_item" >Nombre Item</a></p>
-                          <p class="mb-0 fs--1"><span id="id_modal_articulo"></span> &bull; #<span id="id_modal_nSoli"></span> &bull; <span id="id_modal_Fecha"></span> <span class="fas fa-calendar"></span></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              <div class="modal-body">
-                
-                <div class="d-flex align-items-center border-top border-200 pt-3">
-                  <div class="avatar avatar-xl">
-                    <img class="rounded-circle" src="{{ asset('images/user/avatar-4.jpg') }}" alt="" />
-                  </div>
-                  <input class="form-control rounded-pill ms-2 fs--1" type="text" placeholder="Escribe un Comentario..." id="id_textarea_comment" />
-                </div>
-
-                
-                <div id="id_comment_item"></div>
-                
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-
-        <div class="modal fade" id="addNuevaSolicitud" tabindex="-1" role="dialog" aria-labelledby="authentication-modal-label" aria-hidden="true">
+       
+        <div class="modal fade" id="modl_add_articulo" tabindex="-1" role="dialog" aria-labelledby="authentication-modal-label" aria-hidden="true">
           <div class="modal-dialog modal-xl mt-6" role="document">
             <div class="modal-content border-0">
               <div class="modal-header px-5 position-relative modal-shape-header bg-shape">
                 <div class="position-relative z-index-1 light">
-                  <h4 class="mb-0 text-white" id="id_mdl_nombre_articulo">Nombre del Articulo a Modificar</h4>
-                  <p class="fs--1 mb-0 text-white" ><span id="id_mdl_articulo">000000</span>  - #<a href="!#" class="text-white"> <strong id="id_row"># 000 </strong></a> </p> 
-                </div>
-                <button class="btn-close btn-close-white position-absolute top-0 end-0 mt-2 me-2" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body py-4 px-5">
-                <div class="mb-3" style="display:none">
-                  <label for="organizerSingle">Articulo</label>
-                    <select class="form-select js-choice" id="organizerSingle" size="1" name="organizerSingle" data-options='{"removeItemButton":true,"placeholder":true}'>
-                      <option value="">Select organizer...</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                  <label class="fs-0" for="eventStartDate">Fecha de Solicitud</label>
-                  <input class="form-control datetimepicker" id="eventStartDate" type="text" required="required" name="startDate" placeholder="yyyy/mm/dd" data-options='{"static":"true","enableTime":"false","dateFormat":"Y-m-d"}' />
-                </div>
-                <div class="row gx-2">
-                  <div class="mb-3 col-sm-12">
-                    <label class="form-label" for="txt_proyeccion_mensual">Proyeccion Mensual</label>
-                    <input class="form-control" type="text" autocomplete="on" id="id_txt_proyeccion_mensual" onkeypress="soloNumeros(event.keyCode, event, $(this).val())"/>
-                  </div>
-                </div>                
-                <div class="mb-3">
-                  <button class="btn btn-primary d-block w-100 mt-3" id="id_send_info" type="submit" name="submit">Guardar</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="modal fade" id="addMultiRow" tabindex="-1" role="dialog" aria-labelledby="authentication-modal-label" aria-hidden="true">
-          <div class="modal-dialog modal-xl mt-6" role="document">
-            <div class="modal-content border-0">
-              <div class="modal-header px-5 position-relative modal-shape-header bg-shape">
-                <div class="position-relative z-index-1 light">
-                  <h4 class="mb-0 text-white" id="authentication-modal-label">Multiples Filas</h4>
-                  <p class="fs--1 mb-0 text-white">Puede descar el formato para carga la información dando click <a href="{{ asset('Formatos/Formato2022.xlsx') }}" class="text-white" >Aqui </a></p>
+                  <h4 class="mb-0 text-white" id="id_titulo_modal">Multiples Filas</h4>
+                  <p class="fs--1 mb-0 text-white">Puede descar el formato para carga la información dando click <a href="{{ asset('Formatos/Plantilla-Articulos-Rutas.xlsx') }}" class="text-white" >Aqui </a></p>
                 </div>
                 <button class="btn-close btn-close-white position-absolute top-0 end-0 mt-2 me-2" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
@@ -358,61 +369,6 @@
           </div>
         </div>
 
-        <div class="modal fade" id="tbl_setting" tabindex="-1" role="dialog" aria-labelledby="authentication-modal-label" aria-hidden="true">
-          <div class="modal-dialog modal-xl mt-6" role="document">
-            <div class="modal-content border-0">
-              <div class="modal-header px-5 position-relative modal-shape-header bg-shape">
-                <div class="position-relative z-index-1 light">
-                  <h4 class="mb-0 text-white" id="authentication-modal-label">Filtros</h4>
-                  <p class="fs--1 mb-0 text-white">Filtrado de información a aplicar</p>
-                </div>
-                <button class="btn-close btn-close-white position-absolute top-0 end-0 mt-2 me-2" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body py-4 px-5">
-                <div class="mb-3">
-                  <label for="">Mes</label>
-                  <select class="form-select" id="id_select_nmes">
-                      <?php                        
-                            $mes = date("m");
-
-                            $meses = array('none','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
-
-                            for ($i= 1; $i <= 12 ; $i++) {
-                              if ($i==$mes) {
-                                  echo'<option selected value="'.$i.'">'.$meses[$i].'</option>';
-                              }else {
-                                  echo'<option value="'.$i.'">'.$meses[$i].'</option>';
-                              }
-                            }
-                        ?>
-                        
-                    </select>
-                </div>
-                
-                <div class="row gx-2">
-                  <div class="mb-3 col-sm-12">
-                  <label for="">Año</label>
-                  <select class="form-select" id="id_select_annio">
-                        <?php
-                            $year = date("Y");
-                            for ($i= 2018; $i <= $year ; $i++) {
-                                if ($i==$year) {
-                                    echo'<option selected value="'.$i.'">'.$i.'</option>';
-                                }else {
-                                    echo'<option value="'.$i.'">'.$i.'</option>';
-                                }
-                            }
-                        ?>
-                  </select>
-                  </div>
-                </div>                
-                <div class="mb-3">
-                  <button class="btn btn-primary d-block w-100 mt-3" id="" type="submit" name="submit">Aplicar</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </main>
     
