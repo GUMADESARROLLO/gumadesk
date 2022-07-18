@@ -124,6 +124,7 @@
       
         <div class="content">
           
+          
           @include('layouts.nav_gumadesk')
 
           
@@ -135,7 +136,7 @@
                 <div class="card-header border-bottom">
                 <div class="row flex-between-center">
                   <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
-                    <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0" >Articulos para la RUTA: F00</h5> 
+                    <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0" >Listas de Articulos</h5>                     
                   </div>
                   <div class="col-8 col-sm-auto ms-auto text-end ps-0">
                   <div id="orders-actions">
@@ -145,14 +146,14 @@
                   <div class="btn btn-sm">
                       <select class="form-select" id="IdSelectRuta">
                         @foreach ($Vendedores as $vendedor)
-                          <option value="{{$vendedor->VENDEDOR}}">{{$vendedor->VENDEDOR}} | {{strtoupper($vendedor->NOMBRE)}}</option>
+                          <option value="{{$vendedor['VENDEDOR']}}">{{$vendedor['VENDEDOR']}} | {{strtoupper($vendedor['NOMBRE'])}}</option>
                         @endforeach
                       </select>
                   </div>
 
                     
                     <button class="btn btn-falcon-default btn-sm" type="button" id="id_table_articulos_ruta">
-                      <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>                      
+                      <span class="fas fa-upload" data-fa-transform="shrink-3 down-2"></span>                      
                     </button>
                   </div>
                 </div>
@@ -276,27 +277,21 @@
 
                           </div>
                           <div class="flex-1 ms-3">
-                            <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900" href="#!" onClick="mdlAsignar()">{{$vendedor->NOMBRE}}</a></h6>
-                            <p class="text-500 fs--2 mb-0">{{$vendedor->VENDEDOR}}</p>
+                            <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900" href="#!" onClick="mdlAsignar('{{$vendedor['VENDEDOR']}}')"> {{$vendedor['VENDEDOR']}} | {{$vendedor['NOMBRE']}}</a></h6>
+                            
                           </div>
                         </div>
                         </div>
                         <div class="kanban-item-footer cursor-default">
-                          <div class="text-500 z-index-2"><span class="me-2" data-bs-toggle="tooltip" title="You're assigned in this card"><span class="fas fa-eye"></span></span><span class="me-2" data-bs-toggle="tooltip" title="Checklist"><span class="fas fa-check me-1"></span><span>5/5</span></span>
-                          </div>
-                          <div class="z-index-2">
-                            <div class="avatar avatar-l align-top ms-n2" data-bs-toggle="tooltip" title="Sophie">
-                              <img class="rounded-circle" src="images/avatar.png" alt="" />
 
+                        
+                          <div class="col-12 ">
+                            <div class="d-inline-flex align-items-center border rounded-pill px-3 py-1 me-2 mt-2 inbox-link" href="#!">
+                              <span class="fas fa-file-alt text-primary" data-fa-transform="grow-4"></span>
+                              <span class="ms-2">Lista de Articulos {{$vendedor['ASIGNADA']}}</span>
                             </div>
-                            <div class="avatar avatar-l align-top ms-n2" data-bs-toggle="tooltip" title="Antony">
-                              <img class="rounded-circle" src="images/avatar.png" alt="" />
+                           
 
-                            </div>
-                            <div class="avatar avatar-l align-top ms-n2" data-bs-toggle="tooltip" title="Emma">
-                              <img class="rounded-circle" src="images/avatar.png" alt="" />
-
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -325,6 +320,7 @@
                 <div class="position-relative z-index-1 light">
                   <h4 class="mb-0 text-white" id="id_titulo_modal">Multiples Filas</h4>
                   <p class="fs--1 mb-0 text-white">Puede descar el formato para carga la información dando click <a href="{{ asset('Formatos/Plantilla-Articulos-Rutas.xlsx') }}" class="text-white" >Aqui </a></p>
+                  <span class="text-white" id="id_mdl_insert"> - </span>
                 </div>
                 <button class="btn-close btn-close-white position-absolute top-0 end-0 mt-2 me-2" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>

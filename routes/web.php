@@ -65,10 +65,6 @@ Route::post('cambiar_estado', 'HomeController@cambiarEstado')->name('cambiar_est
 
 
 
-
-// RUTA DE TICKET
-
-
 Route::get('dashboard', 'TicketsController@dashboard')->name('dashboard');
 Route::get('TicketDetalles', 'TicketsController@getTicketDetalles')->name('TicketDetalles');
 Route::get('nuevo_ticket', 'TicketsController@Nuevo')->name('nuevo_ticket');
@@ -87,3 +83,7 @@ Auth::routes();
 
 Route::get('ventas', 'VentasController@getVentas')->name('ventas');
 Route::post('dtProyeccion', 'VentasController@getDataProyeccion')->name('dtProyeccion');
+Route::get('getArticulos', 'VentasController@getArticulos')->name('getArticulos');
+Route::post('GuardarListas', 'VentasController@postGuardarListas')->name('GuardarListas');
+Route::get('getVendedor', 'VentasController@getVendedor')->name('getVendedor');
+Route::post('GuardarAsignacion', 'VentasController@GuardarAsignacion')->name('GuardarAsignacion');

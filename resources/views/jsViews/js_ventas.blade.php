@@ -3,22 +3,52 @@
     var annio  = $("#IdSelectAnnio option:selected").val()
     var dta_table_header = [];
     var dta_table_excel = []
-    CargarDatos(nMes,annio);
+    var dta_master_articulo = []
+    var isError = false
+    
+    //getDataTable(nMes,annio);
     var Selectors = {        
         ADD_ITEM_RUTA: '#modl_add_articulo',
         
     };
+
+    $.ajax({
+        type: 'get',        
+        url: 'getArticulos', 
+        async: false,
+        dataType: "json",
+        success: function(item){
+
+            $.each(item,function(key, registro) {
+
+                dta_master_articulo.push({ 
+                        ARTICULO: registro.ARTICULO,
+                        DESCRIPCION: registro.DESCRIPCION,
+                    })
+            });
+
+            getDataTableArticulos();
+
+            
+        },
+        error: function(data) {
+        }
+    });
     
     $("#id_table_articulos_ruta").click(function(){
+
+        $("#id_mdl_insert").html("item_ruta");
+
+        var var_nombre   = $("#IdSelectRuta option:selected").text();  
 
         var addMultiRow = document.querySelector(Selectors.ADD_ITEM_RUTA);
         var modal = new window.bootstrap.Modal(addMultiRow);
         modal.show();
 
-        $("#id_titulo_modal").text("Articulos para Rutas")
-
+        $("#id_titulo_modal").text("Articulos para Rutas " + var_nombre)
+        
     });
-
+    
     $("#id_add_item_vinneta").click(function(){
 
         var addMultiRow = document.querySelector(Selectors.ADD_ITEM_RUTA);
@@ -32,27 +62,60 @@
         var var_nMes   = $("#IdSelectMes option:selected").val();           
         var var_annio  = $("#IdSelectAnnio option:selected").val()
 
-        CargarDatos(var_nMes,var_annio)
+        //CargarDatos(var_nMes,var_annio)
     })
 
     
 
-    function CargarDatos(nMes,annio){                 
-
-        /*dta_table_header = [
+    function getDataTableArticulos(){    
+        var var_ruta   = $("#IdSelectRuta option:selected").val();  
+        var dta_table  = [];
+      
+        dta_table_header = [
+                {"title": "Index","data": "Index"}, 
                 {"title": "Articulo","data": "Articulos"},
-                {"title": "Descripcion","data": "Descripcion"},                                
-                {"title": "Proyeccion Mensual","data": "proyect_mensual","render": $.fn.dataTable.render.number(',', '.', 2)},]*/
+                {"title": "Descripcion","data": "Descrip"},                                        
+                {"title": "Lista","data": "Lista"},
+                ]   
+
+        $.ajax({
+            type: 'post',
+            data: {
+                ruta      : var_ruta,              
+                _token  : "{{ csrf_token() }}" 
+            },
+            url: 'dtProyeccion', 
+            async: false,
+            dataType: "json",
+            success: function(data){
+
+                $.each(data[0]['data'],function(key, registro) {      
+                    var index       = dta_master_articulo.map(function (itm) { return itm.ARTICULO; }).indexOf(registro.Articulo);                    
+                    var varDescri   = (index < 0) ? 'ND' : dta_master_articulo[index].DESCRIPCION   
+
+                    dta_table.push({ 
+                        Articulos: registro.Articulo,
+                        Descrip : varDescri,
+                        Lista: registro.Lista,
+                        Index: registro.id
+                    })
+                });
+
+
+                
+                table_render('#id_table_articulos',dta_table,dta_table_header)
+
+                
+            },
+            error: function(data) {
+            }
+        });
+    }
+
+    function CargarDatos(nMes,annio){    
+        
 
  
-        table_render(
-            "#id_table_articulos",
-            [],
-            [
-                {"title": "ARTICULO"},
-                {"title": "DESCRIPCION"}
-            ]
-        )
 
         table_render(
             "#id_table_articulos_vinneta",
@@ -66,30 +129,7 @@
 
  
 
-        $.ajax({
-            type: 'post',
-            data: {
-                mes      : nMes,
-                annio   : annio,                
-                _token  : "{{ csrf_token() }}" 
-            },
-            url: 'dtProyeccion', 
-            async: false,
-            dataType: "json",
-            success: function(data){
-                if (data[0]['data'].length > 0) {
-                    table_render(
-                        'id_table_articulos',
-                        data[0]['data'],
-                        dta_table_header
-                        )
-                }
-
-                
-            },
-            error: function(data) {
-            }
-        });
+       
     }
     $("#id_get_history").click(function(){
         var var_nMes   = $("#IdSelectMes option:selected").val();           
@@ -167,6 +207,18 @@
                 "search": "BUSCAR"
             },
             'columns': Header,
+            "columnDefs": [
+                {
+                    "visible": false,
+                    "searchable": false,
+                    "targets": [0]
+                },
+            ],
+            rowCallback: function( row, data, index ) {
+                if ( data.Index < 0 ) {
+                    $(row).addClass('table-danger');
+                } 
+            }
         });
         $(Table+"_length").hide();
         $(Table+"_filter").hide();
@@ -176,14 +228,7 @@
     });
 
     $('#IdSelectRuta').on("change", function(e){ 
-        table_render(
-            "#id_table_articulos",
-            [],
-            [
-                {"title": "ARTICULO"},
-                {"title": "DESCRIPCION"}
-            ]
-        )
+        getDataTableArticulos()
     });
    
     var ExcelToJSON = function() {
@@ -200,40 +245,43 @@
                 var objJson         = JSON.parse(json_object)
 
                 dta_table_excel = [];
-                isError = false
-                error_txt = ''
-                Error_descripcion = ''
+                isError=false
+
                 $.each(objJson,function(key, objJson) {
 
-                    var varCodigo  = isValue(objJson.Codigo,'N/D',true)
-                    var varDescripcion  = isValue(objJson.RUTA,'N/D',true)
-                    var varProyeccion_Mensual  = isValue(objJson.LISTA,'0',true)
+                    var varCodigo   = isValue(objJson.Codigo,'N/D',true)
+                    var index       = dta_master_articulo.map(function (itm) { return itm.ARTICULO; }).indexOf(varCodigo);                    
+                    var varDescri   = (index < 0) ? 'ND' : dta_master_articulo[index].DESCRIPCION
+                    var varRuta     = isValue(objJson.RUTA,'N/D',true)
+                    var varLista    = isValue(objJson.LISTA,'0',true)
 
-                    if(varCodigo == 'N/D'){
+
+                    if(index < 0){
                         isError=true
-                        error_txt = varCodigo
-                        Error_descripcion = varDescripcion
-                        dta_table_excel = [];
                     }
                     
                     dta_table_excel.push({ 
                         Articulos: varCodigo,
-                        Ruta: varDescripcion,
-                        Lista: varProyeccion_Mensual,
+                        Descrip : varDescri,
+                        Ruta: varRuta,
+                        Lista: varLista,
+                        Index: index
                     })
 
 
                 });
                 if(isError){
-                    Swal.fire(Error_descripcion, "Error en columna Codigo : " + error_txt, "error");
-                    dta_table_excel = [];
+                    Swal.fire("Codigo de Articulo No encontrado", "Existen articulos sin Definicion de Codigo ", "error");
                 }
 
 
                 dta_table_header = [
+                {"title": "Index","data": "Index"}, 
                 {"title": "Articulo","data": "Articulos"},
+                {"title": "Descripcion","data": "Descrip"},
                 {"title": "Ruta","data": "Ruta"},                                
-                {"title": "Lista","data": "Lista"}, ]                
+                {"title": "Lista","data": "Lista"},
+                ]                
                 table_render('#tbl_excel',dta_table_excel,dta_table_header)
             })
         };
@@ -264,7 +312,8 @@
         }
     }
     $("#id_send_data_excel").click(function(){
-        if(dta_table_excel.length > 0){
+        
+        if(!isError){
             Swal.fire({
             title: '¿Estas Seguro de cargar  ?',
             text: "¡Se cargara la informacion previamente visualizada!",
@@ -276,25 +325,37 @@
             target: document.getElementById('mdlMatPrima'),
             showLoaderOnConfirm: true,
             preConfirm: () => {
-                /*$.ajax({
-                    url: "guardar_excel_proyecciones",
+                $.ajax({
+                    url: "GuardarListas",
                     data: {
-                        mes     : slct_mes,
-                        annio   : slct_annio,
                         datos   : dta_table_excel,
                         _token  : "{{ csrf_token() }}" 
                     },
                     type: 'post',
                     async: true,
                     success: function(response) {
-                        Swal.fire("Exito!", "Guardado exitosamente", "success");
-                    },
+                        //Swal.fire("Exito!", "Guardado exitosamente", "success");
+                        if(response.original){
+                            Swal.fire({
+                                title: 'Articulos Ingresados Correctamente ' ,
+                                icon: 'success',
+                                showCancelButton: false,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'OK'
+                                }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                    }
+                                })
+                            }
+                        },
                     error: function(response) {
-                        Swal.fire("Oops", "No se ha podido guardar!", "error");
+                        //Swal.fire("Oops", "No se ha podido guardar!", "error");
                     }
                     }).done(function(data) {
-                        CargarDatos(nMes,annio);
-                    });*/
+                        //CargarDatos(nMes,annio);
+                    });
                 },
             allowOutsideClick: () => !Swal.isLoading()
         });
@@ -304,17 +365,85 @@
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'No hay datos para cargar!!!...',
+                text: "Existen articulos sin Definicion de Codigo ",
                 
             })
         }
     })
 
-    function mdlAsignar(){
-        Swal.fire(
-            'Listo!',
-            'Aqui tiene que asignar que ruta se va a trabajar',
-            'success'
-        )
+    function mdlAsignar(Ruta){
+        var options = {};
+        $.ajax({
+            type: 'get',          
+            url: 'getVendedor', 
+            async: false,
+            dataType: "json",
+            success: function(data){
+                $.map(data,function(o) {
+                    options[o.VENDEDOR] = o.VENDEDOR;
+                });
+
+                Swal.fire({
+                    title: 'Nueva lista de Articulos Para ' + Ruta,
+                    input: 'select',
+                    inputOptions:options,
+                    inputPlaceholder: 'Seleccione la Ruta',
+                    showCancelButton: true,
+                    confirmButtonText: 'OK'
+                    }).then(function (result) {
+                        if (result.isConfirmed) {
+                            
+                            var isEmpy = isValue(result.value,'N/D',true)
+
+                            if(isEmpy !='N/D'){
+
+                                $.ajax({
+                                url: "GuardarAsignacion",
+                                data: {
+                                    Ruta    : Ruta,
+                                    Asign   : result.value,
+                                    _token  : "{{ csrf_token() }}" 
+                                },
+                                type: 'post',
+                                async: true,
+                                success: function(response) {
+                                    if(response.original){
+                                        Swal.fire({
+                                            title: 'Todo Correcto' ,
+                                            icon: 'success',
+                                            showCancelButton: false,
+                                            confirmButtonColor: '#3085d6',
+                                            cancelButtonColor: '#d33',
+                                            confirmButtonText: 'OK'
+                                            }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                location.reload();
+                                                }
+                                            })
+                                        }
+                                    },
+                                error: function(response) {
+                                    //Swal.fire("Oops", "No se ha podido guardar!", "error");
+                                }
+                                }).done(function(data) {
+                                    //CargarDatos(nMes,annio);
+                                });
+
+                            }else{
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: "Campo no puede ir Vacio",
+                                    
+                                })
+
+                            }
+                            //location.reload();
+                        }
+                    })
+            },
+            error: function(data) {
+            }
+        });       
     }
 </script>
