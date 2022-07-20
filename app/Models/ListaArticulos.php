@@ -15,30 +15,49 @@ class ListaArticulos extends Model {
         $ruta     = $request->input('ruta');        
         return ListaArticulos::where('Ruta',$ruta)->get();
     }
+    public static function getArticulosVinneta(Request $request){
+        $nMes   = $request->input('nMes');        
+        $annio  = $request->input('annio');        
+        
+        return ArticulosVinneta::where('NMES',$nMes)->where('ANNIO',$annio)->get();
+    }
 
     public static function GuardarListas(Request $request) {
         if ($request->ajax()) {
             try {
-                $datos_a_insertar = array();     
-                $id_insert = '';
-                
+                $datos_a_insertar = array();      
+                $mdl = $request->input('mdl');
 
-                $isExit = ListaArticulos::getProyecciones($request);
+                //$isExit = ListaArticulos::getProyecciones($request);
 
-                ListaArticulos::where('Activo', 'S')->delete();
-                foreach ($request->input('datos') as $key => $val) {
-                    $datos_a_insertar[$key]['Articulo']        = $val['Articulos'];
-                    $datos_a_insertar[$key]['Ruta']             = $val['Ruta'];
-                    $datos_a_insertar[$key]['Lista']            = $val['Lista'];
-                    $datos_a_insertar[$key]['Activo']           = 'S';
-                    $datos_a_insertar[$key]['created_at']       = date('Y-m-d H:i:s');
-                    $datos_a_insertar[$key]['updated_at']       = date('Y-m-d H:i:s');
-                    
+                if($mdl =="item_vinneta" ){
+                    foreach ($request->input('datos') as $key => $val) {
+                        $datos_a_insertar[$key]['ARTICULO']         = $val['Articulos'];
+                        $datos_a_insertar[$key]['VALOR']            = $val['Valor'];
+                        $datos_a_insertar[$key]['NMES']             = $val['nMes'];
+                        $datos_a_insertar[$key]['ANNIO']            = $val['annio'];
+                        $datos_a_insertar[$key]['created_at']       = date('Y-m-d H:i:s');
+                        $datos_a_insertar[$key]['updated_at']       = date('Y-m-d H:i:s');
+                    }
+                    $response = ArticulosVinneta::insert($datos_a_insertar); 
+
+                }else{
+                    ListaArticulos::where('Activo', 'S')->delete();
+                    foreach ($request->input('datos') as $key => $val) {
+                        $datos_a_insertar[$key]['Articulo']        = $val['Articulos'];
+                        $datos_a_insertar[$key]['Ruta']             = $val['Ruta'];
+                        $datos_a_insertar[$key]['Lista']            = $val['Lista'];
+                        $datos_a_insertar[$key]['Activo']           = 'S';
+                        $datos_a_insertar[$key]['created_at']       = date('Y-m-d H:i:s');
+                        $datos_a_insertar[$key]['updated_at']       = date('Y-m-d H:i:s');
+                        
+                    }
+                    $response = ListaArticulos::insert($datos_a_insertar); 
                 }
 
-                $response = ListaArticulos::insert($datos_a_insertar); 
                 
-                return response()->json($datos_a_insertar);
+                
+                return $response;
                 
             } catch (Exception $e) {
                 $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";

@@ -127,110 +127,104 @@
           
           @include('layouts.nav_gumadesk')
 
-          
-
           <div class="row g-3 mb-3">
             
-            <div class="col-lg-6">
+            <div class="col-lg-6" >
               <div class="card">
-                <div class="card-header border-bottom">
-                <div class="row flex-between-center">
-                  <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
-                    <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0" >Listas de Articulos</h5>                     
-                  </div>
-                  <div class="col-8 col-sm-auto ms-auto text-end ps-0">
-                  <div id="orders-actions">
-
-                  
-
-                  <div class="btn btn-sm">
-                      <select class="form-select" id="IdSelectRuta">
-                        @foreach ($Vendedores as $vendedor)
-                          <option value="{{$vendedor['VENDEDOR']}}">{{$vendedor['VENDEDOR']}} | {{strtoupper($vendedor['NOMBRE'])}}</option>
-                        @endforeach
-                      </select>
-                  </div>
-
-                    
-                    <button class="btn btn-falcon-default btn-sm" type="button" id="id_table_articulos_ruta">
-                      <span class="fas fa-upload" data-fa-transform="shrink-3 down-2"></span>                      
-                    </button>
-                  </div>
-                </div>
-                      
+              <div class="card-header">
+                  <div class="row flex-between-center ">
+                    <div class="col-auto col-sm-6 col-lg-7">
+                      <h1 class="fs-0 text-900">Lista de Articulos</h1>
+                      <div class="d-flex">
+                        <h4 class="text-primary mb-0">$165.50</h4>
+                        <div class="ms-3"><span class="badge rounded-pill badge-soft-primary"><span class="fas fa-caret-up"></span> 5%</span></div>
+                      </div>
                     </div>
+                    <div class="col-auto col-sm-6 col-lg-5 mt-3">
+                      <div class="input-group"> 
+                        <select class="form-select form-select-sm pe-4" id="IdSelectRuta">
+                          @foreach ($Vendedores as $vendedor)
+                            <option value="{{$vendedor['VENDEDOR']}}">{{$vendedor['VENDEDOR']}} | {{strtoupper($vendedor['NOMBRE'])}}</option>
+                          @endforeach
+                        </select>
+                        <div class="input-group-text bg-transparent" id="id_table_articulos_ruta">
+                          <span class="fa fa-upload fs--1 text-600" ></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="card-body pt-0">
+                <div class="card-body pt-0 mt-3">
                   <div class="tab-content">
-                    <div class="tab-pane preview-tab-pane active" role="tabpanel" aria-labelledby="tab-dom-6fa4c848-cf7f-4ed7-bab0-9326a3ce9502" id="dom-6fa4c848-cf7f-4ed7-bab0-9326a3ce9502">
+                    <div class="tab-pane preview-tab-pane active" >
                       <div class="table-responsive scrollbar">
                         <table class="table" id="id_table_articulos">
                           
                         </table>
                       </div>
                     </div>
-                    <div class="tab-pane code-tab-pane" role="tabpanel" aria-labelledby="tab-dom-1588a2c2-ec0c-4296-a6aa-f7f6131ac1fc" id="dom-1588a2c2-ec0c-4296-a6aa-f7f6131ac1fc">
+                    <div class="tab-pane code-tab-pane" >
                       
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6"  >
               <div class="card z-index-1">
-                <div class="card-header border-bottom">
-                <div class="row flex-between-center">
-                
-                <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
-                  <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0" >ARTICULOS CON VIÑETAS</h5> 
-                </div>
-              <div class="col-8 col-sm-auto ms-auto text-end ps-0">
-                <div id="orders-actions">
+              <div class="card-header">
+                  <div class="row flex-between-center ">
+                    <div class="col-auto col-sm-6 col-lg-5">
+                      <h1 class="fs-0 text-900">ARTICULOS CON VIÑETAS</h1>
+                      <div class="d-flex">
+                        <h4 class="text-primary mb-0">$165.50</h4>
+                        <div class="ms-3"><span class="badge rounded-pill badge-soft-primary"><span class="fas fa-caret-up"></span> 5%</span></div>
+                      </div>
+                    </div>
+                    <div class="col-auto col-sm-6 col-lg-7 mt-3">
+                      <div>
+                        <form>
+                          <div class="input-group">
+                            <select class="form-select" id="IdSelectMes">
+                                <?php                        
+                                    $mes = date("m");
 
-                <div class="btn btn-sm ">
-                    <select class="form-select" id="IdSelectMes">
-                        <?php                        
-                            $mes = date("m");
+                                    $meses = array('none','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
 
-                            $meses = array('none','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
-
-                            for ($i= 1; $i <= 12 ; $i++) {
-                              if ($i==$mes) {
-                                  echo'<option selected value="'.$i.'">'.$meses[$i].'</option>';
-                              }else {
-                                  echo'<option value="'.$i.'">'.$meses[$i].'</option>';
-                              }
-                            }
-                        ?>
-                    </select>
+                                    for ($i= 1; $i <= 12 ; $i++) {
+                                      if ($i==$mes) {
+                                          echo'<option selected value="'.$i.'">'.$meses[$i].'</option>';
+                                      }else {
+                                          echo'<option value="'.$i.'">'.$meses[$i].'</option>';
+                                      }
+                                    }
+                                ?>
+                            </select>
+                            <select class="form-select" id="IdSelectAnnio">
+                              <?php
+                                  $year = date("Y");
+                                  for ($i= 2020; $i <= $year ; $i++) {
+                                      if ($i==$year) {
+                                          echo'<option selected value="'.$i.'">'.$i.'</option>';
+                                      }else {
+                                          echo'<option value="'.$i.'">'.$i.'</option>';
+                                      }
+                                  }
+                              ?>
+                            </select>
+                            <div class="input-group-text bg-transparent"  id="id_send_filtros">
+                              <span class="fa fa-filter fs--1 text-600"></span>
+                            </div>
+                            <div class="input-group-text bg-transparent" id="id_add_item_vinneta">
+                              <span class="fa fa-plus fs--1 text-600"></span>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="btn btn-sm">
-                    <select class="form-select" id="IdSelectAnnio">
-                      <?php
-                          $year = date("Y");
-                          for ($i= 2020; $i <= $year ; $i++) {
-                              if ($i==$year) {
-                                  echo'<option selected value="'.$i.'">'.$i.'</option>';
-                              }else {
-                                  echo'<option value="'.$i.'">'.$i.'</option>';
-                              }
-                          }
-                      ?>
-                    </select>
-                </div>
-
-                  <button class="btn btn-falcon-default btn-sm" type="button" id="id_send_filtros">
-                    <span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span>                      
-                  </button>
-                  
-                  <button class="btn btn-falcon-default btn-sm" type="button" id="id_add_item_vinneta">
-                    <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>                      
-                  </button>
-                </div>
-              </div>
-            </div>
-                </div>
-                <div class="card-body pt-0">
+                <div class="card-body pt-0 ">
                   <div class="tab-content">
                     <div class="tab-pane preview-tab-pane active" role="tabpanel" aria-labelledby="tab-dom-f81ca2e4-6ec3-4ee6-b1d2-d931b9d71eac" id="dom-f81ca2e4-6ec3-4ee6-b1d2-d931b9d71eac">
                       <div class="table-responsive scrollbar">
@@ -263,10 +257,7 @@
               
               <div class="row g-0 text-center fs--1">
               @foreach ($Vendedores as $vendedor)
-                          
-                        
-               
-                <div class="kanban-items-container scrollbar col-6 col-md-4 col-lg-3 col-xxl-2">
+                <div class="kanban-items-container scrollbar col-12 col-md-4 col-lg-3 col-xxl-3">
                   <div class="kanban-item">
                     <div class="card kanban-item-card hover-actions-trigger">
                       <div class="card-body">                      
@@ -318,7 +309,7 @@
             <div class="modal-content border-0">
               <div class="modal-header px-5 position-relative modal-shape-header bg-shape">
                 <div class="position-relative z-index-1 light">
-                  <h4 class="mb-0 text-white" id="id_titulo_modal">Multiples Filas</h4>
+                  <h4 class="mb-0 text-white" id="id_titulo_modal"> - - -</h4>
                   <p class="fs--1 mb-0 text-white">Puede descar el formato para carga la información dando click <a href="{{ asset('Formatos/Plantilla-Articulos-Rutas.xlsx') }}" class="text-white" >Aqui </a></p>
                   <span class="text-white" id="id_mdl_insert"> - </span>
                 </div>
@@ -329,7 +320,7 @@
                   <div class="col-md-7">
                     <input class="form-control" id="upload" type=file  name="files[]"/>
                   </div>
-                  <div class="col-md-5">
+                  <div class="col-md-5 ">
                         <div class="input-group">
                           <input class="form-control  shadow-none search" type="search"  id="id_searh_table_Excel" placeholder="Ingrese informacion a buscar." aria-label="search" />
                           <div class="input-group-text bg-transparent">

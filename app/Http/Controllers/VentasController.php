@@ -21,7 +21,8 @@ class VentasController extends Controller {
     public function getDataProyeccion(Request $request)
     {
         $Proyec[] = array(
-            'data' => ListaArticulos::getProyecciones($request)
+            'lstArticulo'   => ListaArticulos::getProyecciones($request),
+            'lstVinneta'    => ListaArticulos::getArticulosVinneta($request)
         );
 
         return response()->json($Proyec);

@@ -45,11 +45,13 @@
         var modal = new window.bootstrap.Modal(addMultiRow);
         modal.show();
 
-        $("#id_titulo_modal").text("Articulos para Rutas " + var_nombre)
+        $("#id_titulo_modal").text("Articulos para Rutas " )
         
     });
     
     $("#id_add_item_vinneta").click(function(){
+
+        $("#id_mdl_insert").html("item_vinneta");
 
         var addMultiRow = document.querySelector(Selectors.ADD_ITEM_RUTA);
         var modal = new window.bootstrap.Modal(addMultiRow);
@@ -69,27 +71,35 @@
 
     function getDataTableArticulos(){    
         var var_ruta   = $("#IdSelectRuta option:selected").val();  
+        
+        var var_nMes   = $("#IdSelectMes option:selected").val();           
+        var var_annio  = $("#IdSelectAnnio option:selected").val()
+
         var dta_table  = [];
       
-        dta_table_header = [
+        dta_table_header_ARTI = [
                 {"title": "Index","data": "Index"}, 
                 {"title": "Articulo","data": "Articulos"},
                 {"title": "Descripcion","data": "Descrip"},                                        
                 {"title": "Lista","data": "Lista"},
                 ]   
-
         $.ajax({
             type: 'post',
             data: {
-                ruta      : var_ruta,              
-                _token  : "{{ csrf_token() }}" 
+                ruta        : var_ruta,  
+                nMes        : var_nMes,   
+                annio       : var_annio,          
+                _token      : "{{ csrf_token() }}" 
             },
             url: 'dtProyeccion', 
             async: false,
             dataType: "json",
             success: function(data){
 
-                $.each(data[0]['data'],function(key, registro) {      
+                console.log(data[0])
+
+
+                $.each(data[0]['lstArticulo'],function(key, registro) {      
                     var index       = dta_master_articulo.map(function (itm) { return itm.ARTICULO; }).indexOf(registro.Articulo);                    
                     var varDescri   = (index < 0) ? 'ND' : dta_master_articulo[index].DESCRIPCION   
 
@@ -100,10 +110,28 @@
                         Index: registro.id
                     })
                 });
+                table_render('#id_table_articulos',dta_table,dta_table_header_ARTI)
 
+                dta_table  = []
 
-                
-                table_render('#id_table_articulos',dta_table,dta_table_header)
+                $.each(data[0]['lstVinneta'],function(key, reg) {   
+                 
+                    var index       = dta_master_articulo.map(function (itm) { return itm.ARTICULO; }).indexOf(reg.Articulo);                    
+                    var varDescri   = (index < 0) ? 'ND' : dta_master_articulo[index].DESCRIPCION   
+
+                    dta_table.push({ 
+                        Index       : reg.ARTICULO,
+                        ARTICULO    : reg.ARTICULO,
+                        Descrip     : varDescri,
+                        VALOR       : reg.VALOR
+                    })
+                });
+                table_render('#id_table_articulos_vinneta',dta_table, [
+                {"title": "Index","data": "Index"},
+                {"title": "Articulo","data": "ARTICULO"},
+                {"title": "Descripcion","data": "Descrip"},                                        
+                {"title": "Valor","data": "VALOR"},
+                ] )
 
                 
             },
@@ -154,6 +182,7 @@
                     var In_Total= 0;
 
                     dta_table_excel = [];
+                    
                     $.each(data[0]['data'],function(key, registro) {
 
                         
@@ -233,6 +262,10 @@
    
     var ExcelToJSON = function() {
 
+        var mdl        = $("#id_mdl_insert").text();        
+        var var_nMes   = $("#IdSelectMes option:selected").val();           
+        var var_annio  = $("#IdSelectAnnio option:selected").val()
+        
         this.parseExcel = function(file) {
         var reader = new FileReader();
 
@@ -254,35 +287,62 @@
                     var varDescri   = (index < 0) ? 'ND' : dta_master_articulo[index].DESCRIPCION
                     var varRuta     = isValue(objJson.RUTA,'N/D',true)
                     var varLista    = isValue(objJson.LISTA,'0',true)
+                    var valor       = isValue(objJson.VALOR,'0',true)
 
 
                     if(index < 0){
                         isError=true
                     }
                     
-                    dta_table_excel.push({ 
-                        Articulos: varCodigo,
-                        Descrip : varDescri,
-                        Ruta: varRuta,
-                        Lista: varLista,
-                        Index: index
-                    })
-
+                  
+                    if(mdl==="item_vinneta"){
+                        dta_table_excel.push({ 
+                            Articulos: varCodigo,
+                            Descrip : varDescri,
+                            Index: index,
+                            Valor: numeral(valor).format('0,0'),
+                            Fecha : var_nMes + " / " + var_annio,
+                            nMes: var_nMes,
+                            annio: var_annio,
+                        })
+                    }else{
+                        dta_table_excel.push({ 
+                            Articulos: varCodigo,
+                            Descrip : varDescri,
+                            Ruta: varRuta,
+                            Lista: varLista,
+                            Index: index,
+                            Valor: valor,
+                        })
+                    }
 
                 });
+                
                 if(isError){
                     Swal.fire("Codigo de Articulo No encontrado", "Existen articulos sin Definicion de Codigo ", "error");
                 }
 
+                if(mdl==="item_vinneta"){
+                    dta_table_header_vinneta = [
+                    {"title": "Index","data": "Index"}, 
+                    {"title": "Articulo","data": "Articulos"},
+                    {"title": "Descripcion","data": "Descrip"},
+                    {"title": "Valor","data": "Valor"},
+                    {"title": "Fecha","data": "Fecha"}
+                    ]
+                    table_render('#tbl_excel',dta_table_excel,dta_table_header_vinneta)
+                }else{
+                    dta_table_header_listas = [
+                    {"title": "Index","data": "Index"}, 
+                    {"title": "Articulo","data": "Articulos"},
+                    {"title": "Descripcion","data": "Descrip"},
+                    {"title": "Ruta","data": "Ruta"},                                
+                    {"title": "Lista","data": "Lista"},
+                    ]
+                    table_render('#tbl_excel',dta_table_excel,dta_table_header_listas)
+                }
 
-                dta_table_header = [
-                {"title": "Index","data": "Index"}, 
-                {"title": "Articulo","data": "Articulos"},
-                {"title": "Descripcion","data": "Descrip"},
-                {"title": "Ruta","data": "Ruta"},                                
-                {"title": "Lista","data": "Lista"},
-                ]                
-                table_render('#tbl_excel',dta_table_excel,dta_table_header)
+                
             })
         };
 
@@ -312,6 +372,7 @@
         }
     }
     $("#id_send_data_excel").click(function(){
+        var mdl = $("#id_mdl_insert").text();  
         
         if(!isError){
             Swal.fire({
@@ -329,12 +390,12 @@
                     url: "GuardarListas",
                     data: {
                         datos   : dta_table_excel,
+                        mdl     : mdl,
                         _token  : "{{ csrf_token() }}" 
                     },
                     type: 'post',
                     async: true,
                     success: function(response) {
-                        //Swal.fire("Exito!", "Guardado exitosamente", "success");
                         if(response.original){
                             Swal.fire({
                                 title: 'Articulos Ingresados Correctamente ' ,
