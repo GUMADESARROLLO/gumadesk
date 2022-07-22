@@ -118,9 +118,6 @@
                 var itm_top     = 0;
                 var itm_no_top  = 0;
 
-               
-
-
                 $.each(data[0]['lstArticulo'],function(key, registro) {      
                     var index       = dta_master_articulo.map(function (itm) { return itm.ARTICULO; }).indexOf(registro.Articulo);                    
                     var varDescri   = (index < 0) ? 'ND' : dta_master_articulo[index].DESCRIPCION   
@@ -151,8 +148,8 @@
 
                 dta_table  = []
 
-                $.each(data[0]['lstVinneta'],function(key, reg) {   
-                 
+                $.each(data[0]['lstVinneta'],function(key, reg) {  
+                    
                     var index       = dta_master_articulo.map(function (itm) { return itm.ARTICULO; }).indexOf(reg.Articulo);                    
                     var varDescri   = (index < 0) ? 'ND' : dta_master_articulo[index].DESCRIPCION   
 
