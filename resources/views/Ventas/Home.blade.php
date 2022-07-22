@@ -129,15 +129,15 @@
 
           <div class="row g-3 mb-3">
             
-            <div class="col-lg-6" >
+            <div class="col-lg-12" >
               <div class="card">
               <div class="card-header">
                   <div class="row flex-between-center ">
                     <div class="col-auto col-sm-6 col-lg-7">
                       <h1 class="fs-0 text-900">Lista de Articulos</h1>
                       <div class="d-flex">
-                        <h4 class="text-primary mb-0">$165.50</h4>
-                        <div class="ms-3"><span class="badge rounded-pill badge-soft-primary"><span class="fas fa-caret-up"></span> 5%</span></div>
+                        <h4 class="text-primary mb-0" id="id_table_articulos_count">0.00</h4>
+                        <div class="ms-3 invisible"><span class="badge rounded-pill badge-soft-primary"><span class="fas fa-caret-up"></span> 0.00</span></div>
                       </div>
                     </div>
                     <div class="col-auto col-sm-6 col-lg-5 mt-3">
@@ -170,7 +170,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-6"  >
+            <div class="col-lg-6"  style="display:none">
               <div class="card z-index-1">
               <div class="card-header">
                   <div class="row flex-between-center ">

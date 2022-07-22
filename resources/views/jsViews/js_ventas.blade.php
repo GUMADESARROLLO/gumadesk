@@ -96,7 +96,9 @@
             dataType: "json",
             success: function(data){
 
-                console.log(data[0])
+                
+
+                $("#id_table_articulos_count").text("# " + data[0]['lstArticulo'].length)
 
 
                 $.each(data[0]['lstArticulo'],function(key, registro) {      
@@ -110,6 +112,8 @@
                         Index: registro.id
                     })
                 });
+
+
                 table_render('#id_table_articulos',dta_table,dta_table_header_ARTI)
 
                 dta_table  = []
