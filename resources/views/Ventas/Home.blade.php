@@ -134,14 +134,41 @@
               <div class="card-header">
                   <div class="row flex-between-center ">
                     <div class="col-auto col-sm-6 col-lg-7">
-                      <h1 class="fs-0 text-900">Lista de Articulos</h1>
                       <div class="d-flex">
-                        <h4 class="text-primary mb-0" id="id_table_articulos_count">0.00</h4>
-                        <div class="ms-3 invisible"><span class="badge rounded-pill badge-soft-primary"><span class="fas fa-caret-up"></span> 0.00</span></div>
+                        <div class="row g-sm-4">
+                        <div class="col-12 col-sm-auto">
+                          <div class="pe-4 border-sm-end border-200">
+                            <h6 class="fs--2 text-600 mb-1">Total Articulos</h6>
+                            <div class="d-flex align-items-center">
+                              <h5 class="fs-0 text-900 mb-0 me-2" id="id_table_articulos_count"> 0 </h5><span class="badge rounded-pill badge-soft-primary"><span class="fas fa-caret-up"></span> 100 %</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-auto">
+                          <div class="pe-4 border-sm-end border-200">
+                            <h6 class="fs--2 text-600 mb-1">Articulos TOP</h6>
+                            <div class="d-flex align-items-center">
+                              <h5 class="fs-0 text-900 mb-0 me-2" id="id_table_articulos_top"> 0 </h5><span class="badge rounded-pill badge-soft-success"> 80 %</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-auto">
+                          <div class="pe-0">
+                            <h6 class="fs--2 text-600 mb-1">Articulos Otros</h6>
+                            <div class="d-flex align-items-center">
+                              <h5 class="fs-0 text-900 mb-0 me-2" id="id_table_articulos_nTop"> 0 </h5><span class="badge rounded-pill badge-soft-warning"> 20 %</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       </div>
                     </div>
-                    <div class="col-auto col-sm-6 col-lg-5 mt-3">
+                    <div class="col-auto col-sm-6 col-lg-5">
+
                       <div class="input-group"> 
+                        <input class="form-control form-control-sm shadow-none search" type="search" placeholder="Buscar..." aria-label="search" id="id_search_articulo_ruta" />
+                        <div class="input-group-text bg-transparent"><span class="fa fa-search fs--1 text-600"></span></div>
+                        
                         <select class="form-select form-select-sm pe-4" id="IdSelectRuta">
                           @foreach ($Vendedores as $vendedor)
                             <option value="{{$vendedor['VENDEDOR']}}">{{$vendedor['VENDEDOR']}} | {{strtoupper($vendedor['NOMBRE'])}}</option>
@@ -248,7 +275,7 @@
             <div class="card-header bg-light">
               <div class="row align-items-center">
                 <div class="col">
-                  <h5 class="mb-0" id="followers">Rutas <span class="d-none d-sm-inline-block">(0)</span></h5>
+                  <h5 class="mb-0" id="followers">Rutas <span class="d-none d-sm-inline-block">( {{count($Vendedores)}} )</span></h5>
                 </div>
                 
               </div>
@@ -257,6 +284,8 @@
               
               <div class="row g-0 text-center fs--1">
               @foreach ($Vendedores as $vendedor)
+
+              
                 <div class="kanban-items-container scrollbar col-12 col-md-4 col-lg-3 col-xxl-3">
                   <div class="kanban-item">
                     <div class="card kanban-item-card hover-actions-trigger">

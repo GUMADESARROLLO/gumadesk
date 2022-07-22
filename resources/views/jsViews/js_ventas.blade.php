@@ -5,7 +5,6 @@
     var dta_table_excel = []
     var dta_master_articulo = []
     var isError = false
-    
     //getDataTable(nMes,annio);
     var Selectors = {        
         ADD_ITEM_RUTA: '#modl_add_articulo',
@@ -35,6 +34,9 @@
         }
     });
     
+
+  
+
     $("#id_table_articulos_ruta").click(function(){
 
         $("#id_mdl_insert").html("item_ruta");
@@ -79,9 +81,26 @@
       
         dta_table_header_ARTI = [
                 {"title": "Index","data": "Index"}, 
-                {"title": "Articulo","data": "Articulos"},
-                {"title": "Descripcion","data": "Descrip"},                                        
-                {"title": "Lista","data": "Lista"},
+                {"title": "Articulo","data": "Articulos",
+                "render": function(data, type, row, meta) {
+
+                    var color_badge = (row.Lista >= 80 )? 'badge-soft-success' : 'badge-soft-warning'
+
+
+                    return  ` <div class="d-flex hover-actions-trigger align-items-center">
+                    <div class="file-thumbnail"><img class="border h-100 w-100 fit-cover rounded-2" src="images/item.png" alt="" /> </div>
+                        <div class="ms-3 flex-shrink-1 flex-grow-1">
+                        <h6 class="mb-1"><a class="stretched-link text-900 fw-semi-bold" href="#!">`+ row.Descrip.toUpperCase() +`</a></h6>
+                        <div class="fs--1"><span class="fw-semi-bold">SKU: `+ row.Articulos +`</span><span class="fw-medium text-600 ms-2"> <span class="badge `+color_badge+` rounded-pill fs--2">`+ row.Lista +` %</span></span></div>
+                        <div class="hover-actions end-0 top-50 translate-middle-y"><a class="btn btn-light border-300 btn-sm me-1 text-600" data-bs-toggle="tooltip" data-bs-placement="top" title="Download" href="assets/img/icons/cloud-download.svg" download="download"><img src="assets/img/icons/cloud-download.svg" alt="" width="15" /></a>
+                            <button class="btn btn-light border-300 btn-sm me-1 text-600 shadow-none" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><img src="assets/img/icons/edit-alt.svg" alt="" width="15" /></button>
+                        </div>
+                        </div>
+                    </div>`
+
+
+                               
+                }},
                 ]   
         $.ajax({
             type: 'post',
@@ -96,14 +115,17 @@
             dataType: "json",
             success: function(data){
 
-                
+                var itm_top     = 0;
+                var itm_no_top  = 0;
 
-                $("#id_table_articulos_count").text("# " + data[0]['lstArticulo'].length)
+               
 
 
                 $.each(data[0]['lstArticulo'],function(key, registro) {      
                     var index       = dta_master_articulo.map(function (itm) { return itm.ARTICULO; }).indexOf(registro.Articulo);                    
                     var varDescri   = (index < 0) ? 'ND' : dta_master_articulo[index].DESCRIPCION   
+
+                    
 
                     dta_table.push({ 
                         Articulos: registro.Articulo,
@@ -111,7 +133,18 @@
                         Lista: registro.Lista,
                         Index: registro.id
                     })
+                    
+
+                    if (registro.Lista >= 80 ) {
+                        itm_top++
+                    } else {
+                        itm_no_top++
+                    }
+
                 });
+                $("#id_table_articulos_count").text(data[0]['lstArticulo'].length)
+                $("#id_table_articulos_top").text(itm_top)
+                $("#id_table_articulos_nTop").text(itm_no_top)
 
 
                 table_render('#id_table_articulos',dta_table,dta_table_header_ARTI)
@@ -215,7 +248,7 @@
     })
     function table_render(Table,datos,Header){
 
-        table_excel =  $(Table).DataTable({
+        $(Table).DataTable({
             "data": datos,
             "destroy": true,
             "info": false,
@@ -511,4 +544,10 @@
             }
         });       
     }
+
+    var search_tbl = $("#id_table_articulos").DataTable()
+    $('#id_search_articulo_ruta').on('keyup', function() {
+        search_tbl.search(this.value).draw();
+    });
+
 </script>

@@ -2,44 +2,44 @@ version: "3.7"
 
 services:
   
-  nginx:
+  nginx_estadisticas:
     image: nginx:stable-alpine
-    container_name: nginx
+    container_name: nginx_estadisticas
     ports:
       - 8000:80
     volumes:
       - .:/var/www/html
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-      - app_gumadesk
+      - app_estadisticas
       - mysql
     networks:
       - networkapp
 
-  mysql:
+  mysql_estadisticas:
     image: mysql:5.7
-    container_name: mysql
+    container_name: mysql_estadisticas
     restart: always
     environment:
-      MYSQL_DATABASE: db_gumadesk
+      MYSQL_DATABASE: db_estadisticas
       MYSQL_USER: usr_container
       MYSQL_PASSWORD: pss_container
       MYSQL_ROOT_PASSWORD: db_root_password
     ports:
       - 33069:3306
     volumes:
-      - vol_gumadesk:/var/lib/mysql
+      - _vol:/var/lib/mysql
     networks:
       - networkapp
 
-  app_gumadesk:
+  app_estadisticas:
     build:
       args:
         user: laraveluser
         uid: 1000
       context: .
       dockerfile: ./Dockerfile
-    container_name: app_gumadesk
+    container_name: app_estadisticas
     working_dir: /var/www/html
     volumes:
       - .:/var/www/html
@@ -52,4 +52,4 @@ networks:
   networkapp:
 
 volumes:
-  vol_gumadesk:
+  _vol:
