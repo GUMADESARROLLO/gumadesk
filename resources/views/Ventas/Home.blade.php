@@ -177,6 +177,9 @@
                         <div class="input-group-text bg-transparent" id="id_table_articulos_ruta">
                           <span class="fa fa-upload fs--1 text-600" ></span>
                         </div>
+                        <div class="input-group-text bg-transparent" id="id_table_articulos_add">
+                          <span class="fa fa-plus fs--1 text-600" ></span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -329,6 +332,51 @@
               
             </div>
           @include('layouts.footer_gumadesk')
+        </div>
+
+
+        <div class="modal fade" id="modl_add_articulo_tolist" tabindex="-1" role="dialog" aria-labelledby="authentication-modal-label" aria-hidden="true">
+          <div class="modal-dialog modal-xl mt-6" role="document">
+            <div class="modal-content border-0">
+              <div class="modal-header px-5 position-relative modal-shape-header bg-shape">
+                <div class="position-relative z-index-1 light">
+                  <h4 class="mb-0 text-white" id="id_titulo_modal"> - - -</h4>
+                  <p class="fs--1 mb-0 text-white">Muestra los articulos que no tiene en su lista</p>
+                  <p class="fs--1 mb-0 text-white" style="display:none" id="id_ruta_add"> F00 </p>
+                </div>
+                <button class="btn-close btn-close-white position-absolute top-0 end-0 mt-2 me-2" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body py-4 px-5 ">
+                
+                <div class="mb-3">
+                  <label class="form-label" for="basic-form-name">Listas</label>
+                  <select class="form-control" id="id_list_add_arti">
+                      <option value="80"> 80 % </option>
+                      <option value="20"> 20 % </option>
+                    <select>
+                </div>
+                  
+                  
+
+                  <div class="mb-3 mt-3">
+                    
+
+                      <div class="notification" href="#!">                        
+                        <div class="notification-body">
+                          <table class="table table-hover table-striped overflow-hidden" id="id_articulos_withoutlist" ></table>  
+                        </div>
+                      </div>
+
+
+                    
+                  </div>
+                              
+                  <div class="mb-3">
+                    <button class="btn btn-primary d-block w-100 mt-3" id="" type="submit" name="submit">Aplicar</button>
+                  </div>
+              </div>
+            </div>
+          </div>
         </div>
             
 

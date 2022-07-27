@@ -8,6 +8,7 @@ use App\Models\Vendedores;
 use App\Models\Articulos;
 
 
+
 class VentasController extends Controller {
     public function __construct()
     {
@@ -38,6 +39,16 @@ class VentasController extends Controller {
         $Articulos = Articulos::getArticulos();
         return response()->json($Articulos);
     }
+    public function getArticulosPOST(Request $request)
+    {
+        $Articulos = Articulos::getArticulosPOST($request);
+        return response()->json($Articulos);
+    }
+    public function AddOneArticulo(Request $request)
+    {
+        $response = ListaArticulos::AddOneArticulo($request);
+        return response()->json($response);
+    }
     public function postGuardarListas(Request $request)
     {
         $response = ListaArticulos::GuardarListas($request);
@@ -46,6 +57,11 @@ class VentasController extends Controller {
     public function GuardarAsignacion(Request $request)
     {
         $response = VendedoresAsignados::GuardarAsignacion($request);
+        return response()->json($response);
+    }
+    public function CambiarDeLista(Request $request)
+    {
+        $response = ListaArticulos::CambiarDeLista($request);
         return response()->json($response);
     }
 

@@ -87,3 +87,7 @@ Route::get('getArticulos', 'VentasController@getArticulos')->name('getArticulos'
 Route::post('GuardarListas', 'VentasController@postGuardarListas')->name('GuardarListas');
 Route::get('getVendedor', 'VentasController@getVendedor')->name('getVendedor');
 Route::post('GuardarAsignacion', 'VentasController@GuardarAsignacion')->name('GuardarAsignacion');
+Route::post('CambiarDeLista', 'VentasController@CambiarDeLista')->name('CambiarDeLista');
+
+Route::post('getArticulosPOST', 'VentasController@getArticulosPOST')->name('getArticulosPOST');
+Route::post('AddOneArticulo', 'VentasController@AddOneArticulo')->name('AddOneArticulo');

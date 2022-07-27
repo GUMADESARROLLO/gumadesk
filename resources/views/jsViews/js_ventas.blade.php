@@ -5,9 +5,13 @@
     var dta_table_excel = []
     var dta_master_articulo = []
     var isError = false
-    //getDataTable(nMes,annio);
+    
+   
+
     var Selectors = {        
         ADD_ITEM_RUTA: '#modl_add_articulo',
+        ADD_ITEM_TOLIST: '#modl_add_articulo_tolist',
+        
         
     };
 
@@ -62,12 +66,193 @@
         $("#id_titulo_modal").text("Articulos para Viñeta")
 
     });
+
+    $("#id_table_articulos_add").click(function(){
+
+        var var_ruta_name   = $("#IdSelectRuta option:selected").text();           
+        var var_ruta_val    = $("#IdSelectRuta option:selected").val();   
+        
+        $("#id_titulo_modal").text(var_ruta_name)
+        $("#id_ruta_add").text(var_ruta_val)
+
+
+        var addRow = document.querySelector(Selectors.ADD_ITEM_TOLIST);
+        var modal = new window.bootstrap.Modal(addRow);
+        modal.show();
+        dta_table  = [];
+        dta_table_header_ARTI = [
+                {"title": "Articulos","data": "Articulos"}, 
+                {"title": "Articulo que no tiene la Ruta","data": "Articulos",
+                "render": function(data, type, row, meta) {
+                    return  ` <div class="d-flex hover-actions-trigger align-items-center">
+                    <div class="file-thumbnail"><img class="border h-100 w-100 fit-cover rounded-2" src="images/item.png" alt="" /> </div>
+                        <div class="ms-3 flex-shrink-1 flex-grow-1">
+                        <h6 class="mb-1"><a class="stretched-link text-900 fw-semi-bold" href="#!" onclick="AddArticulos(`+ "'" + row.Articulos +"'" +`)">`+ row.Descrip.toUpperCase() +`</a></h6>
+                        <div class="fs--1"><span class="fw-semi-bold">SKU: `+ row.Articulos +`</span></div>
+                        <div class="hover-actions end-0 top-50 translate-middle-y"><a class="btn btn-light border-300 btn-sm me-1 text-600" data-bs-toggle="tooltip" data-bs-placement="top" title="Download" href="assets/img/icons/cloud-download.svg" download="download"><img src="assets/img/icons/cloud-download.svg" alt="" width="15" /></a>
+                            <button class="btn btn-light border-300 btn-sm me-1 text-600 shadow-none" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><img src="assets/img/icons/edit-alt.svg" alt="" width="15" /></button>
+                        </div>
+                        </div>
+                    </div>`
+                }},
+                ]   
+        $.ajax({
+            url: "getArticulosPOST",
+            data: {
+                Ruta   : var_ruta_val,
+                _token  : "{{ csrf_token() }}" 
+            },
+            type: 'post',
+            async: true,
+            success: function(response) {
+                $.each(response,function(key, registro) {                    
+                    dta_table.push({ 
+                        Articulos: registro.ARTICULO,
+                        Descrip : registro.DESCRIPCION
+                    })
+                })
+                table_render('#id_articulos_withoutlist',dta_table,dta_table_header_ARTI,true)
+            },
+            error: function(response) {
+                //Swal.fire("Oops", "No se ha podido guardar!", "error");
+            }
+            }).done(function(data) {
+                //CargarDatos(nMes,annio);
+            });
+
+    });
     $("#id_send_filtros").click(function(){
         var var_nMes   = $("#IdSelectMes option:selected").val();           
         var var_annio  = $("#IdSelectAnnio option:selected").val()
 
-        //CargarDatos(var_nMes,var_annio)
     })
+    function AddArticulos(ARTICULOS){
+
+        var var_lista   = $("#id_list_add_arti option:selected").val();
+        var var_rutas   = $("#id_ruta_add").text();
+
+
+        Swal.fire({
+            title: '¿Estas Seguro de cargar  ?',
+            text: "¡Se cargara la informacion previamente visualizada!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si!',
+            target: document.getElementById('mdlMatPrima'),
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                $.ajax({
+                    url: "AddOneArticulo",
+                    data: {
+                        Articulos   : ARTICULOS,
+                        Ruta     : var_rutas,
+                        Lista     : var_lista,
+                        _token  : "{{ csrf_token() }}" 
+                    },
+                    type: 'post',
+                    async: true,
+                    success: function(response) {
+                        if(response ){
+                            Swal.fire({
+                                title: 'Articulos Ingresados Correctamente ' ,
+                                icon: 'success',
+                                showCancelButton: false,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'OK'
+                                }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                    }
+                                })
+                            }
+                        },
+                    error: function(response) {
+                        //Swal.fire("Oops", "No se ha podido guardar!", "error");
+                    }
+                    }).done(function(data) {
+                        //CargarDatos(nMes,annio);
+                    });
+                },
+            allowOutsideClick: () => !Swal.isLoading()
+        });
+
+
+
+
+        
+        
+     
+    }
+
+    $('#id_table_articulos tbody').on('click', 'tr', function () {
+        var var_ruta   = $("#IdSelectRuta option:selected").text();           
+
+        var data = $('#id_table_articulos').DataTable().row(this).data();
+
+        Swal.fire({
+            input: 'select',
+                inputOptions: {
+                'Listas': {
+                    80: '80 % ',
+                    20: '20 %',
+                },
+            },
+            customClass: "form-control",
+            html:
+            '<h5 class="text-800 ">'+var_ruta+'</h5>' +
+            '<h6 class="text-800 ">'+data.Descrip+'</h6>' +
+            '<h6 class="text-800">SKU: <strong class="text-dark"> '+data.Articulos+' </strong></h6>',
+            inputPlaceholder: '',
+            showCancelButton: true,
+            inputValidator: (value) => {
+                return new Promise((resolve) => {
+                    console.log(value)
+
+                    $.ajax({
+                        url: "CambiarDeLista",
+                        data: {
+                            valor   : value,
+                            id      : data.Index,
+                            _token  : "{{ csrf_token() }}" 
+                        },
+                    type: 'post',
+                    async: true,
+                    success: function(response) {
+                        if(response.original){
+                            Swal.fire({
+                                title: 'Articulos Actualizado Correctamente ' ,
+                                icon: 'success',
+                                showCancelButton: false,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'OK'
+                                }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                    }
+                                })
+                            }
+                        },
+                    error: function(response) {
+                        //Swal.fire("Oops", "No se ha podido guardar!", "error");
+                    }
+                    }).done(function(data) {
+                        //CargarDatos(nMes,annio);
+                    });
+               
+                })
+            }
+        })
+
+
+
+
+
+        
+    });
 
     
 
@@ -144,7 +329,7 @@
                 $("#id_table_articulos_nTop").text(itm_no_top)
 
 
-                table_render('#id_table_articulos',dta_table,dta_table_header_ARTI)
+                table_render('#id_table_articulos',dta_table,dta_table_header_ARTI,false)
 
                 dta_table  = []
 
@@ -165,7 +350,7 @@
                 {"title": "Articulo","data": "ARTICULO"},
                 {"title": "Descripcion","data": "Descrip"},                                        
                 {"title": "Valor","data": "VALOR"},
-                ] )
+                ],false )
 
                 
             },
@@ -186,7 +371,7 @@
                 {"title": "ARTICULO"},
                 {"title": "DESCRIPCION"},
                 {"title": "VALOR"}
-            ]
+            ],false
         )
 
  
@@ -231,7 +416,7 @@
                     table_render(
                         '#tbl_excel',
                         dta_table_excel,
-                        dta_table_header
+                        dta_table_header,false
                         )
 
     
@@ -243,7 +428,7 @@
             }
         });
     })
-    function table_render(Table,datos,Header){
+    function table_render(Table,datos,Header,Filter){
 
         $(Table).DataTable({
             "data": datos,
@@ -283,8 +468,11 @@
                 } 
             }
         });
-        $(Table+"_length").hide();
-        $(Table+"_filter").hide();
+        if(!Filter){
+            $(Table+"_length").hide();
+            $(Table+"_filter").hide();
+        }
+        
     }
     $('#upload').on("change", function(e){ 
         handleFileSelect(e)
@@ -364,7 +552,7 @@
                     {"title": "Valor","data": "Valor"},
                     {"title": "Fecha","data": "Fecha"}
                     ]
-                    table_render('#tbl_excel',dta_table_excel,dta_table_header_vinneta)
+                    table_render('#tbl_excel',dta_table_excel,dta_table_header_vinneta,false)
                 }else{
                     dta_table_header_listas = [
                     {"title": "Index","data": "Index"}, 
@@ -373,7 +561,7 @@
                     {"title": "Ruta","data": "Ruta"},                                
                     {"title": "Lista","data": "Lista"},
                     ]
-                    table_render('#tbl_excel',dta_table_excel,dta_table_header_listas)
+                    table_render('#tbl_excel',dta_table_excel,dta_table_header_listas,false)
                 }
 
                 
@@ -409,7 +597,7 @@
         var mdl = $("#id_mdl_insert").text();  
         
         if(!isError){
-            Swal.fire({
+        Swal.fire({
             title: '¿Estas Seguro de cargar  ?',
             text: "¡Se cargara la informacion previamente visualizada!",
             icon: 'warning',
@@ -546,5 +734,9 @@
     $('#id_search_articulo_ruta').on('keyup', function() {
         search_tbl.search(this.value).draw();
     });
+
+    
+
+
 
 </script>

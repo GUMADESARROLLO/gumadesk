@@ -65,6 +65,54 @@ class ListaArticulos extends Model {
             }
         }
     }
+
+    public static function AddOneArticulo(Request $request) {
+        if ($request->ajax()) {
+            try {
+
+                $Articulo = $request->input('Articulos');
+                $Ruta = $request->input('Ruta');
+                $Lista = $request->input('Lista');
+              
+                $obj_Productos = new ListaArticulos();   
+                $obj_Productos->Articulo        = $Articulo;                
+                $obj_Productos->Ruta       = $Ruta;                    
+                $obj_Productos->Lista       = $Lista;
+                $obj_Productos->Activo                  = 'S';                 
+                $response = $obj_Productos->save();
+            
+                
+                return $response;
+                
+            } catch (Exception $e) {
+                $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
+                return response()->json($mensaje);
+            }
+        }
+    }
+
+    public static function CambiarDeLista(Request $request)
+    {
+        if ($request->ajax()) {
+            try {
+
+                $valor   = $request->input('valor');
+                $id      = $request->input('id');
+                
+                $response =   ListaArticulos::where('id',  $id)->update([
+                    "Lista" => $valor,
+                ]);
+
+                return response()->json($response);
+
+
+            } catch (Exception $e) {
+                $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
+                return response()->json($mensaje);
+            }
+        }
+
+    }
     
 
 
