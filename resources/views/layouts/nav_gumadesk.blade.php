@@ -30,7 +30,7 @@
         <a class="dropdown-item" href="Departamentos">Departamentos</a>
         <a class="dropdown-item" href="categorias">Categorias</a>
         <a class="dropdown-item" href="Usuarios">Usuarios</a>-->
-        <a class="dropdown-item" href="ventas">Articulos  / Viñetas</a>
+        <a class="dropdown-item" href="ventas">Articulos </a>
         <div class="dropdown-divider"></div>
         <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
             document.getElementById('logout-form').submit()">Salir
