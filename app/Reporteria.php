@@ -76,12 +76,12 @@ class Reporteria extends Model
         ISNULL((SELECT T3.META_CLIENTE FROM tbl_meta_cliente_rutas T3 WHERE T3.RUTA = T0.VENDEDOR AND T3.MES = MONTH( '".$d1."') AND T3.ANNIO= YEAR( '".$d1."')),0) AS META_CLIENTE,
         SUM(T0.TOTAL_LINEA) as MesActual,
         ISNULL((SELECT  sum(T4.VentaNetaLocal) Venta FROM Softland.dbo.ANA_VentasTotales_MOD_Contabilidad_UMK T4  WHERE T4.Fecha_de_factura = '".$d2."' AND T4.VENDEDOR=	 T0.VENDEDOR    ), 0) AS DiaActual,	
-        ISNULL((SELECT COUNT(DISTINCT T1.ARTICULO) FROM view_master_pedidos_umk AS T1 WHERE T1.FECHA_PEDIDO BETWEEN '".$d1."' AND '".$d2."'AND T1.VENDEDOR = T0.VENDEDOR ), 0) AS SKU,	
-        ISNULL((SELECT SUM(T1.TOTAL_LINEA) AS NoV FROM view_master_pedidos_umk AS T1 WHERE T1.FECHA_PEDIDO BETWEEN '".$d1."'  AND '".$d2."' AND T1.VENDEDOR = T0.VENDEDOR and   T1.PEDIDO NOT LIKE 'PT%'  ), 0) AS EJEC,
-        ISNULL((SELECT SUM(T1.TOTAL_LINEA) AS NoV FROM view_master_pedidos_umk AS T1 WHERE T1.FECHA_PEDIDO BETWEEN '".$d1."'  AND '".$d2."' AND T1.VENDEDOR = T0.VENDEDOR and   T1.PEDIDO LIKE 'PT%'    ), 0) AS SAC
+        ISNULL((SELECT COUNT(DISTINCT T1.ARTICULO) FROM view_master_pedidos_umk_v2 AS T1 WHERE T1.FECHA_PEDIDO BETWEEN '".$d1."' AND '".$d2."'AND T1.VENDEDOR = T0.VENDEDOR ), 0) AS SKU,	
+        ISNULL((SELECT SUM(T1.TOTAL_LINEA) AS NoV FROM view_master_pedidos_umk_v2 AS T1 WHERE T1.FECHA_PEDIDO BETWEEN '".$d1."'  AND '".$d2."' AND T1.VENDEDOR = T0.VENDEDOR and   T1.PEDIDO NOT LIKE 'PT%'  ), 0) AS EJEC,
+        ISNULL((SELECT SUM(T1.TOTAL_LINEA) AS NoV FROM view_master_pedidos_umk_v2 AS T1 WHERE T1.FECHA_PEDIDO BETWEEN '".$d1."'  AND '".$d2."' AND T1.VENDEDOR = T0.VENDEDOR and   T1.PEDIDO LIKE 'PT%'    ), 0) AS SAC
     
     FROM
-        view_master_pedidos_umk T0 	
+        view_master_pedidos_umk_v2 T0 	
         
     WHERE
         T0.FECHA_PEDIDO BETWEEN '".$d1."' AND '".$d2."'  AND T0.VENDEDOR NOT IN ( 'F01', 'F12' ) ".$Rutas."
@@ -89,18 +89,18 @@ class Reporteria extends Model
 
 
         $sql_skus = "SELECT 	( 
-            SELECT COUNT(DISTINCT T0.ARTICULO) FROM	view_master_pedidos_umk T0 
+            SELECT COUNT(DISTINCT T0.ARTICULO) FROM	view_master_pedidos_umk_v2 T0 
             WHERE T0.FECHA_PEDIDO BETWEEN DATEADD( m, DATEDIFF( m, 0, '".$d1."' ), 0 ) AND dateadd( DD, - 1, CAST ( '".$d2."'AS DATE ) ) 
             AND T0.VENDEDOR NOT IN ( 'F01','F02', 'F04','F15','F12' ) 
             ) SKU_Farmacia,
             ( 
-                SELECT COUNT(DISTINCT T0.ARTICULO) FROM	view_master_pedidos_umk T0
+                SELECT COUNT(DISTINCT T0.ARTICULO) FROM	view_master_pedidos_umk_v2 T0
                 WHERE T0.FECHA_PEDIDO BETWEEN DATEADD( m, DATEDIFF( m, 0, '".$d1."' ), 0 ) AND dateadd( DD, - 1, CAST ( '".$d2."'AS DATE ) ) 
                 AND T0.VENDEDOR IN ( 'F02', 'F04' ) 
             ) SKU_Proyect02,
             COUNT(DISTINCT T0.ARTICULO) SKU_TODOS
             FROM
-            view_master_pedidos_umk T0
+            view_master_pedidos_umk_v2 T0
             WHERE
             T0.FECHA_PEDIDO BETWEEN '".$d1."' AND '".$d2."' AND T0.VENDEDOR NOT IN ( 'F01', 'F12' ) ";
             
@@ -146,23 +146,25 @@ class Reporteria extends Model
         $rVendedor = $sql_server->fetchArray($sql_vendedor, SQLSRV_FETCH_ASSOC);
 
         $SAC_into_vendedor = array(
-            ["RUTA" => "F03","SAC" => "ALEJANDRA","ZONA" => "MGA ABAJO NORTE"],
+            ["RUTA" => "F03","SAC" => "AURA","ZONA" => "MGA ABAJO NORTE"],
             ["RUTA" => "F06","SAC" => "NADIESKA","ZONA" => "LEON"],
-            ["RUTA" => "F07","SAC" => "YORLENI","ZONA" => "MYA-GDA"],
+            ["RUTA" => "F07","SAC" => "YESSICA","ZONA" => "MYA-GDA"],
             ["RUTA" => "F08","SAC" => "REYNA","ZONA" => "CAR-RIV"],
             ["RUTA" => "F13","SAC" => "NADIESKA","ZONA" => "MGA ABAJO SUR"],            
             ["RUTA" => "F14","SAC" => "NADIESKA","ZONA" => "CHINANDEGA"],
-            ["RUTA" => "F05","SAC" => "MARISELA","ZONA" => "MGA ARRIBA"],
-            ["RUTA" => "F09","SAC" => "YORLENI","ZONA" => "EST-NS-MAD"],
+            ["RUTA" => "F05","SAC" => "AURA","ZONA" => "MGA ARRIBA"],
+            ["RUTA" => "F09","SAC" => "REYNA","ZONA" => "EST-NS-MAD"],
             ["RUTA" => "F10","SAC" => "REYNA","ZONA" => "MAT-JIN"],
             ["RUTA" => "F11","SAC" => "YORLENI","ZONA" => "CHON-RSJ-RAAS"],
-            ["RUTA" => "F20","SAC" => "REYNA","ZONA" => "BOACO- RAAN"],
-            ["RUTA" => "F02","SAC" => "MARISELA SEVILLA","ZONA" => "INSTIT"],
-            ["RUTA" => "F04","SAC" => "","ZONA" => "MCDO/MAYORISTAS"],
+            ["RUTA" => "F20","SAC" => "YORLENI","ZONA" => "BOACO- RAAN"],
+            ["RUTA" => "F02","SAC" => "MARISELA","ZONA" => "INSTIT"],
+            ["RUTA" => "F04","SAC" => "ALEJANDRA","ZONA" => "MCDO/MAYORISTAS"],
             ["RUTA" => "F15","SAC" => "","ZONA" => "VENTAS GERENCIA"],            
-            ["RUTA" => "F19","SAC" => "N/D","ZONA" => "OCCIDENTE"],
-            ["RUTA" => "F23","SAC" => "N/A","ZONA" => "SUR ORIENTE"],
-            ["RUTA" => "F22","SAC" => "N/A","ZONA" => "N/D"],
+            ["RUTA" => "F18","SAC" => "","ZONA" => ""],            
+            ["RUTA" => "F19","SAC" => "NADIESKA","ZONA" => "OCCIDENTE"],
+            ["RUTA" => "F23","SAC" => "YESSICA","ZONA" => "SUR ORIENTE"],
+            ["RUTA" => "F22","SAC" => "REYNA","ZONA" => "N/D"],
+            ["RUTA" => "F21","SAC" => "AURA","ZONA" => "N/D"],
         );
 
 
