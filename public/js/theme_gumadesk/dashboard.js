@@ -444,8 +444,8 @@ function RangeStat(D1,D2){
         };
       
     $.getJSON("api/"+D1 + "/"+D2, function(json) {
-        table_header += '<th colspan="13" class="bg-linkedin text-100"> FERNANDO</th>';   
-        table_headerPro02 += '<th colspan="4" class="bg-linkedin text-100"> PROYECTO 1. LIC. ESPERANZA</th>';   
+        table_header += '<th colspan="16" class="bg-linkedin text-100"> FERNANDO</th>';   
+        table_headerPro02 += '<th colspan="5" class="bg-linkedin text-100"> PROYECTO 1. LIC. ESPERANZA</th>';   
         $.each(json, function(i, item) {
             if(jQuery.type(item.VENDEDOR) !== "undefined"){
     
@@ -467,7 +467,7 @@ function RangeStat(D1,D2){
                 
                 CAMPOS[CAMPOS.indexOf(CAMPOS[14])] = isToday ;
     
-                if (item.VENDEDOR != 'F02' && item.VENDEDOR != 'F15'&& item.VENDEDOR != 'F04' ) {            
+                if (item.VENDEDOR != 'F02' && item.VENDEDOR != 'F15' && item.VENDEDOR != 'F04' && item.VENDEDOR != 'F18') {            
                     
                     row_codigo[0]    += '<td><div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap">'+item.NOMBRE_SAC+'</h6></div></td>';
                     //row_codigo[1]    += '<td class="bg-soft-primary"> <div class="flex-1 ms-3"><h6 class="mb-1 fw-semi-bold text-nowrap">'+item.NOMBRE+'</h6><span class="material-icons text-secondary fs-2" onclick="PrintRow()">email</span></div></td>';
@@ -556,7 +556,7 @@ function RangeStat(D1,D2){
                 if(item.VENDEDOR == "F15"){
                     tt_only_venta_gerencia += intVal(item.MesActual);
                 }
-                
+           
     
                 
                 
