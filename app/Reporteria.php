@@ -147,24 +147,25 @@ class Reporteria extends Model
 
         $SAC_into_vendedor = array(
             ["RUTA" => "F03","SAC" => "AURA","ZONA" => "MGA ABAJO NORTE"],
-            ["RUTA" => "F06","SAC" => "NADIESKA","ZONA" => "LEON"],
-            ["RUTA" => "F07","SAC" => "YESSICA","ZONA" => "MYA-GDA"],
-            ["RUTA" => "F08","SAC" => "REYNA","ZONA" => "CAR-RIV"],
-            ["RUTA" => "F13","SAC" => "NADIESKA","ZONA" => "MGA ABAJO SUR"],            
-            ["RUTA" => "F14","SAC" => "NADIESKA","ZONA" => "CHINANDEGA"],
             ["RUTA" => "F05","SAC" => "AURA","ZONA" => "MGA ARRIBA"],
+            ["RUTA" => "F13","SAC" => "AURA","ZONA" => "MGA ABAJO SUR"],            
+            ["RUTA" => "F21","SAC" => "AURA","ZONA" => "N/D"],            
+            ["RUTA" => "F06","SAC" => "NOHEMY","ZONA" => "LEON"],
+            ["RUTA" => "F14","SAC" => "PATRICIA","ZONA" => "CHINANDEGA"],
+            ["RUTA" => "F19","SAC" => "NADIESKA","ZONA" => "OCCIDENTE"],
+            ["RUTA" => "F07","SAC" => "YESSICA","ZONA" => "MYA-GDA"],
+            ["RUTA" => "F08","SAC" => "YESSICA","ZONA" => "CAR-RIV"],
             ["RUTA" => "F09","SAC" => "REYNA","ZONA" => "EST-NS-MAD"],
             ["RUTA" => "F10","SAC" => "REYNA","ZONA" => "MAT-JIN"],
+            ["RUTA" => "F22","SAC" => "REYNA","ZONA" => "N/D"],
             ["RUTA" => "F11","SAC" => "YORLENI","ZONA" => "CHON-RSJ-RAAS"],
             ["RUTA" => "F20","SAC" => "YORLENI","ZONA" => "BOACO- RAAN"],
-            ["RUTA" => "F02","SAC" => "MARISELA","ZONA" => "INSTIT"],
+            ["RUTA" => "F23","SAC" => "YESSICA","ZONA" => "SUR ORIENTE"],
+
+            ["RUTA" => "F02","SAC" => "ALEJANDRA","ZONA" => "INSTIT"],
             ["RUTA" => "F04","SAC" => "ALEJANDRA","ZONA" => "MCDO/MAYORISTAS"],
             ["RUTA" => "F15","SAC" => "","ZONA" => "VENTAS GERENCIA"],            
-            ["RUTA" => "F18","SAC" => "","ZONA" => ""],            
-            ["RUTA" => "F19","SAC" => "NADIESKA","ZONA" => "OCCIDENTE"],
-            ["RUTA" => "F23","SAC" => "YESSICA","ZONA" => "SUR ORIENTE"],
-            ["RUTA" => "F22","SAC" => "REYNA","ZONA" => "N/D"],
-            ["RUTA" => "F21","SAC" => "AURA","ZONA" => "N/D"],
+            ["RUTA" => "F18","SAC" => "","ZONA" => ""],             
         );
 
 
