@@ -12,7 +12,10 @@ class Reporteria extends Model
     }
     public static function get_rutas_group($Id)
     {
-        $datos_rutas = DB::table('view_rutas')->where('id', $Id)->get();
+        
+        $UsrName = DB::table('users')->where('id', $Id)->pluck('username');
+
+        $datos_rutas = DB::table('sac_app.view_rutas')->where('id', $UsrName)->get();
 
         $json = array();
         $i = 0;
