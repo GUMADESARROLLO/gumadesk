@@ -89,7 +89,10 @@ class LoginController extends Controller
         }
         return $this->sendFailedLoginResponse($request);
     }
-
+    public function logout () {
+        auth()->logout();
+        return redirect('/');
+    }
     public function showLoginForm()//para no afectar al metodo showLoginForm del trait AuthenticatesUsers, el metodo debe de sobre escribirse en el controlador
     {
         return view('auth.login');// envia variable al MOD
