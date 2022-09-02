@@ -168,8 +168,7 @@ class Reporteria extends Model
             
             
             ["RUTA" => "F11","SAC" => "YORLENI","ZONA" => "CHON-RSJ-RAAS"],
-            ["RUTA" => "F20","SAC" => "YORLENI","ZONA" => "BOACO- RAAN"],
-           
+            ["RUTA" => "F20","SAC" => "YORLENI","ZONA" => "BOACO- RAAN"],           
         
             ["RUTA" => "F02","SAC" => "ALEJANDRA","ZONA" => "INSTIT"],
             ["RUTA" => "F04","SAC" => "ALEJANDRA","ZONA" => "MCDO/MAYORISTAS"],
