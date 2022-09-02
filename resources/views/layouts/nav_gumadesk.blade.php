@@ -32,8 +32,7 @@
         <a class="dropdown-item" href="Usuarios">Usuarios</a>-->
         <a class="dropdown-item" href="ventas">Articulos </a>
         <div class="dropdown-divider"></div>
-        <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
-            document.getElementById('logout-form').submit()">Salir
+        <a href="{{ route('logout') }}" class="dropdown-item" >Salir
                 <span class="pcoded-micon ml-2">
                     <i class="feather icon-log-out"></i>
                 </span>
