@@ -79,7 +79,7 @@ Route::get('stats', 'EstadisticasController@getStats')->name('stats');
 Route::get('api/{d1}/{d2}', 'EstadisticasController@getData')->name('api/{d1}/{d2}');
 Route::get('/ActualizarDiaHabiles/{d1}', 'EstadisticasController@ActualizarDiaHabiles')->name('/ActualizarDiaHabiles/{d1}');
 Auth::routes();
-
+Route::get('get8020', 'EstadisticasController@ventas')->name('get8020');
 
 Route::get('ventas', 'VentasController@getVentas')->name('ventas');
 Route::post('dtProyeccion', 'VentasController@getDataProyeccion')->name('dtProyeccion');
