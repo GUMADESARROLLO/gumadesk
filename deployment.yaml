@@ -38,7 +38,7 @@ spec:
             - name: APP_KEY
               value: base64:lXDDp5xzYk1avcHc1Jj+52OGX4hQM75buwc/bPlSjiI=
             - name: DB_DATABASE
-              value: solicitud
+              value: gumadesk
           resources:
             requests:
               memory: "64Mi"
