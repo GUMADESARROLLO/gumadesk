@@ -21,7 +21,7 @@ class Vendedores extends Model
         $json = array();
 
         $Rutas = Vendedores::whereNotIn('VENDEDOR',['F01','F02','F04'])->get();
-
+        
         foreach($Rutas as $ruta){
 
             $rw = VendedoresAsignados::where('Ruta',$ruta->VENDEDOR)->get()[0]->original;

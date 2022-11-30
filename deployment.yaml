@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sta-app
+  namespace: grupoguma
+  labels:
+    app: gumadesk
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sta-app
+  template:
+    metadata:
+      labels:
+        app: sta-app
+    spec:
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: cn-sta-app
+          image: gumadesarrollo/estadistica:v1.0.{{BUILD_NUMBER}}
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: storage
+              mountPath: /data/web/storage
+              subPath: storageApp
+          ports:
+            - containerPort: 80
+          envFrom:
+          - configMapRef:
+              name: laravel-config
+          env:
+            - name: APP_KEY
+              value: base64:lXDDp5xzYk1avcHc1Jj+52OGX4hQM75buwc/bPlSjiI=
+            - name: DB_DATABASE
+              value: solicitud
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "72m"
+            limits:
+              memory: "128Mi"
+              cpu: "144m"
