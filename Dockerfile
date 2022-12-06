@@ -1,11 +1,15 @@
-FROM kooldev/php:7.4-nginx-sqlsrv-prod 
+FROM gumadesarrollo/php:7.4-apache-sqlsrv-prod
 
-WORKDIR /app
+WORKDIR /var/www/html
+
+RUN mkdir estadistica
+
+WORKDIR /var/www/html/estadistica
 
 COPY . .
 
-RUN chmod -R 777 storage
-
 RUN composer install --ignore-platform-reqs
+
+RUN chmod -R 777 storage
 
 EXPOSE 80
