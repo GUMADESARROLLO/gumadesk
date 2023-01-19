@@ -25,5 +25,15 @@ class EstadisticasController extends Controller{
         $response = Reporteria::ActualizarDiaHabiles($val);
         return response()->json($response);
     }
+    public function get8020()
+    {  
+        $Ruta = 'F10';
+        $d1   = '2022-09-01';
+        $d2   = '2022-09-30';
+
+        $obj = Reporteria::get8020($Ruta,$d1,$d2);
+        
+        return response()->json($obj);
+    }
    
 }

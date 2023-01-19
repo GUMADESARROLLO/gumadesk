@@ -178,7 +178,7 @@
             <div class="card-header d-flex flex-between-center ps-0 py-0 border-bottom">
               <ul class="nav nav-tabs border-0 flex-nowrap tab-active-caret" id="crm-revenue-chart-tab" role="tablist" data-tab-has-echarts="data-tab-has-echarts">
                 <li class="nav-item" role="presentation"><a class="nav-link py-3 mb-0 active" id="crm-deals-tab" data-bs-toggle="tab" href="#crm-deals" role="tab" aria-controls="crm-deals" aria-selected="false">CANAL FARMACIA</a></li>  
-                @if( Session::get('rol')[0] == '1' )
+                @if( Session::get('rol') == '1' )
                 <li class="nav-item" role="presentation"><a class="nav-link py-3 mb-0" id="crm-revenue-tab" data-bs-toggle="tab" href="#crm-revenue" role="tab" aria-controls="crm-revenue" aria-selected="true">ALCANCE POR CANAL</a></li>
                 <li class="nav-item" role="presentation"><a class="nav-link py-3 mb-0" id="crm-users-tab" data-bs-toggle="tab" href="#crm-users" role="tab" aria-controls="crm-users" aria-selected="false">PY 1: Lic. ESPERANZA C.</a></li>
                 @endif
@@ -211,7 +211,7 @@
                 <li class="nav-item" role="presentation">
                   <a class="nav-link py-3 mb-0 active" id="id_aportes_tab" data-bs-toggle="tab" href="#id_aportes" role="tab" aria-controls="id_aportes" aria-selected="false">APORTE <br>% POR CANAL</a>
                 </li>
-                @if( Session::get('rol')[0] == '1' )
+                @if( Session::get('rol') == '1' )
                 <li class="nav-item" role="presentation">
                   <a class="nav-link py-3 mb-0" id="resu_farmacia_tab" data-bs-toggle="tab" href="#resu_farmacia" role="tab" aria-controls="resu_farmacia" aria-selected="false">RESUMEN <br>FARMACIA</a>
                 </li> 
@@ -240,7 +240,7 @@
 
                 <div class="col-md-12 col-xxl-12 mb-xxl-1  ">
                   <hr class="mx-ncard mb-0 d-md-none d-xxl-block" />
-                  @if( Session::get('rol')[0] == '1' )
+                  @if( Session::get('rol') == '1' )
                   <div class="d-flex flex-between-center border-bottom py-3 pt-md-0 pt-xxl-3">
                     <div class="d-flex">
                       <h6 class="text-700 mb-0">FARMACIA </h6>
@@ -470,7 +470,7 @@
           </div>
         </div>
         
-        @if( Session::get('rol')[0] == '1' )
+        @if( Session::get('rol') == '1' )
         <div class="col-md-12 col-xxl-12">
           <div class="card overflow-hidden">                
             <div class="card-body p-0">

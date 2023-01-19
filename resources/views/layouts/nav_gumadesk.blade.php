@@ -1,7 +1,7 @@
 <nav class="navbar navbar-light navbar-glass navbar-top navbar-expand">
 
 <button class="btn navbar-toggler-humburger-icon navbar-toggler me-1 me-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
-<a class="navbar-brand me-1 me-sm-3" href="dashboard">
+<a class="navbar-brand me-1 me-sm-3" href="home">
   <div class="d-flex align-items-center"><span class="font-sans-serif">GumaStats</span> 
   <div class="spinner visible" id="id_spinner_load">
       <div class="dot1"></div>
@@ -21,16 +21,11 @@
     </a>
     <div class="dropdown-menu dropdown-menu-end py-0" aria-labelledby="navbarDropdownUser">
       <div class="bg-white dark__bg-1000 rounded-2 py-2">
-       <!--<div class="bg-white dark__bg-1000 rounded-2 py-2">
-      <a class="dropdown-item fw-bold text-warning" href="#!"><span class="fas fa-crown me-1"></span><span>Nombre Usuario</span></a>
-      <div class="dropdown-divider"></div>
-      <a class="dropdown-item" href="tickets">Vista Usuario</a>
-      <a class="dropdown-item" href="stats">eSTADISTICAS</a>
-        <a class="dropdown-item" href="UnidadNegocio">Unidades de Negocio</a>
-        <a class="dropdown-item" href="Departamentos">Departamentos</a>
-        <a class="dropdown-item" href="categorias">Categorias</a>
-        <a class="dropdown-item" href="Usuarios">Usuarios</a>-->
-        <a class="dropdown-item" href="ventas">Articulos </a>
+        <a class="dropdown-item" href="{{ route('ventas') }}"><span class="fas fa-calendar"></span><span> Articulos</span></a>
+
+        @if(Session::get('rol') == '1')
+        <a class="dropdown-item" href="{{ route('Comiciones') }}"><span class="fas fa-calendar"></span><span> Comisión</span></a>
+        @endif
         <div class="dropdown-divider"></div>
         <a href="{{ route('logout') }}" class="dropdown-item" >Salir
                 <span class="pcoded-micon ml-2">

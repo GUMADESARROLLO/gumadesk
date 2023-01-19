@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Vendedores;
+
 class Reporteria extends Model
 {
     public function __construct() {
@@ -33,7 +35,8 @@ class Reporteria extends Model
 
         return $json;
     }
-    public static function ActualizarDiaHabiles($val){
+    public static function ActualizarDiaHabiles($val)
+    {
     
         $sql_server = new \sql_server(); 
         $sql_exec = '';
@@ -45,6 +48,58 @@ class Reporteria extends Model
 
         $rSKU_Facturados = $sql_server->fetchArray($sql_exec, SQLSRV_FETCH_ASSOC);
         $sql_server->close();
+    }
+    public static function get8020($Ruta,$d1,$d2)
+    {
+        $Vendedores = Vendedores::getVendedor();
+        $data  = array();
+        $cArti = array();
+        $c=0;
+        $Clasi = 0;
+       
+        
+        
+        
+
+        $c=0;
+
+        foreach ($Vendedores as $Vendedor ) {
+            $data[$c]['VENDEDOR']           = $Vendedor['VENDEDOR'];
+
+            for ($i=1; $i <= 12; $i++) { 
+
+                $sql = "SELECT T0.VENDEDOR,T0.ARTICULO,CONVERT(DECIMAL(7,2),COUNT(T0.ARTICULO)) cArticulo,CONVERT(DECIMAL(7,2),COUNT(COUNT(T0.ARTICULO)) over ()) cttArticulo,
+                ((CONVERT(DECIMAL(7,2),COUNT(T0.ARTICULO)) /  CONVERT(DECIMAL(7,2),COUNT(COUNT(T0.ARTICULO)) over ()) ) * 100 ) Aporte
+                FROM Softland.dbo.ANA_VentasTotales_MOD_Contabilidad_UMK T0 
+                WHERE T0.VENDEDOR = '".$Vendedor['VENDEDOR']."' AND YEAR ( T0.Fecha_de_factura ) = '2022' AND MONTH ( T0.Fecha_de_factura ) = '".$i."' 
+                AND t0.VentaNetaLocal  > 0 AND t0.ARTICULO NOT LIKE 'VU%' GROUP BY  T0.VENDEDOR,T0.ARTICULO ORDER BY  T0.VENDEDOR,COUNT(T0.ARTICULO) DESC";  
+                $query = DB::connection('sqlsrv')->select($sql);
+                
+                $Clasi = 0;                
+                $cArti = array();
+
+                foreach ($query as $key) {
+                    $Clasi   += $key->Aporte;
+                    $setList =  ($Clasi<=80) ? 80 : 20 ;
+                    if($setList == 80){
+                        $cArti[] =$key->ARTICULO;
+                    }      
+                }
+
+
+
+                $data[$c]['ARTICULOS'][$i]['NUM_MOTH']           = $i;
+                $data[$c]['ARTICULOS'][$i]['TOTAL_SKU']           = count($query) ;
+                $data[$c]['ARTICULOS'][$i]['TOTAL_P8020']           =count($cArti) ;
+                $data[$c]['ARTICULOS'][$i]['TOTAL_CLIENTE']           = count($query) ;
+                $data[$c]['ARTICULOS'][$i]['TOTAL_C8020']           =count($cArti) ;
+            }
+            $c++;
+            
+        }
+        
+        
+        return $data;
     }
     public static function getData($d1,$d2){
 
