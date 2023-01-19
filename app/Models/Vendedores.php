@@ -34,4 +34,23 @@ class Vendedores extends Model
         }
         return  $json;
     }
+    public static function getVendedorComision()
+    {  
+        $i = 0;
+        $json = array();
+
+        $Rutas = Vendedores::whereNotIn('VENDEDOR',['F01','F12','F02','F18',"F15","F04",'F24',"F21","F23","F22","F19"])->get();
+
+        foreach($Rutas as $ruta){
+
+            $rw = VendedoresAsignados::where('Ruta',$ruta->VENDEDOR)->get()[0]->original;
+
+            $json[$i]['VENDEDOR']   = $ruta->VENDEDOR;
+            $json[$i]['NOMBRE']     = $ruta->NOMBRE;
+            $json[$i]['ASIGNADA']   = $rw['Ruta_asignada'];
+            $i++;
+
+        }
+        return  $json;
+    }
 }

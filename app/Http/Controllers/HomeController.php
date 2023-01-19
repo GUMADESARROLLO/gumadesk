@@ -11,6 +11,8 @@ use App\Models\Laboratorios;
 use App\Models\Consignados;
 use App\Traits\ModelScopes;
 use Illuminate\Support\Facades\DB;
+
+use App\Models\Comision;
 use Exception;
 
 class HomeController extends Controller
@@ -169,5 +171,26 @@ class HomeController extends Controller
 
             return response()->json($mensaje);
         } 
+    }
+    public function Comiciones()
+    {  
+        $Mes   = '1';
+        $Anno   = '2023';
+
+        $Comision = Comision::getData($Mes,$Anno);
+
+        //return response()->json($Comision);
+        return view('Ventas.Comiciones',compact('Comision'));
+    }
+
+    public function getHistoryItems(Request $request)
+    {
+        $Ruta           = $request->input('ruta');
+        $Mes            = $request->input('mes');
+        $Anno           = $request->input('annio');
+
+        $Comision = Comision::getHistoryItems($Ruta,$Mes,$Anno);
+        return response()->json($Comision);
+        
     }
 }

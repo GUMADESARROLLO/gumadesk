@@ -7,11 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    
 
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Solcitudes | Lorem &amp; ipsum </title>
+    <title>GUMASTATS | Estadisticas &amp; Ventas </title>
 
 
     <!-- ===============================================-->
@@ -107,6 +108,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
     <script src="{{ asset('js/theme_gumadesk/dashboard.js') }}"></script>
+    
     @yield('metodosjs')
     
 

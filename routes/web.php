@@ -91,3 +91,7 @@ Route::post('CambiarDeLista', 'VentasController@CambiarDeLista')->name('CambiarD
 
 Route::post('getArticulosPOST', 'VentasController@getArticulosPOST')->name('getArticulosPOST');
 Route::post('AddOneArticulo', 'VentasController@AddOneArticulo')->name('AddOneArticulo');
+
+
+Route::get('Comiciones', 'HomeController@Comiciones')->name('Comiciones');
+Route::post('getHistoryItems', 'HomeController@getHistoryItems')->name('getHistoryItems');

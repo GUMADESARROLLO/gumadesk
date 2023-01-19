@@ -82,7 +82,8 @@ class LoginController extends Controller
         if (!$queryResult->isEmpty()) {//si queryResult no esta vacio existe el usuario
             if ($this->attemptLogin($request)) {
                 $rol = DB::table('usuario_rol')->where('usuario_id', $queryResult)->pluck('rol_id');
-                $request->session()->put('rol', $rol);
+                
+                $request->session()->put('rol', $rol[0]);
 
                 return $this->sendLoginResponse($request);
             }
