@@ -395,10 +395,6 @@
             dataType: "json",
             success: function(data){
                 if (data[0]['data'].length > 0) {
-                    var Transito = 0;
-                    var Retenido = 0;
-                    var In_parci= 0;
-                    var In_Total= 0;
 
                     dta_table_excel = [];
                     

@@ -281,33 +281,75 @@
               <div class="modal-header px-5 position-relative modal-shape-header bg-shape">
                 <div class="position-relative z-index-1 light">
                   <p class="fs--1 mb-0 text-white">Listado de Articulos que Confirman el 80 / 20 de la ruta</p>
-                  <span class="text-white" id="id_mdl_insert"> - </span>
                 </div>
                 <button class="btn-close btn-close-white position-absolute top-0 end-0 mt-2 me-2" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body py-4 px-5 ">
                 <div class="row">
+
+                  <div class="row flex-between-center">
+                    <div class="col-auto">
+                      <h6 class="mb-2">Resumen</h6>
+                    </div>
+                    <div class="col-auto mt-2">
+                      <div class="row g-sm-4">
+                      <div class="col-12 col-sm-auto">
+                          <div class="mb-3 pe-4 border-sm-end border-200">
+                            <h6 class="fs--2 text-600 mb-1">SKUS</h6>
+                            <div class="d-flex align-items-center">
+                              <h5 class="fs-0 text-900 mb-0 me-2" id="id_list_80">0</h5><span class="badge rounded-pill badge-soft-primary"><span class="fas fa-caret-up"></span> 80 %</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-auto">
+                          <div class="mb-3 pe-4 border-sm-end border-200">
+                            <h6 class="fs--2 text-600 mb-1">SKUS</h6>
+                            <div class="d-flex align-items-center">
+                              <h5 class="fs-0 text-900 mb-0 me-2" id="id_list_20">0</h5><span class="badge rounded-pill badge-soft-primary"><span class="fas fa-caret-up"></span> 20 %</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-auto">
+                          <div class="mb-3 pe-4 border-sm-end border-200">
+                            <h6 class="fs--2 text-600 mb-1">META UND</h6>
+                            <div class="d-flex align-items-center">
+                              <h5 class="fs-0 text-900 mb-0 me-2" id="id_Meta_UND">0</h5>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-auto">
+                          <div class="mb-3 pe-4 border-sm-end border-200">
+                            <h6 class="fs--2 text-600 mb-1">VENTA UND</h6>
+                            <div class="d-flex align-items-center">
+                              <h5 class="fs-0 text-900 mb-0 me-2" id="id_Venta_UND">0</h5>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-auto">
+                          <div class="mb-3 pe-0">
+                            <h6 class="fs--2 text-600 mb-1">VENTA VALOR</h6>
+                            <div class="d-flex align-items-center">
+                              <h5 class="fs-0 text-900 mb-0 me-2" id="ttVenta_Val">C$256,489</h5>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   
                   <div class="col-md-12 ">
-                        <div class="input-group">
-                          <input class="form-control  shadow-none search" type="search"  id="id_searh_table_Excel" placeholder="Ingrese informacion a buscar." aria-label="search" />
-                          <div class="input-group-text bg-transparent">
+                      <div class="input-group">
+                        <input class="form-control  shadow-none search" type="search"  id="id_searh_table_Excel" placeholder="Ingrese informacion a buscar." aria-label="search" />
+                        <div class="input-group-text bg-transparent">
                             <span class="fa fa-search fs--1 text-600"></span>
-                          </div>                          
-                        </div>
+                        </div>                          
+                      </div>
                     </div>
-                </div>
-                  
-                  
+                  </div>
 
                   <div class="mb-3 mt-3">
-                    
-                  <table class="table table-hover table-striped overflow-hidden" id="tbl_excel" style="width:100%" ></table>  
-
-
-                    
+                    <table class="table table-hover table-striped overflow-hidden" id="tbl_excel" style="width:100%" ></table> 
                   </div>
-                              
                   
               </div>
             </div>

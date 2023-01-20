@@ -59,10 +59,16 @@
     
 
     function OpenModal(Ruta){
-        console.log(Ruta)
+        
         var addMultiRow = document.querySelector(Selectors.ADD_ITEM_RUTA);
         var modal = new window.bootstrap.Modal(addMultiRow);
         modal.show();
+
+        var ventaValor  = 0;
+        var VentaUND    = 0;
+        var MetaUND     = 0;
+        var Item80      = 0;
+        var Item20      = 0;
 
         $.ajax({
             type: 'post',
@@ -98,6 +104,11 @@
                     $.each(data,function(key, registro) {
 
                         
+                        ventaValor  += parseFloat(registro.VentaVAL.replace(/,/g, ''), 10);
+                        VentaUND    += parseFloat(registro.VentaUND.replace(/,/g, ''), 10); 
+                        MetaUND     += parseFloat(registro.MetaUND.replace(/,/g, ''), 10);   
+                        Item80      +=  (registro.Lista==80)? 1 : 0
+                        Item20      +=  (registro.Lista==20)? 1 : 0
                         
                         dta_table_excel.push({ 
                             ROW_ID: registro.ROW_ID,
@@ -117,11 +128,21 @@
 
                     });
 
-                    table_render(
-                        '#tbl_excel',
-                        dta_table_excel,
-                        dta_table_header,false
-                        )
+                    table_render('#tbl_excel',dta_table_excel,dta_table_header,false)
+
+                    ventaValor = "C$ " +numeral(ventaValor).format('0,0,00.00') 
+                    $("#ttVenta_Val").text(ventaValor)
+
+                    VentaUND = numeral(VentaUND).format('0,0,00') 
+                    $("#id_Venta_UND").text(VentaUND)
+
+                    MetaUND = numeral(MetaUND).format('0,0,00') 
+                    $("#id_Meta_UND").text(MetaUND)
+
+
+                    $("#id_list_80").text(Item80)
+                    $("#id_list_20").text(Item20)
+
 
     
                 }
