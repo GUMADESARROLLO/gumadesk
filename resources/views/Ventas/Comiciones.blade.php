@@ -117,7 +117,7 @@
                                 </div>
                                   <div class="flex-1 ms-3">
                                     <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900 fw-semi-bold" href="#!" onclick="OpenModal('{{ strtoupper($cms['VENDEDOR']) }}')" ><div class="stretched-link text-900">{{ strtoupper($cms['NOMBRE']) }}</div></a></h6>
-                                    <p class="text-500 fs--2 mb-0">{{ strtoupper($cms['VENDEDOR']) }} | EST-NS-MD </p>
+                                    <p class="text-500 fs--2 mb-0">{{ strtoupper($cms['VENDEDOR']) }} | {{ strtoupper($cms['ZONA']) }} </p>
                                   </div>
                               </div>
                             </td>

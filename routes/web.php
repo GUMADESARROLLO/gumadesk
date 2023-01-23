@@ -97,3 +97,4 @@ Route::post('AddOneArticulo', 'VentasController@AddOneArticulo')->name('AddOneAr
 
 Route::get('Comiciones', 'HomeController@Comiciones')->name('Comiciones');
 Route::post('getHistoryItems', 'HomeController@getHistoryItems')->name('getHistoryItems');
+Route::get('CalcItems', 'HomeController@CalcItems')->name('CalcItems');

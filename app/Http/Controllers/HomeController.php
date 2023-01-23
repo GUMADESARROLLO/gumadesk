@@ -181,6 +181,12 @@ class HomeController extends Controller
         return view('Ventas.Comiciones',compact('Comision'));
     }
 
+    public function CalcItems()
+    {  
+        $Comision = Comision::CalcItems();
+
+    }
+
     public function getHistoryItems(Request $request)
     {
         $Ruta           = $request->input('ruta');

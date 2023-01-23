@@ -19,16 +19,40 @@ class Comision extends Model{
             
             $Salariobasico = 5000 ;
 
-            $RutaArray[$i]['VENDEDOR']                   = $v['VENDEDOR'];
-            $RutaArray[$i]['NOMBRE']                     = $v['NOMBRE'];
-            $RutaArray[$i]['BASICO']                     = $Salariobasico;
-            $RutaArray[$i]['DATARESULT']                 = Comision::CalculoCommision($v['VENDEDOR'],$Mes,$Anno,$Salariobasico);
+            $RutaArray[$i]['VENDEDOR']          = $v['VENDEDOR'];
+            $RutaArray[$i]['NOMBRE']            = $v['NOMBRE'];
+            $RutaArray[$i]['ZONA']              = $v['ASIGNADA'];
+            $RutaArray[$i]['BASICO']            = $Salariobasico;
+            $RutaArray[$i]['DATARESULT']        = Comision::CalculoCommision($v['VENDEDOR'],$Mes,$Anno,$Salariobasico);
             
             $i++;
         }
         
-        
         return $RutaArray;
+    }
+
+    public static function CalcItems()
+    {
+
+        $Vendedor   = Vendedores::getVendedorComision();
+        
+        foreach ($Vendedor as $v){
+            
+            $Ruta   = $v['VENDEDOR'];
+            DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_articulo "'.$Ruta.'"');
+            
+        }
+
+        foreach ($Vendedor as $v){
+            
+            $Ruta   = $v['VENDEDOR'];
+            DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_articulo_new "'.$Ruta.'"');
+            
+        }
+
+
+        
+        
     }
 
     public static function CalculoCommision($Ruta,$Mes,$Anno,$Salariobasico)
@@ -49,6 +73,10 @@ class Comision extends Model{
         
         $query      = DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_calc_8020 "'.$Mes.'","'.$Anno.'","'.$Ruta.'", "'.'N/D'.'" ');
         $qCobertura = DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_calc_BonoCobertura "'.$Ruta.'"');
+        
+
+        // CARGA LOS ARTICULOS QUE NUEVOS QUE NO SE ALLAN FACTURADO EN EL PERIODO EVALUADO
+        DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_articulo_new "'.$Ruta.'"');
 
         if (count($qCobertura )>0) {
             $cliente_prom=number_format($qCobertura[0]->PROMEDIOANUAL,0,'.','');
