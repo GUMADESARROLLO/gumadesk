@@ -73,17 +73,14 @@ class Comision extends Model{
         
         $query      = DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_calc_8020 "'.$Mes.'","'.$Anno.'","'.$Ruta.'", "'.'N/D'.'" ');
         $qCobertura = DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_calc_BonoCobertura "'.$Ruta.'"');
-        
-
-        // CARGA LOS ARTICULOS QUE NUEVOS QUE NO SE ALLAN FACTURADO EN EL PERIODO EVALUADO
         DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_articulo_new "'.$Ruta.'"');
 
         if (count($qCobertura )>0) {
-            $cliente_prom=number_format($qCobertura[0]->PROMEDIOANUAL,0,'.','');
-            $cliente_meta=number_format($qCobertura[0]->METAMES,0,'.','');
-            $cliente_fact=number_format($qCobertura[0]->MESFACTURADO,0,'.','');
-            $cliente_CUMp=number_format($qCobertura[0]->CUMPLI,2,'.','');
-            $Cliente_cober= $qCobertura[0]->isCumple;
+            $cliente_prom   = number_format($qCobertura[0]->PROMEDIOANUAL,0,'.','');
+            $cliente_meta   = number_format($qCobertura[0]->METAMES,0,'.','');
+            $cliente_fact   = number_format($qCobertura[0]->MESFACTURADO,0,'.','');
+            $cliente_CUMp   = number_format($qCobertura[0]->CUMPLI,2,'.','');
+            $Cliente_cober  = $qCobertura[0]->isCumple;
         }
         
         
@@ -162,7 +159,7 @@ class Comision extends Model{
             ]
         ];
 
-        $Bono_de_cobertura = Comision::BonoCobertura($Cliente_cober);
+        $Bono_de_cobertura  = Comision::BonoCobertura($Cliente_cober);
         
         $ComisionesMasBonos = ($Bono_de_cobertura);
 
@@ -207,10 +204,21 @@ class Comision extends Model{
 
     public static function NivelFactorComision($Count,$Valor)
     {
-        $factor = Factor::where('min', '<=', $Count)->where('max', '>=', $Count)->first();
-        if ($factor) {
-            return ($Valor >= $factor->meta) ? $factor->valor : 3 ;
+    
+        if ($Count < 20) {
+        $porcentaje = 3;
+        } else if ($Count >= 50 && $Valor >= 395000) {
+        $porcentaje = 6;
+        } else if ($Count >= 40 && $Valor >= 345000) {
+        $porcentaje = 5.5;
+        } else if ($Count >= 30 && $Valor >= 285000) {
+        $porcentaje = 5;
+        } else if ($Count >= 20 && $Valor >= 235000) {
+        $porcentaje = 4.5;
+        } else {
+        $porcentaje = 3;
         }
+        return $porcentaje;
 
     }
 
