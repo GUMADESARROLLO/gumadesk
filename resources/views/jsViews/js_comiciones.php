@@ -35,6 +35,10 @@
         },
     });
 
+    $("#btn_nota_credito").click(function(){
+        window.location.replace('NotasCredito')
+    })
+
     //OCULTA DE LA PANTALLA EL FILTRO DE PAGINADO Y FORM DE BUSQUEDA
     $("#table_comisiones_length").hide();
     $("#table_comisiones_filter").hide();
@@ -89,8 +93,7 @@
                     dta_table_header = [
                         {"title": "Index","data": "ROW_ID"}, 
                         {"title": "Articulo","data": "ARTICULO"},
-                        {"title": "Descrip.","data": "DESCRIPCION"},
-                        
+                        {"title": "Descrip.","data": "DESCRIPCION"},                        
                         {"title": "P.UNIT","data": "Venta"},                         
                         {"title": "APORTE","data": "Aporte"},          
                         {"title": "SKU","data": "Lista"},                         

@@ -10,7 +10,7 @@ use App\Models\ArticulosGP;
 use App\Models\Laboratorios;
 use App\Models\Consignados;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\Vendedores;
 use App\Models\Comision;
 use Exception;
 
@@ -196,5 +196,10 @@ class HomeController extends Controller
         $Comision = Comision::getHistoryItems($Ruta,$Mes,$Anno);
         return response()->json($Comision);
         
+    }
+
+    public function NotasCredito(){
+        $Vendedores = Vendedores::getVendedor();
+        return view('Ventas.NotasCredito',compact('Vendedores'));
     }
 }

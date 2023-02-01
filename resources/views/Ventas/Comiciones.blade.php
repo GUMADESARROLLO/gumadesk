@@ -59,8 +59,11 @@
                                   <option value="{{ $year }}" {{ $year == date('Y') ? 'selected' : '' }}>{{ $year }}</option>
                                 @endforeach  
                             </select>
-                            <div class="input-group-text bg-transparent" id="id_btn_new">
+                              <div class="input-group-text bg-transparent" id="id_btn_new">
                                   <span class="fas fa-history fs--1 text-600"></span>
+                              </div>
+                              <div class="input-group-text bg-transparent" id="btn_nota_credito">
+                                  <span class="far fa-calendar-minus fs--1 text-600"></span>
                               </div>
                           </div>
                         </div> 
@@ -69,7 +72,7 @@
                        
                         
                         <div class="col-md-auto">
-                          <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="frm_lab_row">                                          
+                          <select class="form-select form-select-sm"  id="frm_lab_row">                                          
                             <option selected="" value="5">5</option>
                             <option value="10">10</option>
                             <option value="20">20</option>
