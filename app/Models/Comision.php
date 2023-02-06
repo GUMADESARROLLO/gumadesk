@@ -73,7 +73,7 @@ class Comision extends Model{
         
         $query      = DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_calc_8020 "'.$Mes.'","'.$Anno.'","'.$Ruta.'", "'.'N/D'.'" ');
         $qCobertura = DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_calc_BonoCobertura "'.$Mes.'","'.$Anno.'","'.$Ruta.'"');
-        DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_articulo_new "'.$Ruta.'"');
+        DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_articulo_new "'.$Mes.'","'.$Anno.'","'.$Ruta.'"');
 
         if (count($qCobertura )>0) {
             $cliente_prom   = number_format($qCobertura[0]->PROMEDIOANUAL,0,'.','');
@@ -125,6 +125,12 @@ class Comision extends Model{
                                                 }
                                             })); 
         $sum_venta_articulos_lista20        = array_sum(array_column($Array_articulos_lista20,'VentaVAL'));
+
+        //RESTA LAS NOTAS DE CREDITO QUE TIENE LA RUTA AL MES APLICADO
+        $sum_venta_articulos_lista80 = Comision::NotasCredito($Mes,$Anno,$Ruta,"80",$sum_venta_articulos_lista80);
+        $sum_venta_articulos_lista20 = Comision::NotasCredito($Mes,$Anno,$Ruta,"20",$sum_venta_articulos_lista20);
+
+
         $factor_comision_venta_lista20      = Comision::NivelFactorComision($count_articulos_lista20,$sum_venta_articulos_lista20);
     
         $Total_articulos_cumplen            = $count_articulos_lista80  + $count_articulos_lista20; 
@@ -180,6 +186,15 @@ class Comision extends Model{
         $RutaArray['Totales_finales']            = $Totales_finales ;
         $RutaArray['Total_Compensacion']         = number_format(($Salariobasico + $Bono_de_cobertura + $ttComision),2,'.','');
 
+        $NotaCredito_val80 = abs(Comision::NotasCredito($Mes,$Anno,$Ruta,"80",0));
+        $NotaCredito_val20 = abs(Comision::NotasCredito($Mes,$Anno,$Ruta,"20",0));
+        $NotaCredito_total = $NotaCredito_val80 + $NotaCredito_val20;
+
+        $RutaArray['NotaCredito_val80']          = $NotaCredito_val80 ;
+        $RutaArray['NotaCredito_val20']          = $NotaCredito_val20 ;
+        $RutaArray['NotaCredito_total']          = $NotaCredito_total ;
+        
+
         
         return $RutaArray;
     }
@@ -219,6 +234,23 @@ class Comision extends Model{
         $porcentaje = 3;
         }
         return $porcentaje;
+
+    }
+
+    public static function NotasCredito($Mh,$Yr,$Rt,$Ls,$Vl)
+    {
+
+        $ValorNotasCredito = NotasCredito::where('RUTA',$Rt)->where('MES',$Mh)->where('ANNO',$Yr)->where('TIPO',$Ls);
+
+        if($ValorNotasCredito->count() > 0){
+            
+            $rsValor = $ValorNotasCredito->get();
+
+            $Vl = $Vl - $rsValor[0]->VALOR;
+
+        }
+
+        return $Vl;
 
     }
 

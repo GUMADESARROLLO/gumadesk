@@ -197,6 +197,39 @@
                                       </tr>
                                     </tbody>
                                   </table>
+
+                                  <table class="table" > 
+                                    <thead>
+                                      <tr>
+                                        <th colspan="2">ANULACIÓN NOTA DE CRÉDITOS</th>
+                                        
+                                      </tr>
+                                      <tr>                       
+                                        <th></th>
+                                        <th></th>
+                                      </tr>
+                                    </thead>     
+                                    <tbody>
+                                      <tr class="border-200">
+                                        <td class="align-middle">
+                                          <h6 class="mb-0 text-nowrap">80% </h6>
+                                        </td>
+                                        <td class="align-middle text-end ">C$ {{ number_format(strtoupper($cms['DATARESULT']['NotaCredito_val80']),2) }} </td>
+                                      </tr>
+                                      <tr class="border-200">
+                                        <td class="align-middle">
+                                          <h6 class="mb-0 text-nowrap">20% </h6>
+                                        </td>
+                                        <td class="align-middle text-end">C$ {{ number_format(strtoupper($cms['DATARESULT']['NotaCredito_val20']),2) }} </td>
+                                      </tr>
+                                      <tr class="border-200">
+                                        <td class="align-middle">
+                                          <h6 class="mb-0 text-nowrap">Total </h6>
+                                        </td>
+                                        <td class="align-middle text-end">C$ {{ number_format(strtoupper($cms['DATARESULT']['NotaCredito_total']),2) }} </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
                                   </div>
                                 </div>
                                 
