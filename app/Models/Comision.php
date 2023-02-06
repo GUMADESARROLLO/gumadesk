@@ -127,8 +127,14 @@ class Comision extends Model{
         $sum_venta_articulos_lista20        = array_sum(array_column($Array_articulos_lista20,'VentaVAL'));
 
         //RESTA LAS NOTAS DE CREDITO QUE TIENE LA RUTA AL MES APLICADO
-        $sum_venta_articulos_lista80 = Comision::NotasCredito($Mes,$Anno,$Ruta,"80",$sum_venta_articulos_lista80);
-        $sum_venta_articulos_lista20 = Comision::NotasCredito($Mes,$Anno,$Ruta,"20",$sum_venta_articulos_lista20);
+
+        $NotaCredito_val80 = abs(Comision::NotasCredito($Mes,$Anno,$Ruta,"80",0));
+        $NotaCredito_val20 = abs(Comision::NotasCredito($Mes,$Anno,$Ruta,"20",0));        
+
+        $sum_venta_articulos_lista80 = $sum_venta_articulos_lista80 - $NotaCredito_val80;
+        $sum_venta_articulos_lista20 = $sum_venta_articulos_lista20 - $NotaCredito_val20;
+
+        $NotaCredito_total = $NotaCredito_val80 + $NotaCredito_val20;
 
 
         $factor_comision_venta_lista20      = Comision::NivelFactorComision($count_articulos_lista20,$sum_venta_articulos_lista20);
@@ -185,10 +191,6 @@ class Comision extends Model{
         $RutaArray['Comision_de_venta']          = $Comision_de_venta ;
         $RutaArray['Totales_finales']            = $Totales_finales ;
         $RutaArray['Total_Compensacion']         = number_format(($Salariobasico + $Bono_de_cobertura + $ttComision),2,'.','');
-
-        $NotaCredito_val80 = abs(Comision::NotasCredito($Mes,$Anno,$Ruta,"80",0));
-        $NotaCredito_val20 = abs(Comision::NotasCredito($Mes,$Anno,$Ruta,"20",0));
-        $NotaCredito_total = $NotaCredito_val80 + $NotaCredito_val20;
 
         $RutaArray['NotaCredito_val80']          = $NotaCredito_val80 ;
         $RutaArray['NotaCredito_val20']          = $NotaCredito_val20 ;
