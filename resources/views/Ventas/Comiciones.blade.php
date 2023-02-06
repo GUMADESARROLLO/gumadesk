@@ -62,7 +62,7 @@
                               <div class="input-group-text bg-transparent" id="id_btn_new">
                                   <span class="fas fa-history fs--1 text-600"></span>
                               </div>
-                              <div class="input-group-text bg-transparent" id="btn_nota_credito">
+                              <div class="input-group-text bg-transparent" id="btn_nota_credito" style='display:none'>
                                   <span class="far fa-calendar-minus fs--1 text-600"></span>
                               </div>
                           </div>
