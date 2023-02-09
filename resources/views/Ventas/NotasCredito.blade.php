@@ -65,9 +65,9 @@
                             <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="id_select_year">
                                 @foreach (range(date('Y'),date('Y')-1) as $year)
                                   <option value="{{ $year }}" {{ $year == date('Y') ? 'selected' : '' }}>{{ $year }}</option>
-                                @endforeach  
+                                @endforeach 
                             </select>
-                              <div class="btn input-group-text bg-transparent" onClick="getFacturasRuta()" id="id_btn_new">
+                              <div class="input-group-text bg-transparent" onClick="getFacturasRuta()" id="id_btn_new">
                                   <span class="fas fa-history fs--1 text-600"></span>
                               </div>
                           </div>
