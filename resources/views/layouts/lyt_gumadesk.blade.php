@@ -37,6 +37,7 @@
     <link href="{{ asset('css/theme_gumadesk/css/theme.min.css') }}" rel="stylesheet" id="style-default">
     <link href="{{ asset('css/theme_gumadesk/css/user-rtl.min.css') }}" rel="stylesheet" id="user-style-rtl">
     <link href="{{ asset('css/theme_gumadesk/css/user.min.css') }}" rel="stylesheet" id="user-style-default">
+    <link href="{{ asset('css/theme_gumadesk/css/user.css') }}" rel="stylesheet" id="user-style-default">
     <link href="{{ asset('js/theme_gumadesk/vendors/choices/choices.min.css') }}" rel="stylesheet" >
     <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <script>

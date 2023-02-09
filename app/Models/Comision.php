@@ -31,7 +31,7 @@ class Comision extends Model{
         return $RutaArray;
     }
 
-    public static function CalcItems()
+    public static function CalcClose()
     {
 
         $Vendedor   = Vendedores::getVendedorComision();
@@ -42,9 +42,10 @@ class Comision extends Model{
             
             $Ruta   = $v['VENDEDOR'];
            // DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_articulo "'.$Ruta.'"');
-            DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_articulo_new "'.$Mes.'","'.$Anno.'","'.$Ruta.'"');
-            $Query_Articulos = 'EXEC PRODUCCION.dbo.fn_comision_calc_8020 "'.$Mes.'","'.$Anno.'","'.$Ruta.'", "'.'N/D'.'" ';
-            $Query_Clientes  = 'EXEC PRODUCCION.dbo.fn_comision_calc_BonoCobertura "'.$Mes.'","'.$Anno.'","'.$Ruta.'"';
+            //DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_articulo_new "'.$Mes.'","'.$Anno.'","'.$Ruta.'"');
+            DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_calc_8020_close "'.$Mes.'","'.$Anno.'","'.$Ruta.'", "'.'N/D'.'" ');
+            DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_calc_BonoCobertura_close "'.$Mes.'","'.$Anno.'","'.$Ruta.'"');
+            
             
         }
 
@@ -87,6 +88,8 @@ class Comision extends Model{
         
         $query      = DB::connection('sqlsrv')->select($Query_Articulos);
         $qCobertura = DB::connection('sqlsrv')->select($Query_Clientes);
+
+        
 
         
 

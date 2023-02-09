@@ -67,7 +67,9 @@
                                   <option value="{{ $year }}" {{ $year == date('Y') ? 'selected' : '' }}>{{ $year }}</option>
                                 @endforeach 
                             </select>
-                              <div class="input-group-text bg-transparent" onClick="getFacturasRuta()" id="id_btn_new">
+
+                              <div class="input-group-text bg-transparent" id="id_btn_search_history">
+
                                   <span class="fas fa-history fs--1 text-600"></span>
                               </div>
                           </div>
@@ -302,8 +304,6 @@
             <!-- ENTRADA PARA LA CANTIDAD -->
             <div class="form-group mt-4">
               <div class="input-group">
-              
-                    
                 <input type="date" class="form-control input-lg" id="nuevaFecha" name="nuevaFecha" required>    
               </div>
             </div>

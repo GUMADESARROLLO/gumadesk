@@ -97,7 +97,7 @@ Route::post('AddOneArticulo', 'VentasController@AddOneArticulo')->name('AddOneAr
 
 Route::get('Comiciones', 'HomeController@Comiciones')->name('Comiciones');
 Route::post('getHistoryItems', 'HomeController@getHistoryItems')->name('getHistoryItems');
-Route::get('CalcItems', 'HomeController@CalcItems')->name('CalcItems');
+Route::get('Close', 'HomeController@CalcClose')->name('Close');
 
 Route::get('NotasCredito', 'HomeController@NotasCredito')->name('NotasCredito');
 Route::get('getFacturasCreditos', 'HomeController@getFacturasCreditos')->name('getFacturasCreditos');

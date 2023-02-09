@@ -184,9 +184,9 @@ class HomeController extends Controller
         return view('Ventas.Comiciones',compact('Comision'));
     }
 
-    public function CalcItems()
+    public function CalcClose()
     {  
-        $Comision = Comision::CalcItems();
+        $Comision = Comision::CalcClose();
 
     }
 
