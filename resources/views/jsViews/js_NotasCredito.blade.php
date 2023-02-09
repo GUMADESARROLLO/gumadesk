@@ -8,7 +8,17 @@ $('#id_txt_buscar').on('keyup', function() {
 $("#tbl_credito_length").hide();
 $("#tbl_credito_filter").hide();
 
+
+$("#id_btn_search_history").click(function(){
+    if ( $("#id_spinner_load").hasClass('invisible') ) {
+        $("#id_spinner_load").removeClass('invisible');
+        $("#id_spinner_load").addClass('visible');
+    }
+    getFacturasRuta()
+})
 function getFacturasRuta(){
+   
+
     var mes = $('#id_select_mes').val();
     var anno = $('#id_select_year').val();
     var ruta = $('#select_vendedor').val();
@@ -39,6 +49,12 @@ function getFacturasRuta(){
                         "lengthMenu": "MOSTRAR _MENU_",
                         "emptyTable": "NO HAY COINCIDENCIAS",
                         "search":     "BUSCAR"
+                    },
+                    "footerCallback": function ( row, data, start, end, display ) {
+                        if ( $("#id_spinner_load").hasClass('visible') ) {
+                            $("#id_spinner_load").removeClass('visible');
+                            $("#id_spinner_load").addClass('invisible');
+                        }
                     },
                     'columns': [
                         {    "data": "VENDEDOR", "render": function(data, type, row, meta) {

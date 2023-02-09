@@ -184,9 +184,9 @@ class HomeController extends Controller
         return view('Ventas.Comiciones',compact('Comision'));
     }
 
-    public function CalcItems()
+    public function CalcClose()
     {  
-        $Comision = Comision::CalcItems();
+        $Comision = Comision::CalcClose();
 
     }
 
@@ -212,6 +212,7 @@ class HomeController extends Controller
         $ruta = $request->input('ruta');
         
         $facturas = FacturasRutas::where('nMes', $mes)->where('nYear', $anno)->where('VENDEDOR', $ruta)->get();
+
         return response()->json($facturas);
     }
 
