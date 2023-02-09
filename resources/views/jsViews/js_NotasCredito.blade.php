@@ -44,7 +44,7 @@ function getFacturasRuta(){
                         {    "data": "VENDEDOR", "render": function(data, type, row, meta) {
 
                             return  `<td class="align-middle ps-0 text-nowrap">
-                                        <div class="d-flex position-relative align-items-center"><img class="d-flex align-self-center me-2" src="" alt="" width="30" />
+                                        <div class="d-flex position-relative align-items-center">
                                         <div class="flex-1">
                                             <a id="exp_more" class="stretched-link exp_more" href="#!">
                                                 <h6 class="mb-0">FCT. `+row.FACTURA+` </h6>
@@ -108,7 +108,7 @@ function getNotaCredito(mes, anno, ruta){
                     {    "data": "RUTA", "render": function(data, type, row, meta) {
 
                         return  `<td class="align-middle ps-0 text-nowrap">
-                                    <div class="d-flex position-relative align-items-center"><img class="d-flex align-self-center me-2" src="../assets/img/logos/atlassian.png" alt="" width="30" />
+                                    <div class="d-flex position-relative align-items-center">
                                         <div class="flex-1"><a class="stretched-link" href="#!">
                                             <h6 class="mb-0">FCT. `+row.FACTURA+` </h6>
                                         </a>
@@ -218,7 +218,7 @@ function format ( callback, fact) {
             $.each(data, function (i, item) {
 
                 tbody +='<tr>'+
-                            '<td class="text-left"><a class="text-dark" href="#!" onClick="modalNota(`'+fact+'`,`'+item['ARTICULO'].toUpperCase()+'`)">' + item['DESCRIPCION'].toUpperCase() + '</a></td>'+
+                            '<td class="text-left"><a class="text-dark" href="#!" onClick="modalNota(`'+fact+'`,`'+item['ARTICULO']+'`)">'+ item['ARTICULO'] + ' | ' + item['DESCRIPCION'].toUpperCase() + '</a></td>'+
                             '<td class="text-center">' + numeral(item['CANTIDAD']).format('0,0') + '</td>'+                            
                             '<td class="text-right">c$ ' + numeral(item['PRECIO_UNITARIO']).format('0,0.00')  + '</td>'+
                             '<td class="text-right">c$ ' + numeral(item['PRECIO_TOTAL']).format('0,0.00')  + '</td>'+

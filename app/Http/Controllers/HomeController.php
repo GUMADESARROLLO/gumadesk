@@ -255,6 +255,10 @@ class HomeController extends Controller
                 $tipo = 1;
             }
 
+            $nMonth = $request->input('fecha');
+
+            $nMonth = date('n', strtotime($nMonth));
+
             $nCredito = new NotaCredito();
 
             $nCredito->RUTA         =   $ruta;
@@ -263,7 +267,7 @@ class HomeController extends Controller
             $nCredito->ARTICULO     =   $articulo;
             $nCredito->TIPO         =   $tipo;
             $nCredito->VALOR        =   $request->input('valor');
-            $nCredito->MES          =   $request->input('mes');
+            $nCredito->MES          =   $nMonth;
             $nCredito->ANNO         =   $request->input('anno');
             $nCredito->FECHAA       =   $request->input('fecha');
 
