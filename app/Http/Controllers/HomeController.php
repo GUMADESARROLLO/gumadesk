@@ -210,8 +210,10 @@ class HomeController extends Controller
         $mes = $request->input('mes');
         $anno = $request->input('anno');
         $ruta = $request->input('ruta');
+
+        $query = "select * from PRODUCCION.dbo.iweb4_facturas_por_rutas where vendedor = '".$ruta."' and nYear = ".$anno." and nMes = ".$mes;
         
-        $facturas = FacturasRutas::where('nMes', $mes)->where('nYear', $anno)->where('VENDEDOR', $ruta)->get();
+        $facturas = DB::connection('sqlsrv')->select($query);
         return response()->json($facturas);
     }
 
@@ -257,6 +259,7 @@ class HomeController extends Controller
 
             $nMonth = $request->input('fecha');
 
+            $nYear = date('Y', strtotime($nMonth));
             $nMonth = date('n', strtotime($nMonth));
 
             $nCredito = new NotaCredito();
@@ -268,7 +271,7 @@ class HomeController extends Controller
             $nCredito->TIPO         =   $tipo;
             $nCredito->VALOR        =   $request->input('valor');
             $nCredito->MES          =   $nMonth;
-            $nCredito->ANNO         =   $request->input('anno');
+            $nCredito->ANNO         =   $nYear;
             $nCredito->FECHAA       =   $request->input('fecha');
 
             if($tipo == 0){
