@@ -20,7 +20,7 @@ class Vendedores extends Model
         $i = 0;
         $json = array();
 
-        $Rutas = Vendedores::whereNotIn('VENDEDOR',['F01','F02','F04'])->get();
+        $Rutas = Vendedores::whereNotIn('VENDEDOR',['F01','F02','F04','F24'])->get();
         
         foreach($Rutas as $ruta){
 
