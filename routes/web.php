@@ -100,3 +100,9 @@ Route::post('getHistoryItems', 'HomeController@getHistoryItems')->name('getHisto
 Route::get('CalcItems', 'HomeController@CalcItems')->name('CalcItems');
 
 Route::get('NotasCredito', 'HomeController@NotasCredito')->name('NotasCredito');
+Route::get('getFacturasCreditos', 'HomeController@getFacturasCreditos')->name('getFacturasCreditos');
+
+Route::get('getNotasCreditos', 'HomeController@getNotasCreditos')->name('getNotasCreditos');
+Route::get('getDetallesFactura', 'HomeController@getDetallesFactura')->name('getDetallesFactura');
+Route::get('postNuevoNotaCredito', 'HomeController@postNuevoNotaCredito')->name('postNuevoNotaCredito');
+Route::get('deleteNotaCredito', 'HomeController@deleteNotaCredito')->name('deleteNotaCredito');

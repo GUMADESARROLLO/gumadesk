@@ -12,6 +12,9 @@ use App\Models\Consignados;
 use Illuminate\Support\Facades\DB;
 use App\Models\Vendedores;
 use App\Models\Comision;
+use App\Models\FacturaDetalle;
+use App\Models\FacturasRutas;
+use App\Models\NotaCredito;
 use Exception;
 
 class HomeController extends Controller
@@ -201,5 +204,100 @@ class HomeController extends Controller
     public function NotasCredito(){
         $Vendedores = Vendedores::getVendedor();
         return view('Ventas.NotasCredito',compact('Vendedores'));
+    }
+
+    public function getFacturasCreditos(Request $request){
+        $mes = $request->input('mes');
+        $anno = $request->input('anno');
+        $ruta = $request->input('ruta');
+        
+        $facturas = FacturasRutas::where('nMes', $mes)->where('nYear', $anno)->where('VENDEDOR', $ruta)->get();
+        return response()->json($facturas);
+    }
+
+    public function getNotasCreditos(Request $request){
+        $mes = $request->input('mes');
+        $anno = $request->input('anno');
+        $ruta = $request->input('ruta');
+
+        $facturas = NotaCredito::where('MES', $mes)->where('ANNO', $anno)->where('RUTA', $ruta)->get();
+        return response()->json($facturas);
+    }
+
+    public function getDetallesFactura(Request $request)
+    {
+        $Factura = $request->input('factura');
+
+        $response = FacturaDetalle::getDetalles($Factura);
+        return response()->json($response);
+    }
+
+    public function postNuevoNotaCredito(Request $request){
+        try {
+            
+            $ruta = $request->input('ruta');
+            $nota = $request->input('notaC');
+            $factura = $request->input('factura');
+            $articulo = $request->input('articulo');
+            $tipo = 0;
+            $resp = '';
+
+            $sql = "SELECT Lista FROM PRODUCCION.dbo.table_articulo_comisiones WHERE VENDEDOR = '".$ruta."'"." AND ARTICULO = '".$articulo."'";
+            $query = DB::connection('sqlsrv')->select($sql);
+
+            if(count($query) > 0){
+                $tipo = $query[0]->Lista;
+            }
+            
+            $consult = NotaCredito::where('FACTURA', $factura)->where('ARTICULO', $articulo)->where('NOTACREDITO', $nota)->get();
+
+            if(count($consult) > 0){
+                $tipo = 1;
+            }
+
+            $nCredito = new NotaCredito();
+
+            $nCredito->RUTA         =   $ruta;
+            $nCredito->NOTACREDITO  =   $nota;
+            $nCredito->FACTURA      =   $factura;
+            $nCredito->ARTICULO     =   $articulo;
+            $nCredito->TIPO         =   $tipo;
+            $nCredito->VALOR        =   $request->input('valor');
+            $nCredito->MES          =   $request->input('mes');
+            $nCredito->ANNO         =   $request->input('anno');
+            $nCredito->FECHAA       =   $request->input('fecha');
+
+            if($tipo == 0){
+                $resp = 'no';
+                
+             }else if($tipo == 80 || $tipo == 20){
+                $nCredito->save();
+                $resp = 'ok';
+             }else if($tipo == 1){
+                $resp = 'si';
+             }
+            return response()->json($resp);
+        } catch (Exception $e) {
+            $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
+
+            return response()->json($mensaje);
+        }
+    }
+
+    public function deleteNotaCredito(Request $request)
+    {
+        $articulo = $request->input('articulo');
+        $nota     = $request->input('nota');
+        try {
+
+            $response =   NotaCredito::where('ARTICULO',  $articulo)->where('NOTACREDITO', $nota)->delete();
+
+            return response()->json($response);
+
+
+        } catch (Exception $e) {
+            $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
+            return response()->json($mensaje);
+        }
     }
 }
