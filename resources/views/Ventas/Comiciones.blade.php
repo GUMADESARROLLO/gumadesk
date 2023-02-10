@@ -43,9 +43,11 @@
                     </form>                            
                     </div>
                     <div class="col-8 col-sm-auto text-end ">
-                      <div class="row g-3 needs-validation" >
-                      <div class="col-md-auto">
-                          <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="id_select_status">
+                    <form id="frm_send" action="ComicionesConsulta">  
+                    <div class="row g-3 needs-validation" >
+                      
+                        <div class="col-md-auto">
+                          <select class="form-select form-select-sm" name='name_month' aria-label=".form-select-sm example" id="id_select_month">
                             
                           @for ($i = 1; $i <= 12; $i++)
                             <option value="{{ $i }}" {{ $i == date('m') ? 'selected' : '' }}>{{ Carbon\Carbon::createFromFormat('m', $i)->monthName }}</option>
@@ -54,7 +56,7 @@
                         </div>
                         <div class="col-md-auto">
                           <div class="input-group" >
-                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="id_select_sac">
+                            <select class="form-select form-select-sm" name='name_year' aria-label=".form-select-sm example" id="id_select_year">
                                 @foreach (range(date('Y'),date('Y')-1) as $year)
                                   <option value="{{ $year }}" {{ $year == date('Y') ? 'selected' : '' }}>{{ $year }}</option>
                                 @endforeach  
@@ -66,17 +68,17 @@
                                   <span class="far fa-calendar-minus fs--1 text-600"></span>
                               </div>
                           </div>
-                        </div> 
-                        
+                        </div>                         
                         <div class="col-md-auto">
-                          <select class="form-select form-select-sm"  id="frm_lab_row">                                          
-                            <option selected="" value="5">5</option>
-                            <option value="10">10</option>
+                          <select class="form-select form-select-sm"  id="frm_lab_row">    
+                            <option selected="" value="10">10</option>
                             <option value="20">20</option>
                             <option value="-1">*</option>
                           </select>
                         </div> 
+                        
                       </div>
+                      </form>
                     </div>
                   </div>
                 </div> 

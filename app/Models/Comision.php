@@ -149,11 +149,12 @@ class Comision extends Model{
         //RESTA LAS NOTAS DE CREDITO QUE TIENE LA RUTA AL MES APLICADO
 
         $NotaCredito_val80 = abs(Comision::NotasCredito($Mes,$Anno,$Ruta,"80",0));
-        $NotaCredito_val20 = abs(Comision::NotasCredito($Mes,$Anno,$Ruta,"20",0));        
+        $NotaCredito_val20 = abs(Comision::NotasCredito($Mes,$Anno,$Ruta,"20",0));            
+
 
         $sum_venta_articulos_lista80 = $sum_venta_articulos_lista80 - $NotaCredito_val80;
         $sum_venta_articulos_lista20 = $sum_venta_articulos_lista20 - $NotaCredito_val20;
-
+ 
         $NotaCredito_total = $NotaCredito_val80 + $NotaCredito_val20;
 
 

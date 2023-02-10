@@ -96,6 +96,8 @@ Route::post('AddOneArticulo', 'VentasController@AddOneArticulo')->name('AddOneAr
 
 
 Route::get('Comiciones', 'HomeController@Comiciones')->name('Comiciones');
+Route::get('ComicionesConsulta', 'HomeController@ComicionesConsulta')->name('ComicionesConsulta');
+
 Route::post('getHistoryItems', 'HomeController@getHistoryItems')->name('getHistoryItems');
 Route::get('Close', 'HomeController@CalcClose')->name('Close');
 

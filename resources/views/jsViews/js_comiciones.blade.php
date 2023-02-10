@@ -10,7 +10,10 @@
         ADD_ITEM_RUTA: '#modl_view_detalles_ruta',
     };
 
-    
+    $("#id_btn_new").click(function(){
+       
+        $( "#frm_send" ).submit();
+    })
     
     // INICIALIZA LA DATATABLE CON LOS VALORES POR DEFECTO 
     $("#table_comisiones").DataTable({
@@ -18,8 +21,8 @@
         "info": false,
         "bPaginate": true,
         "lengthMenu": [
-            [7 -1],
-            [7, "Todo"]
+            [10 -1],
+            [10, "Todo"]
         ],
         "language": {
             "zeroRecords": "NO HAY COINCIDENCIAS",
@@ -203,5 +206,10 @@
         }
 
     }
+
+    if ( $("#id_spinner_load").hasClass('visible') ) {
+            $("#id_spinner_load").removeClass('visible');
+            $("#id_spinner_load").addClass('invisible');
+        }
     
 </script>

@@ -16,6 +16,8 @@ $("#id_btn_search_history").click(function(){
     }
     getFacturasRuta()
 })
+
+
 function getFacturasRuta(){
 
     var mes = $('#id_select_mes').val();
