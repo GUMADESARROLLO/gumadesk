@@ -175,12 +175,24 @@ class HomeController extends Controller
     }
     public function Comiciones()
     {  
-        $Mes   = '1';
-        $Anno   = '2023';
+        $Mes   = date('n');
+        $Anno   = date('Y');
 
         $Comision = Comision::getData($Mes,$Anno);
+        return view('Ventas.Comiciones',compact('Comision'));
+    }
 
-        //return response()->json($Comision);
+    public function ComicionesConsulta(Request $request)
+    {  
+       
+
+        $m           = $request->input('name_month');
+        $y            = $request->input('name_year');
+        
+        $Comision = Comision::getData($m,$y);
+
+        
+        
         return view('Ventas.Comiciones',compact('Comision'));
     }
 

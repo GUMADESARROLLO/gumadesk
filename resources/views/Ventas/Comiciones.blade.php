@@ -43,9 +43,11 @@
                     </form>                            
                     </div>
                     <div class="col-8 col-sm-auto text-end ">
-                      <div class="row g-3 needs-validation" >
-                      <div class="col-md-auto">
-                          <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="id_select_status">
+                    <form id="frm_send" action="ComicionesConsulta">  
+                    <div class="row g-3 needs-validation" >
+                      
+                        <div class="col-md-auto">
+                          <select class="form-select form-select-sm" name='name_month' aria-label=".form-select-sm example" id="id_select_month">
                             
                           @for ($i = 1; $i <= 12; $i++)
                             <option value="{{ $i }}" {{ $i == date('m') ? 'selected' : '' }}>{{ Carbon\Carbon::createFromFormat('m', $i)->monthName }}</option>
@@ -54,7 +56,7 @@
                         </div>
                         <div class="col-md-auto">
                           <div class="input-group" >
-                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="id_select_sac">
+                            <select class="form-select form-select-sm" name='name_year' aria-label=".form-select-sm example" id="id_select_year">
                                 @foreach (range(date('Y'),date('Y')-1) as $year)
                                   <option value="{{ $year }}" {{ $year == date('Y') ? 'selected' : '' }}>{{ $year }}</option>
                                 @endforeach  
@@ -66,17 +68,17 @@
                                   <span class="far fa-calendar-minus fs--1 text-600"></span>
                               </div>
                           </div>
-                        </div> 
-                        
+                        </div>                         
                         <div class="col-md-auto">
-                          <select class="form-select form-select-sm"  id="frm_lab_row">                                          
-                            <option selected="" value="5">5</option>
-                            <option value="10">10</option>
+                          <select class="form-select form-select-sm"  id="frm_lab_row">    
+                            <option selected="" value="10">10</option>
                             <option value="20">20</option>
                             <option value="-1">*</option>
                           </select>
                         </div> 
+                        
                       </div>
+                      </form>
                     </div>
                   </div>
                 </div> 
@@ -116,7 +118,7 @@
                                   <img class="rounded-circle" src="{{ asset('images/user/avatar-4.jpg') }}"   />
                                 </div>
                                   <div class="flex-1 ms-3">
-                                    <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900 fw-semi-bold" href="#!" onclick="OpenModal('{{ strtoupper($cms['VENDEDOR']) }}')" ><div class="stretched-link text-900">{{ strtoupper($cms['NOMBRE']) }}</div></a></h6>
+                                    <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900 fw-semi-bold" href="#!" onclick="OpenModal('{{ strtoupper($cms['ZONA']) }}','{{ strtoupper($cms['VENDEDOR']) }}','{{ strtoupper($cms['NOMBRE']) }}')" ><div class="stretched-link text-900">{{ strtoupper($cms['NOMBRE']) }}</div></a></h6>
                                     <p class="text-500 fs--2 mb-0">{{ strtoupper($cms['VENDEDOR']) }} | {{ strtoupper($cms['ZONA']) }} </p>
                                   </div>
                               </div>
@@ -317,28 +319,40 @@
                 </div>
                 <button class="btn-close btn-close-white position-absolute top-0 end-0 mt-2 me-2" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <div class="modal-body py-4 px-5 ">
+              <div class="modal-body ">
                 <div class="row">
 
                   <div class="row flex-between-center">
                     <div class="col-auto">
-                      <h6 class="mb-2">Resumen</h6>
+                      <div class="d-flex align-items-center position-relative mt-0">
+                        <div class="avatar avatar-xl ">
+                          <img class="rounded-circle" src="{{ asset('images/user/avatar-4.jpg') }}"   />
+                        </div>
+                          <div class="flex-1 ms-3">
+                            <h6 class="mb-0 fw-semi-bold">
+                              <a class="stretched-link text-900 fw-semi-bold" href="#!" >
+                                <div class="stretched-link text-900" id='nombre_ruta_modal'>NOMBRE DEL VENDEDOR</div>
+                              </a>
+                            </h6>
+                            <p class="text-500 fs--2 mb-0"id='nombre_ruta_zona_modal'>F00 | ZONA DE LA RUTA</p>
+                          </div>
+                      </div>
                     </div>
                     <div class="col-auto mt-2">
                       <div class="row g-sm-4">
                       <div class="col-12 col-sm-auto">
                           <div class="mb-3 pe-4 border-sm-end border-200">
-                            <h6 class="fs--2 text-600 mb-1">SKUS</h6>
+                            <h6 class="fs--2 text-600 mb-1">SKUS 80%</h6>
                             <div class="d-flex align-items-center">
-                              <h5 class="fs-0 text-900 mb-0 me-2" id="id_list_80">0</h5><span class="badge rounded-pill badge-soft-primary"><span class="fas fa-caret-up"></span> 80 %</span>
+                              <h5 class="fs-0 text-900 mb-0 me-2" id="id_list_80">0</h5><span class="badge rounded-pill badge-soft-primary" id="id_prom_ls80"> 80 %</span>
                             </div>
                           </div>
                         </div>
                         <div class="col-12 col-sm-auto">
                           <div class="mb-3 pe-4 border-sm-end border-200">
-                            <h6 class="fs--2 text-600 mb-1">SKUS</h6>
+                            <h6 class="fs--2 text-600 mb-1">SKUS 20%</h6>
                             <div class="d-flex align-items-center">
-                              <h5 class="fs-0 text-900 mb-0 me-2" id="id_list_20">0</h5><span class="badge rounded-pill badge-soft-primary"><span class="fas fa-caret-up"></span> 20 %</span>
+                              <h5 class="fs-0 text-900 mb-0 me-2" id="id_list_20">0</h5><span class="badge rounded-pill badge-soft-primary" id="id_prom_ls20" >20 %</span>
                             </div>
                           </div>
                         </div>
