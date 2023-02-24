@@ -1,0 +1,29 @@
+Table promocion {
+  id int(10) [pk, increment] 
+  Titulo varchar(100)
+  fecha_ini date
+  fecha_end date
+  Ruta varchar(10)
+
+  estado int(5)
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table promocion_detalles {
+  id int(10) [pk, increment] 
+  id_promocin int(10)
+  Articulo varchar(10)
+  Descripcion varchar(150)
+  Precio decimal(10,4)
+  NuevaBonificacion varchar (150)
+  ValorVinneta varchar(10)
+  ValMeta decimal(10,4)
+  MetaUnd int(10)
+
+  estado int(5)
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: "promocion"."id" < "promocion_detalles"."id_promocin"
