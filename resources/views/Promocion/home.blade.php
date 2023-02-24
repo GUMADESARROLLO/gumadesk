@@ -108,7 +108,7 @@
                             <td>
                               <div class="pe-4 border-sm-end border-200 mt-2">
                                 <div class="flex-1">
-                                    <h6 class="mb-0 fw-semi-bold"><a href="#!" onclick="OpenModal({{$p->Detalles}} )" >{{ $p->Titulo }} </div></a></h6>
+                                    <h6 class="mb-0 fw-semi-bold"><a href="#!" onclick="OpenModal({{$p}} )" >{{ $p->Titulo }} </div></a></h6>
                                     
                                     <p class="text-500 fs--2 mb-0">{{$p->id}} | Items ({{count($p->Detalles)}})</p>
                                   </div>
@@ -119,7 +119,8 @@
                             <div class="pe-4 border-sm-end border-200">
                                 <h6 class="fs--2 text-600 mb-1">Inicia</h6>
                                 <div class="d-flex align-items-center">
-                                  <h5 class="fs-0 text-900 mb-0 me-2">{{ date('D, M d, Y', strtotime($p->fecha_ini))  }} </h5>
+                                  
+                                  <span class="badge rounded-pill bg-primary" onclick="DateChance(0,{{$p}})" >{{ date('D, M d, Y', strtotime($p->fecha_ini))  }}  <span class="ms-1 fas fa-pencil-alt"></span></span> </h5>
                                 </div>
                               </div> 
                             </td>
@@ -128,7 +129,8 @@
                               <div class="pe-4 border-sm-end border-200">
                                 <h6 class="fs--2 text-600 mb-1">Termina</h6>
                                 <div class="d-flex align-items-center">
-                                  <h5 class="fs-0 text-900 mb-0 me-2">{{ date('D, M d, Y', strtotime($p->fecha_end))  }} </h5>
+                                  <h5 class="fs-0 text-900 mb-0 me-2" >
+                                  <span class="badge rounded-pill bg-primary" onclick="DateChance(1,{{$p}})" >{{ date('D, M d, Y', strtotime($p->fecha_end))  }}  <span class="ms-1 fas fa-pencil-alt"></span></span> </h5>
                                 </div>
                               </div> 
                             </td>
@@ -146,7 +148,7 @@
                             </td>
                             <td class="text-center">
                                 <div class=" mt-2">
-                                    <button class="btn p-0 ms-2" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><span class="text-500 fas fa-trash-alt"></span></button>
+                                    <button class="btn p-0 ms-2" type="button" data-bs-toggle="tooltip" data-bs-placement="top" onclick="rmPromo({{$p->id}})" title="Delete"><span class="text-500 fas fa-trash-alt"></span></button>
                                 </div>
                             </td>
 
@@ -177,9 +179,17 @@
             <div class="modal-dialog modal-xl mt-6" role="document">
                 <div class="modal-content border-0">
                 <div class="modal-header px-5 position-relative modal-shape-header bg-shape">
-                    <div class="position-relative z-index-1 light">
-                    <p class="fs--1 mb-0 text-white">AGREGAR UN ARTICULO A LA PROMOCION</p>
-                    </div>
+                  <div class="position-relative z-index-1 light">
+                      <div class="flex-1">
+                          <h6 class="mb-0 fw-semi-bold">
+                          <a class="stretched-link text-900 fw-semi-bold" href="#!" >
+                              <div class="stretched-link text-white" id='id_lbl_nombre'>NOMBRE DE LA PROMOCION </div>
+                          </a>
+                          </h6>
+                          <p class="text-white fs--2 mb-0"id='id_lbl_fechas'>00/00/0000 al 00/00/0000</p>
+                          <span id="id_num_prom" style="display:none"></span>
+                      </div>
+                  </div>
                     <button class="btn-close btn-close-white position-absolute top-0 end-0 mt-2 me-2" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body ">
@@ -187,26 +197,26 @@
                             <div class="row flex-between-center">
                                 <div class="col-auto">
                                     <div class="d-flex align-items-center position-relative mt-0">
-                                        <div class="avatar avatar-xl ">
-                                            <img class="rounded-circle" src="{{ asset('images/user/avatar-4.jpg') }}"   />
-                                        </div>
-                                    <div class="flex-1 ms-3">
+                                      <div class="avatar avatar-xl ">
+                                        <img class="rounded-circle" src="{{ asset('images/user/avatar-4.jpg') }}"   />
+                                      </div>
+                                      <div class="flex-1 ms-3">
                                         <h6 class="mb-0 fw-semi-bold">
                                         <a class="stretched-link text-900 fw-semi-bold" href="#!" >
-                                            <div class="stretched-link text-900" id='nombre_ruta_modal'>NOMBRE DEL VENDEDOR</div>
+                                            <div class="stretched-link text-900" id='nombre_ruta_modal'>NOMBRE DE LA PROMOCION </div>
                                         </a>
                                         </h6>
-                                        <p class="text-500 fs--2 mb-0"id='nombre_ruta_zona_modal'>F00 | ZONA DE LA RUTA</p>
+                                        <p class="text-500 fs--2 mb-0"id='nombre_ruta_zona_modal'>00/00/0000 al 00/00/0000</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-auto mt-2">
+                            <div class="col-auto">
                                 <div class="row g-sm-4">
                                     <div class="col-12 col-sm-auto">
                                         <div class="mb-3 pe-4 border-sm-end border-200">
                                             <h6 class="fs--2 text-600 mb-1">Meta Val</h6>
                                             <div class="d-flex align-items-center">
-                                            <h5 class="fs-0 text-900 mb-0 me-2" id="id_list_80">C$ 0.00</h5>
+                                            <h5 class="fs-0 text-900 mb-0 me-2" id="id_ttMetaValor">C$ 0.00</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -214,7 +224,7 @@
                                         <div class="mb-3 pe-4 border-sm-end border-200">
                                             <h6 class="fs--2 text-600 mb-1">Venta</h6>
                                         <div class="d-flex align-items-center">
-                                            <h5 class="fs-0 text-900 mb-0 me-2" id="id_list_20">C$ 0.00</h5>
+                                            <h5 class="fs-0 text-900 mb-0 me-2" id="id_ttVenta">C$ 0.00</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -222,7 +232,7 @@
                                     <div class="mb-3 pe-4 border-sm-end border-200">
                                         <h6 class="fs--2 text-600 mb-1">META UND</h6>
                                         <div class="d-flex align-items-center">
-                                            <h5 class="fs-0 text-900 mb-0 me-2" id="id_Meta_UND">0.00</h5>
+                                            <h5 class="fs-0 text-900 mb-0 me-2" id="id_ttMetaUND">0.00</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -230,7 +240,7 @@
                                 <div class="mb-3 pe-0">
                                     <h6 class="fs--2 text-600 mb-1">VENTA UND</h6>
                                     <div class="d-flex align-items-center">
-                                    <h5 class="fs-0 text-900 mb-0 me-2" id="UND">0.00</h5>
+                                    <h5 class="fs-0 text-900 mb-0 me-2" id="id_ttVentaUND">0.00</h5>
                                     </div>
                                 </div>
                                 </div>
@@ -242,7 +252,7 @@
                                 
                                 <div class="col-9">
                                     <div class="">                                        
-                                        <select class="form-select form-select-sm js-choice"  size="1" name="organizerSingle" data-options='{"removeItemButton":true,"placeholder":true}'>                                
+                                        <select class="form-select form-select-sm js-choice"  size="1" id="id_item" name="organizerSingle" data-options='{"removeItemButton":true,"placeholder":true}'>                                
                                             @foreach ($Articulos as $Art)
                                                 <option value="{{$Art->ARTICULO}}">{{$Art->ARTICULO}} | {{strtoupper($Art->DESCRIPCION)}}</option>
                                             @endforeach
@@ -251,7 +261,7 @@
                                 </div>
 
                                 <div class="col-2">
-                                    <select class="form-select" id="eventLabel" name="label">
+                                    <select class="form-select" id="id_periodo" name="label">
                                         <option value="" selected="selected">Periodo</option>
                                         <option value="3">3M</option>
                                         <option value="6">6M</option>
@@ -268,21 +278,25 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-md-3">
-                                    <label class="form-label" for="inputEmail4">C$. Precio</label>
-                                    <input class="form-control" id="inputEmail4" type="text" />
+                                <div class="col-md-2">
+                                    <label class="form-label" for="id_precio">C$. Precio</label>
+                                    <input class="form-control" id="id_precio" type="text" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label" for="id_vinneta">C$. Viñeta</label>
+                                    <input class="form-control" id="id_vinneta" type="text" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label" for="id_precio">Bonificado</label>
+                                    <input class="form-control" id="id_bonificado" type="text" />
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-label" for="inputPassword4">Bonificado</label>
-                                    <input class="form-control" id="inputPassword4" type="text" />
+                                    <label class="form-label" for="id_meta_unidades">Meta Unidades</label>
+                                    <input class="form-control" id="id_meta_unidades" type="text" />
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-label" for="inputEmail4">Meta Unidades</label>
-                                    <input class="form-control" id="inputEmail4" type="text" />
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-label" for="inputPassword4">Meta Valor C$.</label>
-                                    <input class="form-control" id="inputPassword4" type="text" />
+                                    <label class="form-label" for="id_meta_valor">Meta Valor C$.</label>
+                                    <input class="form-control" id="id_meta_valor" type="text" />
                                 </div>
                               </div>                    
                         </div>     

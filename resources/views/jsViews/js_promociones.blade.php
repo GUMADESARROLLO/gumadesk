@@ -14,7 +14,65 @@
     $("#id_btn_add_promocion").click(function(){
         AddPromocion()
     })
-    
+
+    $("#id_save_item").click(function(){
+        var Articulos       = $("#id_item").val();
+        var Periodo         = $("#id_periodo").val();
+        var Precio          = $("#id_precio").val();
+        var Vinneta         = $("#id_vinneta").val();
+        var Bonificado      = $("#id_bonificado").val();
+        var MetaUnidades    = $("#id_meta_unidades").val();
+        var MetaValor       = $("#id_meta_valor").val();
+        var IdPromo         = $("#id_num_prom").text();
+
+       
+
+        if (Articulos =='' || Periodo =='' || Precio == '' || Bonificado == ''|| MetaUnidades == '' || MetaValor == ''|| Vinneta == '') {
+      
+            Swal.fire({
+                title: 'Tiene Información pendiente',
+                icon: 'success',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'OK'
+            }).then((result) => {                 
+                
+            })    
+        }else{
+            $.ajax({
+                url: "SaveDetalles",
+                type: 'GET',
+                data: {
+                    IdPromo         : IdPromo,
+                    Articulos       : Articulos,
+                    Periodo         : Periodo,
+                    Precio          : Precio,
+                    Vinneta         : Vinneta,
+                    Bonificado      : Bonificado,
+                    MetaUnidades    : MetaUnidades,
+                    MetaValor       : MetaValor
+                },
+                async: true,
+                success: function(response) {
+                    
+                    Swal.fire({
+                        title: 'Articuloa guardado',
+                        icon: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {   
+                        getDetalles(IdPromo)
+                    })
+                }
+            })
+        }
+
+      
+    })
+
     // INICIALIZA LA DATATABLE CON LOS VALORES POR DEFECTO 
     $("#table_promociones").DataTable({
         "destroy": true,
@@ -72,8 +130,96 @@
         var modal = new window.bootstrap.Modal(addMultiRow);
         modal.show();
     }
-    function OpenModal(Obj){
+    function OpenModal(Promo){
+        var addMultiRow = document.querySelector(Selectors.ADD_ITEM_RUTA);
+        var modal = new window.bootstrap.Modal(addMultiRow);
+        modal.show();
+
         
+        $('#id_num_prom').html(Promo.id);
+        $('#id_lbl_nombre').html(Promo.Titulo);
+        
+        $('#nombre_ruta_modal').html(Promo.vendor.NOMBRE);        
+        $('#nombre_ruta_zona_modal').html(Promo.vendor.VENDEDOR + " | " + Promo.zona.Zona);
+        $('#id_lbl_fechas').html("Valido desde " + Promo.fecha_ini + " al " + Promo.fecha_end);
+        
+        //BluidTable(Detalles)
+        getDetalles(Promo.id)
+    }
+    function getDetalles(IdPromo) {
+        $.ajax({
+                url: "getDetalles",
+                type: 'GET',
+                data: {
+                    IdPromo         : IdPromo
+                },
+                async: true,
+                success: function(response) {
+                    BluidTable(response)
+                }
+            })
+    }
+    function DateChance(nTitulo,Obj){
+        let flatpickrInstance
+        let lblTitulos      = ['Fecha Inicio','Fecha Termina']
+        var now             = (nTitulo == 0)? Obj.fecha_ini : Obj.fecha_end
+
+        
+        Swal.fire({
+            title: lblTitulos[nTitulo],
+            html: '<input class="form-control " id="id_frm" placeholder="0000/00/00" value="'+now+'" >',
+            
+            stopKeydownPropagation: false,
+                preConfirm: (value) => {
+
+                    var dtDate = moment(flatpickrInstance.selectedDates[0]).format(FormatDate);
+                    sData = {
+                        id      : Obj.id,
+                        valor   : dtDate,
+                        Campo   : nTitulo,
+                        _token  : "{{ csrf_token() }}" 
+                    }
+                    UpdateFechas(sData)
+
+                },
+                willOpen: () => {
+                    flatpickrInstance = flatpickr(Swal.getPopup().querySelector('#id_frm'))
+                }
+        })
+    }
+    function UpdateFechas(dtInfo){
+        $.ajax({
+            url: "./updtFechas",
+            type: 'post',
+            data: dtInfo,
+            async: true,
+            success: function(response) {
+                if(response.original){
+                    Swal.fire({
+                        title: 'Informacion Actualizada',
+                        icon: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'OK'
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                            }
+                        })
+
+                }
+                
+            },
+            error: function(response) {
+                Swal.fire("Oops", "No se ha podido guardar!", "error");
+            }
+        }).done(function(data) {
+            //CargarDatos(nMes,annio);
+        });
+    }
+
+    function BluidTable(Obj) {
         data_array = Obj
         dta_table_header = [
             {"title": "Index","data": "id"},
@@ -90,7 +236,7 @@
                 "render": function(data, type, row, meta) {
                 return `<div class="pe-4 border-sm-end border-200">                                    
                                     <div class="d-flex align-items-center">
-                                        <h5 class="fs-0 text-900 mb-0 me-2">`+ row.Precio +` </h5>
+                                        <h5 class="fs-0 text-900 mb-0 me-2">`+ numeral(row.Precio).format('0,0,00.00')  +` </h5>
                                     </div>
                                 </div> `
             }},
@@ -106,7 +252,7 @@
                 "render": function(data, type, row, meta) {
                 return `<div class="pe-4 border-sm-end border-200">
                                     <div class="d-flex align-items-center">
-                                        <h5 class="fs-0 text-900 mb-0 me-2">`+ row.ValorVinneta +` </h5>
+                                        <h5 class="fs-0 text-900 mb-0 me-2">`+  numeral(row.ValorVinneta).format('0,0,00.00')  +` </h5>
                                     </div>
                                 </div> `
             }},
@@ -114,7 +260,7 @@
                 "render": function(data, type, row, meta) {
                 return `<div class="pe-4 border-sm-end border-200">
                                     <div class="d-flex align-items-center">
-                                        <h5 class="fs-0 text-900 mb-0 me-2">0.00 </h5>
+                                        <h5 class="fs-0 text-900 mb-0 me-2">`+ numeral(row.Promedio_VAL).format('0,0,00.00') +`</h5>
                                     </div>
                                 </div> `
             }},
@@ -122,7 +268,7 @@
                 "render": function(data, type, row, meta) {
                 return `<div class="pe-4 border-sm-end border-200">
                                     <div class="d-flex align-items-center">
-                                        <h5 class="fs-0 text-900 mb-0 me-2">`+ row.ValMeta +` </h5>
+                                        <h5 class="fs-0 text-900 mb-0 me-2">`+  numeral(row.ValMeta).format('0,0,00.00') +` </h5>
                                     </div>
                                 </div> `
             }},
@@ -131,7 +277,7 @@
                 return `<div class="pe-4 border-sm-end border-200">
                                     
                                     <div class="d-flex align-items-center">
-                                        <h5 class="fs-0 text-900 mb-0 me-2">0.00 </h5>
+                                        <h5 class="fs-0 text-900 mb-0 me-2">`+  numeral(row.Venta).format('0,0,00.00') +` </h5>
                                     </div>
                                 </div> `
             }},
@@ -139,7 +285,7 @@
                 "render": function(data, type, row, meta) {
                 return `<div class="pe-4 border-sm-end border-200">
                                     <div class="d-flex align-items-center">
-                                    <span class="badge rounded-pill badge-soft-primary">99.99%</span>
+                                    <span class="badge rounded-pill badge-soft-primary">`+  numeral(row.PromVenta).format('0,0,00.00') +`%</span>
                                     </div>
                                 </div>`
             }},
@@ -148,7 +294,7 @@
                 "render": function(data, type, row, meta) {
                 return `<div class="pe-4 border-sm-end border-200">
                                     <div class="d-flex align-items-center">
-                                        <h5 class="fs-0 text-900 mb-0 me-2">100</h5>
+                                        <h5 class="fs-0 text-900 mb-0 me-2">`+ row.Promedio_UND +`</h5>
                                     </div>
                                 </div> `
             }},
@@ -164,7 +310,7 @@
                 "render": function(data, type, row, meta) {
                 return `<div class="pe-4 border-sm-end border-200">
                                     <div class="d-flex align-items-center">
-                                        <h5 class="fs-0 text-900 mb-0 me-2">100 </h5>
+                                        <h5 class="fs-0 text-900 mb-0 me-2"> `+ row.VentaUND +` </h5>
                                     </div>
                                 </div> `
             }},
@@ -172,19 +318,28 @@
                 "render": function(data, type, row, meta) {
                 return `<div class="pe-4 border-sm-end border-200">
                                     <div class="d-flex align-items-center">
-                                    <span class="badge rounded-pill badge-soft-primary">99.99%</span>
+                                    <span class="badge rounded-pill badge-soft-primary">`+ row.PromVentaUND +` %</span>
                                     </div>
                                 </div>`
             }},
+            {"title": '',"data": "",
+                "render": function(data, type, row, meta) {
+                return ` <div class="pe-4 border-sm-end border-200">
+                            <button class="btn p-0 ms-2" type="button" data-bs-toggle="tooltip" data-bs-placement="top" onclick="RemoveOrden(`+ row.id +`,`+ row.id_promocion +`)" title="Delete"><span class="text-500 fas fa-trash-alt"></span></button>
+                        </div>`
+            }},
+
+            
         ]
         table_render('#tbl_excel',data_array,dta_table_header,false)
-
-        var addMultiRow = document.querySelector(Selectors.ADD_ITEM_RUTA);
-        var modal = new window.bootstrap.Modal(addMultiRow);
-        modal.show();
     }
 
     function table_render(Table,datos,Header,Filter){
+        
+        var txt_ttMetaValor = 0 ;
+        var txt_ttVenta     = 0 ;
+        var txt_ttMetaUND   = 0 ;
+        var txt_ttVentaUND  = 0 ;
 
         $(Table).DataTable({
             "data": datos,
@@ -217,12 +372,22 @@
                     "searchable": false,
                     "targets": [0]
                 },
+                { "width":"150%", "targets": [ 1 ] }
             ],
-            "createdRow": function( row, data, dataIndex ) {
-            if ( data.VentaUND > '0.00') {        
-                $(row).addClass('table-success');
-                    }
+            "createdRow": function( row, data, dataIndex ) {    
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                    i.replace(/[^0-9.]/g, '')*1 :
+                    typeof i === 'number' ?
+                    i : 0;
+                };
+                txt_ttMetaValor += intVal(data.ValMeta)
+                txt_ttVenta += intVal(data.MetaUnd)
+                txt_ttMetaUND += intVal(data.MetaUnd)
+                txt_ttVentaUND += intVal(data.MetaUnd)
+                
 
+              
             },
             rowCallback: function( row, data, index ) {
                 if ( data.Index < 0 ) {
@@ -230,11 +395,81 @@
                 } 
             }
         });
+        $('#id_ttMetaValor').text("C$ " + numeral(txt_ttMetaValor).format('0,0.00'));
+        $('#id_ttVenta').text("C$ " + numeral(txt_ttVenta).format('0,0.00'));
+        $('#id_ttMetaUND').text("C$ " + numeral(txt_ttMetaUND).format('0,0.00'));
+        $('#id_ttVentaUND').text("C$ " + numeral(txt_ttVentaUND).format('0,0.00'));
         if(!Filter){
             $(Table+"_length").hide();
             $(Table+"_filter").hide();
         }
 
+    }
+
+    function RemoveOrden(id,IdPromocion){
+        Swal.fire({
+            title: '¿Estas Seguro de borrar el Comentario?',
+            text: "¡Esta acción no podrá ser revertida!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si!',
+            target:"",
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                $.ajax({
+                    url: "DeleteItems",
+                    type: 'post',
+                    data: {
+                        id      : id,
+                        _token  : "{{ csrf_token() }}" 
+                    },
+                    async: true,
+                    success: function(response) {
+                        getDetalles(IdPromocion)
+                    },
+                    error: function(response) {
+                    }
+                }).done(function(data) {
+                    
+                });
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        });
+    }
+
+    function rmPromo(id){
+        Swal.fire({
+            title: '¿Estas Seguro de borrar el Comentario?',
+            text: "¡Esta acción no podrá ser revertida!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si!',
+            target:"",
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                $.ajax({
+                    url: "rmPromocion",
+                    type: 'post',
+                    data: {
+                        id      : id,
+                        _token  : "{{ csrf_token() }}" 
+                    },
+                    async: true,
+                    success: function(response) {
+                        location.reload();
+                    },
+                    error: function(response) {
+                    }
+                }).done(function(data) {
+                    
+                });
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        });
     }
 
     if ( $("#id_spinner_load").hasClass('visible') ) {

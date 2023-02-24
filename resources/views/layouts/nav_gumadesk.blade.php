@@ -24,7 +24,8 @@
         <a class="dropdown-item" href="{{ route('ventas') }}"><span class="fas fa-calendar"></span><span> Articulos</span></a>
 
         @if(Session::get('rol') == '1')
-        <a class="dropdown-item" href="{{ route('Comiciones') }}"><span class="fas fa-calendar"></span><span> Comisión</span></a>
+        <a class="dropdown-item" href="{{ route('Comiciones') }}"><span class="fas fa-calendar"></span><span>Comisión</span></a>
+        <a class="dropdown-item" href="{{ route('Promocion') }}"><span class="fas fa-calendar"></span><span> Promociones</span></a>
         @endif
         <div class="dropdown-divider"></div>
         <a href="{{ route('logout') }}" class="dropdown-item" >Salir

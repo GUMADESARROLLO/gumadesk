@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Promocion;
+use App\Models\PromocionDetalle;
 use App\Models\Vendedores;
 use App\Models\Articulos;
 use Illuminate\Http\Request;
@@ -38,33 +39,37 @@ class PromocionController extends Controller
     }
 
     public function SavePromo(Request $request)
-    {
-
-        try {
-            DB::transaction(function () use ($request) {
-
-                $Titulo     = $request->input('PromoName');
-                $RutaCode   = $request->input('RutaCode');
-                $PromoIni   = date('Y-m-d', strtotime($request->input('PromoIni')));
-                $PromoEnd   = date('Y-m-d', strtotime($request->input('PromoEnd')));
-                $Estado     = 1;
-
-
-                $promo = new Promocion();
-                    
-                $promo->Titulo      =   $Titulo;
-                $promo->fecha_ini   =   $PromoIni;
-                $promo->fecha_end   =   $PromoEnd;  
-                $promo->estado      =   $Estado;  
-                $promo->Ruta        =   $RutaCode;       
-                $promo->save();             
-                
-                return redirect()->to('Promocion')->send();
-            });
-        } catch (Exception $e) {
-            $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
-
-            return response()->json($mensaje);
-        }
+    {   
+        $response = Promocion::SavePromo($request);
+        return response()->json($response);
     }
+
+    public function SaveDetalles(Request $request)
+    {
+        $response = PromocionDetalle::SaveDetalles($request);
+        return response()->json($response);
+    }
+    public function getDetalles(Request $request)
+    {
+        $Id = $request->input('IdPromo');
+
+        $response = PromocionDetalle::getDetalles($Id);
+        return response()->json($response);
+    }
+    public function DeleteItems(Request $request)
+    {
+        $response = PromocionDetalle::DeleteDetalle($request);
+        return response()->json($response);
+    }
+    public function rmPromocion(Request $request)
+    {
+        $response = Promocion::rmPromocion($request);
+        return response()->json($response);
+    }
+    public function updtFechas(Request $request)
+    {
+        $response = Promocion::updtFechas($request);
+        return response()->json($response);
+    }
+    
 }
