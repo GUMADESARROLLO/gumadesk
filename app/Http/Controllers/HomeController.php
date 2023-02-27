@@ -173,6 +173,7 @@ class HomeController extends Controller
             return response()->json($mensaje);
         } 
     }
+    
     public function Comiciones()
     {  
         $Mes   = date('n');
@@ -190,8 +191,7 @@ class HomeController extends Controller
         $y            = $request->input('name_year');
         
         $Comision = Comision::getData($m,$y);
-
-        
+                
         
         return view('Ventas.Comiciones',compact('Comision'));
     }

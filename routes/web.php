@@ -108,3 +108,11 @@ Route::get('getNotasCreditos', 'HomeController@getNotasCreditos')->name('getNota
 Route::get('getDetallesFactura', 'HomeController@getDetallesFactura')->name('getDetallesFactura');
 Route::get('postNuevoNotaCredito', 'HomeController@postNuevoNotaCredito')->name('postNuevoNotaCredito');
 Route::get('deleteNotaCredito', 'HomeController@deleteNotaCredito')->name('deleteNotaCredito');
+
+Route::get('Promocion', 'PromocionController@getPromocion')->name('Promocion');
+Route::get('SavePromo', 'PromocionController@SavePromo')->name('SavePromo');
+Route::get('SaveDetalles', 'PromocionController@SaveDetalles')->name('SaveDetalles');
+Route::get('getDetalles', 'PromocionController@getDetalles')->name('getDetalles');
+Route::post('DeleteItems', 'PromocionController@DeleteItems')->name('DeleteItems');
+Route::post('rmPromocion', 'PromocionController@rmPromocion')->name('rmPromocion');
+Route::post('updtFechas', 'PromocionController@updtFechas')->name('updtFechas');
