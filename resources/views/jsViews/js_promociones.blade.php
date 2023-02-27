@@ -172,7 +172,7 @@
             stopKeydownPropagation: false,
                 preConfirm: (value) => {
 
-                    var dtDate = moment(flatpickrInstance.selectedDates[0]).format(FormatDate);
+                    var dtDate = moment(flatpickrInstance.selectedDates[0]).format('YYYY-MM-DD');
                     sData = {
                         id      : Obj.id,
                         valor   : dtDate,
