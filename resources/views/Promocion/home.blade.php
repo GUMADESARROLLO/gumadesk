@@ -280,23 +280,23 @@
                                 
                                 <div class="col-md-2">
                                     <label class="form-label" for="id_precio">C$. Precio</label>
-                                    <input class="form-control" id="id_precio" type="text" />
+                                    <input class="form-control" id="id_precio" type="number" placeholder="0.00" min="0" />
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label" for="id_vinneta">C$. Viñeta</label>
-                                    <input class="form-control" id="id_vinneta" type="text" />
+                                    <input class="form-control" id="id_vinneta" type="number" placeholder="0.00" min="0" />
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label" for="id_precio">Bonificado</label>
-                                    <input class="form-control" id="id_bonificado" type="text" />
+                                    <input class="form-control" id="id_bonificado" type="text" placeholder="0+0"/>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label" for="id_meta_unidades">Meta Unidades</label>
-                                    <input class="form-control" id="id_meta_unidades" type="text" />
+                                    <input class="form-control" id="id_meta_unidades" type="number" placeholder="0" min="0" />
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label" for="id_meta_valor">Meta Valor C$.</label>
-                                    <input class="form-control" id="id_meta_valor" type="text" />
+                                    <input class="form-control" id="id_meta_valor" type="number" placeholder="0.00" min="0" />
                                 </div>
                               </div>                    
                         </div>     

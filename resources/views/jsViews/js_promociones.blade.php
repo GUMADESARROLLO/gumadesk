@@ -57,13 +57,20 @@
                 success: function(response) {
                     
                     Swal.fire({
-                        title: 'Articuloa guardado',
+                        title: 'Articulo guardado',
                         icon: 'success',
                         showCancelButton: false,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
                         confirmButtonText: 'OK'
                     }).then((result) => {   
+                        $("#id_item").val('');
+                        $("#id_periodo").val('');
+                        $("#id_precio").val('');
+                        $("#id_vinneta").val('');
+                        $("#id_bonificado").val('');
+                        $("#id_meta_unidades").val('');
+                        $("#id_meta_valor").val('')
                         getDetalles(IdPromo)
                     })
                 }
