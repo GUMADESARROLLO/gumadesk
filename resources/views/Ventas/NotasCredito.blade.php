@@ -53,7 +53,7 @@
                           </select>
                         </div>
                         <div class="col-md-auto">
-                          <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="id_select_status">
+                          <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="id_select_mes">
                             
                           @for ($i = 1; $i <= 12; $i++)
                             <option value="{{ $i }}" {{ $i == date('m') ? 'selected' : '' }}>{{ Carbon\Carbon::createFromFormat('m', $i)->monthName }}</option>
@@ -62,12 +62,14 @@
                         </div>
                         <div class="col-md-auto">
                           <div class="input-group" >
-                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="id_select_sac">
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="id_select_year">
                                 @foreach (range(date('Y'),date('Y')-1) as $year)
                                   <option value="{{ $year }}" {{ $year == date('Y') ? 'selected' : '' }}>{{ $year }}</option>
-                                @endforeach  
+                                @endforeach 
                             </select>
-                              <div class="input-group-text bg-transparent" id="id_btn_new">
+
+                              <div class="input-group-text bg-transparent" id="id_btn_search_history">
+
                                   <span class="fas fa-history fs--1 text-600"></span>
                               </div>
                           </div>
@@ -104,24 +106,10 @@
                         </div>
                         <div class="card-body py-0">
                             <div class="table-responsive scrollbar">
-                                <table class="table table-dashboard mb-0 fs--1">
-                                <?php for ($i=0; $i < 10; $i++) { ?>
-                                <tr>
-                                    <td class="align-middle ps-0 text-nowrap">
-                                    <div class="d-flex position-relative align-items-center"><img class="d-flex align-self-center me-2" src="../assets/img/logos/atlassian.png" alt="" width="30" />
-                                        <div class="flex-1"><a class="stretched-link" href="#!">
-                                            <h6 class="mb-0">FCT. 00000 </h6>
-                                        </a>
-                                        <p class="mb-0">0000 - NOMBRE DEL CLIENTE</p>
-                                        </div>
-                                    </div>
-                                    </td>
-                                    <td class="align-middle px-4 text-end text-nowrap" style="width:1%;">
-                                        <h6 class="mb-0">C$290.00 NIO</h6>
-                                        <p class="fs--2 mb-0">15 May, 2020</p>
-                                    </td>
-                                </tr>
-                                <?php } ?>
+                                <table class="table table-dashboard mb-0 fs--1" id="tbl_facturas">
+                                  <tbody>
+                                    <tr><td><b>REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS</b></td></tr>
+                                  </tbody>
                                 </table>
                             </div>
                         </div>
@@ -147,39 +135,21 @@
                                 <div class="col-auto d-flex">
                                 <div class="form-check mb-0 d-flex">
                                     <input class="form-check-input form-check-input-primary" id="ecommerceLastMonth" type="checkbox" checked="checked" />
-                                    <label class="form-check-label ps-2 fs--2 text-600 mb-0" for="ecommerceLastMonth">80 %<span class="text-dark d-none d-md-inline">: C$ 32,502.00</span></label>
+                                    <label class="form-check-label ps-2 fs--2 text-600 mb-0" for="ecommerceLastMonth">80 %:<span class="text-dark d-none d-md-inline" id="tipo80">C$ 0</span></label>
                                 </div>
                                 <div class="form-check mb-0 d-flex ps-0 ps-md-3">
                                     <input class="form-check-input ms-2 form-check-input-warning opacity-75" id="ecommercePrevYear" type="checkbox" checked="checked" />
-                                    <label class="form-check-label ps-2 fs--2 text-600 mb-0" for="ecommercePrevYear">20 % <span class="text-dark d-none d-md-inline">: C$ 46,018.00</span></label>
+                                    <label class="form-check-label ps-2 fs--2 text-600 mb-0" for="ecommercePrevYear">20 %: <span class="text-dark d-none d-md-inline" id="tipo20">C$ 0</span></label>
                                 </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body py-0">
                             <div class="table-responsive scrollbar">
-                                <table class="table table-dashboard mb-0 fs--1">
-                                <?php for ($i=0; $i < 10; $i++) { ?>
-                                <tr>
-                                    <td class="align-middle ps-0 text-nowrap">
-                                    <div class="d-flex position-relative align-items-center"><img class="d-flex align-self-center me-2" src="../assets/img/logos/atlassian.png" alt="" width="30" />
-                                        <div class="flex-1"><a class="stretched-link" href="#!">
-                                            <h6 class="mb-0">FCT. 00000 </h6>
-                                        </a>
-                                        <p class="mb-0">0000 - NOMBRE DEL CLIENTE</p>
-                                        </div>
-                                    </div>
-                                    </td>
-                                    <td class="align-middle px-4" style="width:1%;"><span class="badge fs--1 w-100 badge-soft-success">N/C: 0000 </span></td>
-                                    <td class="align-middle px-4 text-end text-nowrap" style="width:1%;">
-                                    <h6 class="mb-0">C$ 290.00 NIO </h6>
-                                    <p class="fs--2 mb-0">15 May, 2020</p>
-                                    </td>
-                                    <td class="align-middle ps-4 pe-1" style="width: 130px; min-width: 130px;">
-                                    <div class="icon-item icon-item-sm border rounded-3 shadow-none me-2"><span class="fas fa-window-close text-primary"></span></div>
-                                    </td>
-                                </tr>
-                                <?php } ?>
+                                <table class="table table-dashboard mb-0 fs--1" id="tbl_credito">
+                                  <tbody>
+                                    <td><b>REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS</b></td>
+                                  </tbody>
                                 </table>
                             </div>
                         </div>
@@ -283,5 +253,71 @@
         </div>
       
     </div>
+
+    <div class="modal fade" id="modalC" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header position-relative modal-shape-header bg-shape">
+            <div class="position-relative z-index-1 light">
+              <p class="fs--1 mb-0 text-white" id="mFact" cFact="0"></p>
+              <p class="fs--1 mb-0 text-black" style="display: none;" id="mValor"></p>
+              <p class="fs--1 mb-0 text-black" style="display: none;" id="mArt"></p>
+            </div>
+          </div>
+          <div class="modal-body">
+              <!--<div class="row col-md-12">
+                <div class="col-9 mt-2">
+                  <p class="fs--1 mb-0 text-black" id="mFact"></p>
+                </div>
+                <div class="col-3 mt-2" style="text-align: right;">
+                  <p class="fs--1 mb-0 text-black" id="mValor"></p>
+                </div>
+              </div>
+              <p class="fs--1 mb-0 text-black" id="mClien"></p>-->
+              <!-- ENTRADA PARA LA NOTA DE CREDITO -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+                <div class="input-group-text bg-transparent">
+                    <span class="fas fa-file-invoice fs--1 text-600"></span>
+                </div>
+
+                <input type="text" class="form-control input-lg" id="mCredit" name="guardarNCredito" placeholder="N/C" value="" required>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA CANTIDAD -->
+            <div class="form-group mt-4">
+              <div class="input-group">
+              <div class="input-group-text bg-transparent">
+                    <span class="fas fa-dollar-sign fs--1 text-600"></span>
+                </div>
+                    
+                  <input type="number" class="form-control input-lg" min="0" id="nuevoValor" name="nuevoValor" placeholder="0" required>
+    
+              </div>
+            </div>
+
+            <!-- ENTRADA PARA LA CANTIDAD -->
+            <div class="form-group mt-4">
+              <div class="input-group">
+                <input type="date" class="form-control input-lg" id="nuevaFecha" name="nuevaFecha" required>    
+              </div>
+            </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary pull-left close" id="closeM">Salir</button>
+
+              <button type="button" class="btn btn-primary" id="guardarNCredito">Guardar</button>
+        </div>
+        </div>
+      </div>
+  </div>
 </main>
+
+
 @endsection('content')

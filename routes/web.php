@@ -96,7 +96,23 @@ Route::post('AddOneArticulo', 'VentasController@AddOneArticulo')->name('AddOneAr
 
 
 Route::get('Comiciones', 'HomeController@Comiciones')->name('Comiciones');
+Route::get('ComicionesConsulta', 'HomeController@ComicionesConsulta')->name('ComicionesConsulta');
+
 Route::post('getHistoryItems', 'HomeController@getHistoryItems')->name('getHistoryItems');
-Route::get('CalcItems', 'HomeController@CalcItems')->name('CalcItems');
+Route::get('Close', 'HomeController@CalcClose')->name('Close');
 
 Route::get('NotasCredito', 'HomeController@NotasCredito')->name('NotasCredito');
+Route::get('getFacturasCreditos', 'HomeController@getFacturasCreditos')->name('getFacturasCreditos');
+
+Route::get('getNotasCreditos', 'HomeController@getNotasCreditos')->name('getNotasCreditos');
+Route::get('getDetallesFactura', 'HomeController@getDetallesFactura')->name('getDetallesFactura');
+Route::get('postNuevoNotaCredito', 'HomeController@postNuevoNotaCredito')->name('postNuevoNotaCredito');
+Route::get('deleteNotaCredito', 'HomeController@deleteNotaCredito')->name('deleteNotaCredito');
+
+Route::get('Promocion', 'PromocionController@getPromocion')->name('Promocion');
+Route::get('SavePromo', 'PromocionController@SavePromo')->name('SavePromo');
+Route::get('SaveDetalles', 'PromocionController@SaveDetalles')->name('SaveDetalles');
+Route::get('getDetalles', 'PromocionController@getDetalles')->name('getDetalles');
+Route::post('DeleteItems', 'PromocionController@DeleteItems')->name('DeleteItems');
+Route::post('rmPromocion', 'PromocionController@rmPromocion')->name('rmPromocion');
+Route::post('updtFechas', 'PromocionController@updtFechas')->name('updtFechas');

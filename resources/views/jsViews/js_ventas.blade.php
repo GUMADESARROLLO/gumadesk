@@ -121,11 +121,8 @@
             });
 
     });
-    $("#id_send_filtros").click(function(){
-        var var_nMes   = $("#IdSelectMes option:selected").val();           
-        var var_annio  = $("#IdSelectAnnio option:selected").val()
-
-    })
+   
+    
     function AddArticulos(ARTICULOS){
 
         var var_lista   = $("#id_list_add_arti option:selected").val();

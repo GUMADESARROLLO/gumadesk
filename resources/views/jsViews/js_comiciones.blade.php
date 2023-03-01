@@ -10,7 +10,10 @@
         ADD_ITEM_RUTA: '#modl_view_detalles_ruta',
     };
 
-    
+    $("#id_btn_new").click(function(){
+       
+        $( "#frm_send" ).submit();
+    })
     
     // INICIALIZA LA DATATABLE CON LOS VALORES POR DEFECTO 
     $("#table_comisiones").DataTable({
@@ -18,8 +21,8 @@
         "info": false,
         "bPaginate": true,
         "lengthMenu": [
-            [7 -1],
-            [7, "Todo"]
+            [10 -1],
+            [10, "Todo"]
         ],
         "language": {
             "zeroRecords": "NO HAY COINCIDENCIAS",
@@ -62,7 +65,9 @@
 
     
 
-    function OpenModal(Ruta){
+    function OpenModal(Zona,Ruta,Nombre){
+
+        
         
         var addMultiRow = document.querySelector(Selectors.ADD_ITEM_RUTA);
         var modal = new window.bootstrap.Modal(addMultiRow);
@@ -73,14 +78,21 @@
         var MetaUND     = 0;
         var Item80      = 0;
         var Item20      = 0;
+        var ItemC80     = 0;
+        var ItemC20     = 0;
+
+        var nMes        = $("#id_select_month").val();
+        var nYer        = $("#id_select_year").val();   
+
+        console.log()
 
         $.ajax({
             type: 'post',
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             data: {
                 ruta    : Ruta,
-                mes     : 1,
-                annio   : 2023
+                mes     : nMes,
+                annio   : nYer
             },
             url: 'getHistoryItems', 
             async: false,
@@ -92,26 +104,50 @@
 
                     dta_table_header = [
                         {"title": "Index","data": "ROW_ID"}, 
-                        {"title": "Articulo","data": "ARTICULO"},
-                        {"title": "Descrip.","data": "DESCRIPCION"},                        
-                        {"title": "P.UNIT","data": "Venta"},                         
-                        {"title": "APORTE","data": "Aporte"},          
+                        {"title": "Articulo","data": "ARTICULO",
+                            "render": function(data, type, row, meta) {
+                            return `<div class="d-flex align-items-center position-relative ">
+                                    <div class="flex-1">
+                                        <h6 class="mb-0 fw-semi-bold">
+                                            <a class="stretched-link text-900 fw-semi-bold" href="#!" >
+                                                <div class="stretched-link text-900">`+ row.DESCRIPCION +`</div>
+                                            </a>
+                                        </h6>
+                                        <p class="text-500 fs--2 mb-0">`+ row.ARTICULO +` </p>
+                                    </div>
+                                </div>`
+                        }},
                         {"title": "SKU","data": "Lista"},                         
-                        {"title": "META UND","data": "MetaUND"},                         
-                        {"title": "VENTA UND","data": "VentaUND"},
-                        {"title": "VENTA VAL","data": "VentaVAL"},                         
-                        {"title": "CUM%","data": "Cumple"},                         
-                        {"title": "CUM META","data": "isCumpl"} 
+                        {"title": "META","data": "MetaUND","render": function(data, type, row, meta) {return data + ' UND'}},                         
+                        {"title": "VENTA","data": "VentaUND","render": function(data, type, row, meta) {return data + ' UND'}}, 
+                        {"title": "VENTAS","data": "VentaVAL","render": function(data, type, row, meta) {
+                            return `<div class="pe-4">
+                                <div class="d-flex align-items-center">
+                                  <h5 class="fs-0 text-900 mb-0 me-2">C$ `+ row.VentaVAL +`</h5>
+                                  <span class="badge rounded-pill badge-soft-primary">`+ row.Cumple +` %</span>
+                                </div>
+                              </div>`
+                        }},
+                        {"title": "CUMPLIO","data": "isCumpl","render": function(data, type, row, meta) {
+                            var lbl = '';
+                            if ( row.isCumpl == 'SI' ) {
+                                lbl = '<span class="badge badge rounded-pill d-block p-2 badge-soft-primary">Cumplio<span class="ms-1 fas fa-dollar-sign" data-fa-transform="shrink-2"></span></span>'
+                            } 
+                            return lbl
+                        }}, 
                     ]
                     
                     $.each(data,function(key, registro) {
 
-                        
-                        ventaValor  += parseFloat(registro.VentaVAL.replace(/,/g, ''), 10);
+                        ventaValor  += parseFloat(numeral(registro.VentaVAL).format('00.00'));
                         VentaUND    += parseFloat(registro.VentaUND.replace(/,/g, ''), 10); 
                         MetaUND     += parseFloat(registro.MetaUND.replace(/,/g, ''), 10);   
+
                         Item80      +=  (registro.Lista==80)? 1 : 0
                         Item20      +=  (registro.Lista==20)? 1 : 0
+
+                        ItemC80     +=  (registro.Lista==80 && registro.VentaUND > '0.00')? 1 : 0
+                        ItemC20     +=  (registro.Lista==20 && registro.VentaUND > '0.00')? 1 : 0
                         
                         dta_table_excel.push({ 
                             ROW_ID: registro.ROW_ID,
@@ -143,8 +179,22 @@
                     $("#id_Meta_UND").text(MetaUND)
 
 
-                    $("#id_list_80").text(Item80)
-                    $("#id_list_20").text(Item20)
+                    $("#id_list_80").text(ItemC80 + " / " + Item80 )
+                    $("#id_list_20").text(ItemC20 + " / " + Item20)
+
+                    var v80 = (((ItemC80 / Item80 ) * 100) )
+                    var v20 = (((ItemC20 / Item20 ) * 100) )
+
+                    v80 = numeral(v80).format('0,0,00.00')
+                    v20 = numeral(v20).format('0,0,00.00')
+
+                    $("#id_prom_ls80").text(v80+" %")
+                    $("#id_prom_ls20").text(v20+" %")
+
+                    $("#nombre_ruta_modal").text(Nombre)
+                    $("#nombre_ruta_zona_modal").text(Ruta + " | " + Zona)
+
+                    
 
 
     
@@ -191,6 +241,12 @@
                     "targets": [0]
                 },
             ],
+            "createdRow": function( row, data, dataIndex ) {
+            if ( data.VentaUND > '0.00') {        
+                $(row).addClass('table-success');
+                    }
+
+            },
             rowCallback: function( row, data, index ) {
                 if ( data.Index < 0 ) {
                     $(row).addClass('table-danger');
@@ -203,5 +259,10 @@
         }
 
     }
+
+    if ( $("#id_spinner_load").hasClass('visible') ) {
+            $("#id_spinner_load").removeClass('visible');
+            $("#id_spinner_load").addClass('invisible');
+        }
     
 </script>
