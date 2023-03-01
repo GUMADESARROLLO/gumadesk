@@ -228,7 +228,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
 
-        'sql_server' => App\Libraries\Sql_server::class,
+       
 
     ],
 

@@ -623,10 +623,10 @@ function RangeStat(D1,D2){
                             type: 'get',
                             async: true,
                             success: function(response) {
-                                swal("Exito!", "Guardado exitosamente", "success");
+                                Swal.fire("Exito!", "Guardado exitosamente", "success");
                             },
                             error: function(response) {
-                                swal("Oops", "No se ha podido guardar!", "error");
+                                Swal.fire("Oops", "No se ha podido guardar!", "error");
                             }
                         }).done(function(data) {
                             RangeStat(startOfMonth,endOfMonth)
