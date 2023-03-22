@@ -223,7 +223,7 @@ class HomeController extends Controller
         $anno = $request->input('anno');
         $ruta = $request->input('ruta');
 
-        $query = "select * from PRODUCCION.dbo.iweb4_facturas_por_rutas where vendedor = '".$ruta."' and nYear = ".$anno." and nMes = ".$mes;
+        $query = "select * from PRODUCCION.dbo.iweb4_facturas_por_rutas where nYear = ".$anno;
         
         $facturas = DB::connection('sqlsrv')->select($query);
         return response()->json($facturas);
@@ -253,7 +253,7 @@ class HomeController extends Controller
             $nota = $request->input('notaC');
             $factura = $request->input('factura');
             $articulo = $request->input('articulo');
-            $tipo = 0;
+            $tipo = 20;
             $resp = '';
 
             $sql = "SELECT Lista FROM PRODUCCION.dbo.table_articulo_comisiones WHERE VENDEDOR = '".$ruta."'"." AND ARTICULO = '".$articulo."'";
