@@ -124,6 +124,8 @@
                 return ($.type(is_return) == 'boolean' && is_return === true ? value : true);
             }
         }
+
+        
     </script>
 
     

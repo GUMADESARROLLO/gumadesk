@@ -15,52 +15,98 @@
 
             
 
-            <div class="col-12">
-              
-              <div class="card h-100">
-                
-                <div class="card-header">
-                  <div class="row flex-between-center">
-                    <div class="col-4 col-sm-auto d-flex align-items-center">
-                    <form class="row align-items-center g-3">
-                      <div class="col-auto"><h6 class="text-700 mb-0"> </h6></div>
-                      <div class="col-md-auto position-relative" style="display:none">
-                        <span class="fas fa-calendar-alt text-primary position-absolute translate-middle-y ms-2 mt-3"> </span>
-                        <input id="id_range_select" class="form-control form-control-sm datetimepicker ps-4" type="text" data-options='{"mode":"range","dateFormat":"Y-m-d","disableMobile":true}'/>
-                      </div>
-                      <div class="col-md-auto">
-                          <div class="input-group" >
 
-                              
-                              
-                              <div class="input-group-text bg-transparent">
-                                  <span class="fa fa-search fs--1 text-600"></span>
+            <div class="row mt-3">
+                <div class="col-xxl-7 col-lg-6">
+                  
+                    <div class="card overflow-hidden">
+                    <div class="card-header">
+                      <div class="row flex-between-center">
+                        
+                        <div class="col-auto col-sm-6 col-lg-7">
+                          <h6 class="mb-0 text-nowrap py-2 py-xl-0">Busca la Factura que necesita.</h6>
+                        </div>
+                        <div class="col-auto col-sm-6 col-lg-5">
+                          <div class="h-100">
+                            
+                              <div class="input-group">
+                                <input id="id_txt_buscar" class="form-control form-control-sm shadow-none search" type="search" placeholder="Buscar con el codigo de Factura." aria-label="search" />
+                                <div class="input-group-text bg-transparent"><span class="fa fa-search fs--1 text-600"></span></div>
                               </div>
-                              
-                              <input class="form-control form-control-sm shadow-none search" type="search" placeholder="Buscar..." aria-label="search" id="id_txt_buscar" />
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                        <div class="card-body py-0">
+                            <div class="table-responsive scrollbar">
+                                <table class="table table-dashboard mb-0 fs--1" id="tbl_facturas">
+                                  <tbody>
+                                    <tr><td><b>SIN RESULTADO</b></td></tr>
+                                  </tbody>
+                                </table>
                             </div>
                         </div>
-                    </form>                            
+                        <div class="card-footer bg-light py-2">
+                            <div class="row flex-between-center">
+                                <div class="col-auto">
+                                
+                                </div>
+                                <div class="col-auto"></div>
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="col-8 col-sm-auto text-end ">
-                      <div class="row g-3 needs-validation" >
-                      <div class="col-md-auto">
-                          <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select_vendedor">
-                            
+                </div>
+
+                <div class="col-xxl-5 col-lg-6">
+                  
+                    <div class="card overflow-hidden">
+                    <div class="card-header">
+                      
+                      <div class="row flex-between-center">
+                        
+                        <div class="col-auto">
+                          <h6 class="mb-2">Notas de Credistos</h6>
+                        </div>
+                        <div class="col-auto mt-2">
+                          <div class="row g-sm-4">
+                            <div class="col-12 col-sm-auto">
+                              <div class="mb-3 pe-4 border-sm-end border-200">
+                                <h6 class="fs--2 text-600 mb-1">NC del 80%</h6>
+                                <div class="d-flex align-items-center">
+                                  <h5 class="fs-0 text-900 mb-0 me-2" id="tipo80">C$ 0.00</h5><span class="badge rounded-pill badge-soft-primary"><span class="fas fa-caret-up"></span> 80%</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-auto">
+                              <div class="mb-3 pe-0">
+                                <h6 class="fs--2 text-600 mb-1">NC del 20%</h6>
+                                <div class="d-flex align-items-center">
+                                  <h5 class="fs-0 text-900 mb-0 me-2"id="tipo20">C$ 0.00</h5><span class="badge rounded-pill badge-soft-primary"><span class="fas fa-caret-up"></span> 20%</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row flex-between-center">
+                      <div class="row" >
+                        <div class="col-6">
+                          <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select_vendedor">                            
                             @foreach ($Vendedores as $vendedor)
                                 <option value="{{$vendedor['VENDEDOR']}}">{{$vendedor['VENDEDOR']}} | {{strtoupper($vendedor['NOMBRE'])}}</option>
                             @endforeach
                           </select>
                         </div>
-                        <div class="col-md-auto">
-                          <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="id_select_mes">
-                            
-                          @for ($i = 1; $i <= 12; $i++)
-                            <option value="{{ $i }}" {{ $i == date('m') ? 'selected' : '' }}>{{ Carbon\Carbon::createFromFormat('m', $i)->monthName }}</option>
-                          @endfor
+                        <div class="col-3">
+                          <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="id_select_mes">                            
+                            @for ($i = 1; $i <= 12; $i++)
+                              <option value="{{ $i }}" {{ $i == date('m') ? 'selected' : '' }}>{{ Carbon\Carbon::createFromFormat('m', $i)->monthName }}</option>
+                            @endfor
                           </select>
                         </div>
-                        <div class="col-md-auto">
+                        <div class="col-3">
                           <div class="input-group" >
                             <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="id_select_year">
                                 @foreach (range(date('Y'),date('Y')-5) as $year)
@@ -78,72 +124,11 @@
 
                        
                         
-                        <div class="col-md-auto">
-                          <select class="form-select form-select-sm"  id="frm_lab_row">                                          
-                            <option selected="" value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="-1">*</option>
-                          </select>
-                        </div> 
+                    
                       </div>
-                    </div>
-                  </div>
-                </div> 
-               
-                
-              
-                
-              </div>
-            </div>
-
-            <div class="row mt-3">
-                <div class="col-xxl-6 col-lg-6">
-                    <div class="card overflow-hidden">
-                        <div class="card-header d-flex flex-between-center bg-light py-2">
-                            <h6 class="mb-0">Facturas</h6>
-                            
-                        </div>
-                        <div class="card-body py-0">
-                            <div class="table-responsive scrollbar">
-                                <table class="table table-dashboard mb-0 fs--1" id="tbl_facturas">
-                                  <tbody>
-                                    <tr><td><b>REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS</b></td></tr>
-                                  </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-light py-2">
-                            <div class="row flex-between-center">
-                                <div class="col-auto">
-                                
-                                </div>
-                                <div class="col-auto"></div>
-                            </div>
-                        </div>
+                      </div>
 
                     </div>
-                </div>
-
-                <div class="col-xxl-6 col-lg-6">
-                    <div class="card overflow-hidden">
-                        <div class="card-header">
-                            <div class="row flex-between-center g-0">
-                                <div class="col-auto">
-                                <h6 class="mb-0">Notas de Credito</h6>
-                                </div>
-                                <div class="col-auto d-flex">
-                                <div class="form-check mb-0 d-flex">
-                                    <input class="form-check-input form-check-input-primary" id="ecommerceLastMonth" type="checkbox" checked="checked" />
-                                    <label class="form-check-label ps-2 fs--2 text-600 mb-0" for="ecommerceLastMonth">80 %:<span class="text-dark d-none d-md-inline" id="tipo80">C$ 0</span></label>
-                                </div>
-                                <div class="form-check mb-0 d-flex ps-0 ps-md-3">
-                                    <input class="form-check-input ms-2 form-check-input-warning opacity-75" id="ecommercePrevYear" type="checkbox" checked="checked" />
-                                    <label class="form-check-label ps-2 fs--2 text-600 mb-0" for="ecommercePrevYear">20 %: <span class="text-dark d-none d-md-inline" id="tipo20">C$ 0</span></label>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="card-body py-0">
                             <div class="table-responsive scrollbar">
                                 <table class="table table-dashboard mb-0 fs--1" id="tbl_credito">
