@@ -219,11 +219,9 @@ class HomeController extends Controller
     }
 
     public function getFacturasCreditos(Request $request){
-        $mes = $request->input('mes');
-        $anno = $request->input('anno');
-        $ruta = $request->input('ruta');
+        $Factura = $request->input('Factura');
 
-        $query = "select * from PRODUCCION.dbo.iweb4_facturas_por_rutas where nYear = ".$anno;
+        $query = "select * from PRODUCCION.dbo.iweb4_facturas_por_rutas where FACTURA =  '".$Factura."' ";
         
         $facturas = DB::connection('sqlsrv')->select($query);
         return response()->json($facturas);
