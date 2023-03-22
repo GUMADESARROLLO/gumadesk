@@ -224,7 +224,6 @@ class HomeController extends Controller
         $ruta = $request->input('ruta');
 
         $query = "select * from PRODUCCION.dbo.iweb4_facturas_por_rutas where nYear = ".$anno;
-        
         $facturas = DB::connection('sqlsrv')->select($query);
         return response()->json($facturas);
     }

@@ -47,13 +47,7 @@
                       
                         <div class="col-md-auto" >
                           <div class="input-group" >
-                          <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select_vendedor">
-                            
-                            @foreach ($Vendedores as $vendedor)
-                                <option value="{{$vendedor['VENDEDOR']}}">{{$vendedor['VENDEDOR']}} | {{strtoupper($vendedor['NOMBRE'])}}</option>
-                            @endforeach
-                          </select>
-
+                          
                               <div class="input-group-text bg-transparent" id="id_btn_add_promocion">
                                   <span class="fas fa-plus fs--1 text-600"></span>
                               </div>
@@ -86,7 +80,6 @@
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th></th>
                             <th class="text-center" scope="col"></th>
                           </tr>
                         </thead>
@@ -99,21 +92,13 @@
                                   <img class="rounded-circle" src="{{ asset('images/user/avatar-4.jpg') }}"   />
                                 </div>
                                   <div class="flex-1 ms-3">
-                                    <h6 class="mb-0 fw-semi-bold"><div class="stretched-link text-900">{{ $p->Vendor->NOMBRE }}</div></h6>
-                                    <p class="text-500 fs--2 mb-0">{{ $p->Ruta }} |  {{ $p->Zona->Zona }} </p>
+                                    <h6 class="mb-0 fw-semi-bold"><a href="#!" onclick="OpenModal({{$p}} )" >{{ $p->Titulo }}</a></h6>
+                                    <p class="text-500 fs--2 mb-0">{{$p->id}} |  Items ({{count($p->Detalles)}})</p>
                                   </div>
                               </div>
                             </td>
 
-                            <td>
-                              <div class="pe-4 border-sm-end border-200 mt-2">
-                                <div class="flex-1">
-                                    <h6 class="mb-0 fw-semi-bold"><a href="#!" onclick="OpenModal({{$p}} )" >{{ $p->Titulo }} </div></a></h6>
-                                    
-                                    <p class="text-500 fs--2 mb-0">{{$p->id}} | Items ({{count($p->Detalles)}})</p>
-                                  </div>
-                              </div> 
-                            </td>
+                            
 
                             <td>
                             <div class="pe-4 border-sm-end border-200">
@@ -250,7 +235,7 @@
                         <div class="mb-3">
                             <div class="row g-3">
                                 
-                                <div class="col-9">
+                                <div class="col-11">
                                     <div class="">                                        
                                         <select class="form-select form-select-sm js-choice"  size="1" id="id_item" name="organizerSingle" data-options='{"removeItemButton":true,"placeholder":true}'>                                
                                             @foreach ($Articulos as $Art)
@@ -260,16 +245,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-2">
-                                    <select class="form-select" id="id_periodo" name="label">
-                                        <option value="" selected="selected">Periodo</option>
-                                        <option value="3">3M</option>
-                                        <option value="6">6M</option>
-                                        <option value="9">9M</option>
-                                        <option value="12">1Y</option>
-                                    </select>
-                                </div>
-                                
+                              
                                 <div class="col-1 ">                                    
                                     <div class="position-relative light">
                                         <div class="d-flex flex-center position-absolute ">
@@ -322,10 +298,7 @@
                   <button class="btn-close me-n1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-card">
-                  <div class="mb-3">
-                    <label class="fs-0" for="eventTitle">Ruta</label>
-                    <input class="form-control" id="IdRutaCode" type="text" name="RutaCode"  required="required" />
-                  </div>
+                  
                   <div class="mb-3">
                     <label class="fs-0" for="eventTitle">Titulo</label>
                     <input class="form-control" id="eventTitle" type="text" name="PromoName" required="required" />

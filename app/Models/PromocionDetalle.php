@@ -91,7 +91,7 @@ class PromocionDetalle extends Model{
 
                 $IdPromo        = $request->input('IdPromo');
                 $Articulos      = $request->input('Articulos');
-                $Periodo        = $request->input('Periodo');
+                $Periodo        = 12;
                 $Precio         = $request->input('Precio');
                 $Vinneta        = $request->input('Vinneta');
                 $Bonificado     = $request->input('Bonificado');

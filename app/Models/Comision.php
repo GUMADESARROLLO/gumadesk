@@ -35,8 +35,8 @@ class Comision extends Model{
     {
 
         $Vendedor   = Vendedores::getVendedorComision();
-        $Mes        = date('n');
-        $Anno       = date('Y');
+        $Mes        = 2;
+        $Anno       = 2023;
         
         foreach ($Vendedor as $v){
             

@@ -17,7 +17,6 @@
 
     $("#id_save_item").click(function(){
         var Articulos       = $("#id_item").val();
-        var Periodo         = $("#id_periodo").val();
         var Precio          = $("#id_precio").val();
         var Vinneta         = $("#id_vinneta").val();
         var Bonificado      = $("#id_bonificado").val();
@@ -27,7 +26,7 @@
 
        
 
-        if (Articulos =='' || Periodo =='' || Precio == '' || Bonificado == ''|| MetaUnidades == '' || MetaValor == ''|| Vinneta == '') {
+        if (Articulos =='' ||Precio == '' || Bonificado == ''|| MetaUnidades == '' || MetaValor == ''|| Vinneta == '') {
       
             Swal.fire({
                 title: 'Tiene Información pendiente',
@@ -46,7 +45,6 @@
                 data: {
                     IdPromo         : IdPromo,
                     Articulos       : Articulos,
-                    Periodo         : Periodo,
                     Precio          : Precio,
                     Vinneta         : Vinneta,
                     Bonificado      : Bonificado,
@@ -65,7 +63,6 @@
                         confirmButtonText: 'OK'
                     }).then((result) => {   
                         $("#id_item").val('');
-                        $("#id_periodo").val('');
                         $("#id_precio").val('');
                         $("#id_vinneta").val('');
                         $("#id_bonificado").val('');
@@ -130,8 +127,6 @@
 
     
     function AddPromocion(){
-        var CodeRuta    = $("#select_vendedor").val();
-        $("#IdRutaCode").val(CodeRuta)
 
         var addMultiRow = document.querySelector(Selectors.ADD_PROMOCION);
         var modal = new window.bootstrap.Modal(addMultiRow);
@@ -146,8 +141,6 @@
         $('#id_num_prom').html(Promo.id);
         $('#id_lbl_nombre').html(Promo.Titulo);
         
-        $('#nombre_ruta_modal').html(Promo.vendor.NOMBRE);        
-        $('#nombre_ruta_zona_modal').html(Promo.vendor.VENDEDOR + " | " + Promo.zona.Zona);
         $('#id_lbl_fechas').html("Valido desde " + Promo.fecha_ini + " al " + Promo.fecha_end);
         
         //BluidTable(Detalles)

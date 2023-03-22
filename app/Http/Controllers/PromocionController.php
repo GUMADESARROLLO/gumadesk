@@ -33,9 +33,8 @@ class PromocionController extends Controller
         $Anno   = date('Y');
 
         $Promociones   = Promocion::getData();
-        $Vendedores    = Vendedores::getVendedor();
         $Articulos     = Articulos::getArticulos();
-        return view('Promocion.home',compact('Promociones','Vendedores','Articulos'));
+        return view('Promocion.home',compact('Promociones','Articulos'));
     }
 
     public function SavePromo(Request $request)
