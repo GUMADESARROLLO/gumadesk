@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use App\Models\Admin\Menu;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,6 +37,14 @@ class AppServiceProvider extends ServiceProvider
             $view->with('menus', $menus);
         });
         View::share('layouts');*/
+        
+        if(env('FORCE_HTTPS',false)) { 
+            if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+                URL::forceScheme('http');
+            } else if (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+                URL::forceScheme('https');
+            }
+        }
 
 
         View::composer("layouts.menu", function ($view) {
