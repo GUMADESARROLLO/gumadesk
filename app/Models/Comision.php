@@ -35,14 +35,14 @@ class Comision extends Model{
     {
 
         $Vendedor   = Vendedores::getVendedorComision();
-        $Mes        = date('n');
-        $Anno       = date('Y');
+        $Mes        = 4;
+        $Anno       = 2023;
         
         foreach ($Vendedor as $v){
             
             $Ruta   = $v['VENDEDOR'];
            // DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_articulo "'.$Ruta.'"');
-            //DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_articulo_new "'.$Mes.'","'.$Anno.'","'.$Ruta.'"');
+            DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_articulo_new "'.$Mes.'","'.$Anno.'","'.$Ruta.'"');
             DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_calc_8020_close "'.$Mes.'","'.$Anno.'","'.$Ruta.'", "'.'N/D'.'" ');
             DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_calc_BonoCobertura_close "'.$Mes.'","'.$Anno.'","'.$Ruta.'"');
             
@@ -279,6 +279,7 @@ class Comision extends Model{
 
     public static function getHistoryItems($Ruta,$Mes,$Anno)
     {
+        DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_articulo_new "'.$Mes.'","'.$Anno.'","'.$Ruta.'"');
         $query      = DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_calc_8020 "'.$Mes.'","'.$Anno.'","'.$Ruta.'", "'.'N/D'.'" ');
 
         return $query;

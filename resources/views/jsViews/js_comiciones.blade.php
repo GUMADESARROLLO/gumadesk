@@ -84,7 +84,6 @@
         var nMes        = $("#id_select_month").val();
         var nYer        = $("#id_select_year").val();   
 
-        console.log()
 
         $.ajax({
             type: 'post',
