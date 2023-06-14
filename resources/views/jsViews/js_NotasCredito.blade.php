@@ -205,7 +205,7 @@ function getNotaCredito(mes, anno, ruta){
             })
 
             $.each( response, function( key, item ) {
-                if(item['TIPO'] == 80){
+                if(item['TIPO'] == 80 || item['TIPO'] == 'SKU_80'){
                     t80 += Number(item['VALOR']);
                 }else{
                     t20 += Number(item['VALOR']);
@@ -341,7 +341,7 @@ function modalNota(fact, articulo){
 
 $("#guardarNCredito").click( function(){
 
-    var ruta = $('#select_vendedor').val();
+    var ruta = 'F00';
     var notaC = $('#mCredit').val();
     var fact = $('#mFact').attr('cFact');
     var articulo =  $('#mArt').html();
@@ -350,6 +350,8 @@ $("#guardarNCredito").click( function(){
     var anno = $('#id_select_year').val();
     var fecha = $('#nuevaFecha').val();
     var modal = $('#modalC').modal();
+
+    
    
     if (notaC =='' || valor == '' || fecha == '') {
         alert(" Tiene Información pendiente ")        

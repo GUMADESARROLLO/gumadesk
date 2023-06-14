@@ -254,11 +254,13 @@ class HomeController extends Controller
             $tipo = 20;
             $resp = '';
 
-            $sql = "SELECT Lista FROM PRODUCCION.dbo.table_articulo_comisiones WHERE VENDEDOR = '".$ruta."'"." AND ARTICULO = '".$articulo."'";
+            $sql = "SELECT Lista FROM PRODUCCION.dbo.table_articulo_comisiones_dev WHERE VENDEDOR = '".$ruta."'"." AND ARTICULO = '".$articulo."'";
+            
             $query = DB::connection('sqlsrv')->select($sql);
 
             if(count($query) > 0){
                 $tipo = $query[0]->Lista;
+                $tipo = ($tipo='SKU_80') ? 80 : 20 ;
             }
             
             $consult = NotaCredito::where('FACTURA', $factura)->where('ARTICULO', $articulo)->where('NOTACREDITO', $nota)->get();
@@ -266,6 +268,8 @@ class HomeController extends Controller
             if(count($consult) > 0){
                 $tipo = 1;
             }
+
+            
 
             $nMonth = $request->input('fecha');
 
@@ -284,9 +288,9 @@ class HomeController extends Controller
             $nCredito->ANNO         =   $nYear;
             $nCredito->FECHAA       =   $request->input('fecha');
 
+     
             if($tipo == 0){
-                $resp = 'no';
-                
+                $resp = 'no';                
              }else if($tipo == 80 || $tipo == 20){
                 $nCredito->save();
                 $resp = 'ok';

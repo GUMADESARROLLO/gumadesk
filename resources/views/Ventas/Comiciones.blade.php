@@ -149,9 +149,7 @@
                                   <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-total-sales" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false">
                                     <div class="d-flex align-items-center">
                                       <h5 class="fs-0 text-900 mb-0 me-2">C$ {{ number_format(strtoupper($cms['DATARESULT']['Comision_de_venta']['Total'][3]),2) }}</h5>
-                                      <span class="badge rounded-pill badge-soft-primary">
-                                          {{ strtoupper($cms['DATARESULT']['Comision_de_venta']['Total'][2]) }}%
-                                        </span>
+                                     
                                     </div>
                                   </button>
                                   <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-total-sales">
@@ -163,72 +161,71 @@
                                         <th class="">SKU</th>
                                         <th class="">Val. C$.</th>
                                         <th class="">Fct.%</th>
+                                        <th class="">N. Crédito</th>
                                         <th class="">Comision</th>
                                       </tr>
                                     </thead>
                                     <tbody>
                                       <tr class="border-200">
                                         <td class="align-middle">
-                                          <h6 class="mb-0 text-nowrap">80% </h6>
+                                          <h6 class="mb-0 text-nowrap">SKU_80</h6>
                                         </td>
                                         <td class="align-middle text-center">{{ strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista80'][0]) }}</td>
                                         <td class="align-middle text-end "> {{ number_format(strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista80'][1]),2) }} </td>
-                                        <td class="align-middle text-end"> {{ strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista80'][2]) }} %</td>                                          
+                                        <td class="align-middle text-end"> {{ strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista80'][2]) }} %</td>  
+                                        <td class="align-middle text-end">C$ {{ number_format(strtoupper($cms['DATARESULT']['NotaCredito_val80']),2) }} </td>                                        
                                         <td class="align-middle text-end ">{{ number_format(strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista80'][3]),2) }} </td>
                                       </tr>
+                                      
                                       <tr class="border-200">
                                         <td class="align-middle">
-                                          <h6 class="mb-0 text-nowrap">20% </h6>
+                                          <h6 class="mb-0 text-nowrap">SKU_20_A</h6>
                                         </td>
-                                        <td class="align-middle text-center">{{ strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista20'][0]) }}</td>
-                                        <td class="align-middle text-end">{{ number_format(strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista20'][1]),2) }} </td>
-                                        <td class="align-middle text-end"> {{ strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista20'][2]) }} %</td>                                          
-                                        <td class="align-middle text-end">{{ number_format(strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista20'][3]),2) }} </td>
+                                        <td class="align-middle text-center">{{ strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista20A'][0]) }}</td>
+                                        <td class="align-middle text-end">{{ number_format(strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista20A'][1]),2) }} </td>
+                                        <td class="align-middle text-end"> {{ strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista20A'][2]) }} %</td> 
+                                        <td class="align-middle text-end"> {{ number_format(strtoupper($cms['DATARESULT']['NotaCredito_val20']),2)  }} %</td>
+                                        <td class="align-middle text-end">{{ number_format(strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista20A'][3]),2) }} </td>
                                       </tr>
+
                                       <tr class="border-200">
                                         <td class="align-middle">
-                                          <h6 class="mb-0 text-nowrap">Total </h6>
+                                          <h6 class="mb-0 text-nowrap">SKU_20_B</h6>
+                                        </td>
+                                        <td class="align-middle text-center">{{ strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista20B'][0]) }}</td>
+                                        <td class="align-middle text-end">{{ number_format(strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista20B'][1]),2) }} </td>
+                                        <td class="align-middle text-end"> {{ strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista20B'][2]) }} %</td>
+                                        <td class="align-middle text-end">C$  - </td>                                          
+                                        <td class="align-middle text-end">{{ number_format(strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista20B'][3]),2) }} </td>
+                                      </tr>
+
+                                      <tr class="border-200">
+                                        <td class="align-middle">
+                                          <h6 class="mb-0 text-nowrap">SKU_20_C</h6>
+                                        </td>
+                                        <td class="align-middle text-center">{{ strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista20C'][0]) }}</td>
+                                        <td class="align-middle text-end">{{ number_format(strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista20C'][1]),2) }} </td>
+                                        <td class="align-middle text-end"> {{ strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista20C'][2]) }} %</td>
+                                        <td class="align-middle text-end">C$  - </td>                                          
+                                        <td class="align-middle text-end">{{ number_format(strtoupper($cms['DATARESULT']['Comision_de_venta']['Lista20C'][3]),2) }} </td>
+                                      </tr>
+                                      
+                                      
+                                      <tr class="border-200">
+                                        <td class="align-middle">
+                                          <h6 class="mb-0 text-nowrap">TOTAL </h6>
                                         </td>
                                         <td class="align-middle text-center">{{ strtoupper($cms['DATARESULT']['Comision_de_venta']['Total'][0]) }}</td>
                                         <td class="align-middle text-end">{{ number_format(strtoupper($cms['DATARESULT']['Comision_de_venta']['Total'][1]),2) }} </td>
-                                        <td class="align-middle text-end">{{ strtoupper($cms['DATARESULT']['Comision_de_venta']['Total'][2]) }} %</td>                                          
+                                        <td class="align-middle text-end">- </td>    
+                                        <td class="align-middle text-end">C$ {{ number_format(strtoupper($cms['DATARESULT']['NotaCredito_total']),2)  }} </td>
                                         <td class="align-middle text-end">{{ number_format(strtoupper($cms['DATARESULT']['Comision_de_venta']['Total'][3]),2) }} </td>
                                       </tr>
+
                                     </tbody>
                                   </table>
 
-                                  <table class="table" > 
-                                    <thead>
-                                      <tr>
-                                        <th colspan="2">ANULACIÓN NOTA DE CRÉDITOS</th>
-                                        
-                                      </tr>
-                                      <tr>                       
-                                        <th></th>
-                                        <th></th>
-                                      </tr>
-                                    </thead>     
-                                    <tbody>
-                                      <tr class="border-200">
-                                        <td class="align-middle">
-                                          <h6 class="mb-0 text-nowrap">80% </h6>
-                                        </td>
-                                        <td class="align-middle text-end ">C$ {{ number_format(strtoupper($cms['DATARESULT']['NotaCredito_val80']),2) }} </td>
-                                      </tr>
-                                      <tr class="border-200">
-                                        <td class="align-middle">
-                                          <h6 class="mb-0 text-nowrap">20% </h6>
-                                        </td>
-                                        <td class="align-middle text-end">C$ {{ number_format(strtoupper($cms['DATARESULT']['NotaCredito_val20']),2) }} </td>
-                                      </tr>
-                                      <tr class="border-200">
-                                        <td class="align-middle">
-                                          <h6 class="mb-0 text-nowrap">Total </h6>
-                                        </td>
-                                        <td class="align-middle text-end">C$ {{ number_format(strtoupper($cms['DATARESULT']['NotaCredito_total']),2) }} </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
+                                  
                                   </div>
                                 </div>
                                 
