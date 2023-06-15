@@ -329,17 +329,37 @@ class Comision extends Model{
         DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_articulo_new_dev "'.$Mes.'","'.$Anno.'","'.$Ruta.'"');
         $query = DB::connection('sqlsrv')->select('EXEC PRODUCCION.dbo.fn_comision_calc_8020_dev "'.$Mes.'","'.$Anno.'","'.$Ruta.'", "'.'N/D'.'" ');
         
-        $json = array();
-        $i = 0;
-        $afact = array();
+        $json       = array();
+        $afact      = array();
+        $Lista80    = 0;
+        $Lista20    = 0;
+        $ListaC80   = 0;
+        $ListaC20   = 0;
+
+       
 
         // Extract article codes from query results.
         foreach ($query as $p){
             $afact[] = $p->ARTICULO;
+
+            if ($p->Lista == 'SKU_80') {
+                $Lista80++;
+            }
+            if ($p->Lista == 'SKU_80' && $p->VentaUND > '0.0') {
+                $ListaC80++;
+            }
+
+            if(($p->Lista=='SKU_20_A' || $p->Lista=='SKU_20_B' || $p->Lista=='SKU_20_C')) {
+                $Lista20++;
+            }
+            if(($p->Lista=='SKU_20_A' || $p->Lista=='SKU_20_B' || $p->Lista=='SKU_20_C') && ($p->VentaUND > 0)){
+                $ListaC20++;
+            }
+            
         }
         
         // Retrieve metadata from database using Eloquent ORM.
-        $Meta = Meta::whereRaw('MONTH(Fecha) = ? AND YEAR(Fecha) = ?', [$Mes, $Anno])->first();
+        $Meta = Meta::whereRaw('MONTH(Fecha) = ? AND YEAR(Fecha) = ?', [$Mes, $Anno])->first(); 
         
         // Filter details using article codes from query results.
         $detalles = $Meta->detalles()
@@ -347,42 +367,53 @@ class Comision extends Model{
                     ->where('CodVendedor',$Ruta)
                     ->get();
 
-        // Build JSON array using metadata and query results.
-        foreach ($detalles as $key => $value) {            
+        $json = array(
+            'LISTA_80'          => $Lista80,
+            'LISTA_80C_FACT'    => $ListaC80,
+            'LISTA_20'          => $Lista20,
+            'LISTA_20_FACT'     => $ListaC20
+        );
 
-            $json[$i]['ROW_ID']         = '9999'.$i;
-            $json[$i]['VENDEDOR']       = $Ruta;
-            $json[$i]['ARTICULO']       = $value->CodProducto;
-            $json[$i]['DESCRIPCION']    = $value->NombreProducto;;            
-            $json[$i]['Venta']          = '0.00';
-            $json[$i]['Aporte']         = '0.00';
-            $json[$i]['Acumulado']      = '0.00';
-            $json[$i]['Lista']          = '20';
-            $json[$i]['MetaUND']        = $value->Meta;;
-            $json[$i]['VentaUND']       = '0.00';
-            $json[$i]['VentaVAL']       = '0.00';
-            $json[$i]['Cumple']         = '0.00';
-            $json[$i]['isCumpl']        = 'NO';
-            $i++;
+
+        // Build JSON array using metadata and query results.
+        foreach ($detalles as $key => $value) {  
+            $json['dt'][$key] = array(
+                'ROW_ID' => '9999' . $i,
+                'VENDEDOR' => $Ruta,
+                'ARTICULO' => $value->CodProducto,
+                'DESCRIPCION' => $value->NombreProducto,
+                'Venta' => '0.00',
+                'Aporte' => '0.00',
+                'Acumulado' => '0.00',
+                'Lista' => '20',
+                'MetaUND' => $value->Meta,
+                'VentaUND' => '0.00',
+                'VentaVAL' => '0.00',
+                'Cumple' => '0.00',
+                'isCumpl' => 'NO'
+            );
+            
         }
 
         // Add query results to JSON array.
         foreach ($query as $key => $value) {
 
-            $json[$i]['ROW_ID']         = $value->ROW_ID;
-            $json[$i]['VENDEDOR']       = $value->VENDEDOR;
-            $json[$i]['ARTICULO']       = $value->ARTICULO;
-            $json[$i]['DESCRIPCION']    = $value->DESCRIPCION;            
-            $json[$i]['Venta']          = $value->Venta;
-            $json[$i]['Aporte']         = $value->Aporte;
-            $json[$i]['Acumulado']      = $value->Acumulado;
-            $json[$i]['Lista']          = $value->Lista;
-            $json[$i]['MetaUND']        = $value->MetaUND;
-            $json[$i]['VentaUND']       = $value->VentaUND;
-            $json[$i]['VentaVAL']       = $value->VentaVAL;
-            $json[$i]['Cumple']         = $value->Cumple;
-            $json[$i]['isCumpl']        = $value->isCumpl;
-            $i++;
+            $json['dt'][$key] = array(
+                'ROW_ID' => $value->ROW_ID,
+                'VENDEDOR' => $value->VENDEDOR,
+                'ARTICULO' => $value->ARTICULO,
+                'DESCRIPCION' => $value->DESCRIPCION,
+                'Venta' => $value->Venta,
+                'Aporte' => $value->Aporte,
+                'Acumulado' => $value->Acumulado,
+                'Lista' => $value->Lista,
+                'MetaUND' => $value->MetaUND,
+                'VentaUND' => $value->VentaUND,
+                'VentaVAL' => $value->VentaVAL,
+                'Cumple' => $value->Cumple,
+                'isCumpl' => $value->isCumpl
+            );
+            
         }
 
         return $json;

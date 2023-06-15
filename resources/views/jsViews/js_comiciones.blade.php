@@ -98,7 +98,13 @@
             dataType: "json",
             success: function(data){
 
-                if (data.length > 0) {
+                Item80      = data['LISTA_80']
+                Item20      =  data['LISTA_20']
+
+                ItemC80     = data['LISTA_80C_FACT']
+                ItemC20     = data['LISTA_20_FACT']
+
+                if (data['dt'].length > 0) {
                     dta_table_excel = [];
 
                     dta_table_header = [
@@ -135,18 +141,15 @@
                             return lbl
                         }}, 
                     ]
+
                     
-                    $.each(data,function(key, registro) {
+                    $.each(data['dt'],function(key, registro) {
 
                         ventaValor  += parseFloat(numeral(registro.VentaVAL).format('00.00'));
                         VentaUND    += parseFloat(registro.VentaUND.replace(/,/g, ''), 10); 
                         MetaUND     += parseFloat(registro.MetaUND.replace(/,/g, ''), 10);   
 
-                        Item80      +=  (registro.Lista==80)? 1 : 0
-                        Item20      +=  (registro.Lista==20)? 1 : 0
-
-                        ItemC80     +=  (registro.Lista==80 && registro.VentaUND > '0.00')? 1 : 0
-                        ItemC20     +=  (registro.Lista==20 && registro.VentaUND > '0.00')? 1 : 0
+                        
                         
                         dta_table_excel.push({ 
                             ROW_ID: registro.ROW_ID,
@@ -165,6 +168,8 @@
                         })
 
                     });
+
+                    
 
                     table_render('#tbl_excel',dta_table_excel,dta_table_header,false)
 
