@@ -378,7 +378,7 @@ class Comision extends Model{
         // Build JSON array using metadata and query results.
         foreach ($detalles as $key => $value) {  
             $json['dt'][$key] = array(
-                'ROW_ID' => '9999' . $i,
+                'ROW_ID' => '9999' . $key,
                 'VENDEDOR' => $Ruta,
                 'ARTICULO' => $value->CodProducto,
                 'DESCRIPCION' => $value->NombreProducto,
