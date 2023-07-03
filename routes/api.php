@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ApiController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,5 +18,8 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 });*/
 //Route::get('grupos', 'apisController@index');
-Auth::routes();
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
+Route::get('Close', 'ApiController@CalcClose')->name('Close');

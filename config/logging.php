@@ -61,7 +61,11 @@ return [
             'emoji' => ':boom:',
             'level' => 'critical',
         ],
-
+        'Schedule_calculo_comisiones' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/Schedule_pedidos.log'),
+            'level' => 'debug',
+        ],
         'papertrail' => [
             'driver' => 'monolog',
             'level' => 'debug',
