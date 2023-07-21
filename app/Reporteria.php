@@ -113,18 +113,23 @@ class Reporteria extends Model
     public static function getData($d1,$d2){
 
         // rol de usuario
-        $role = Auth::User()->activeRole();
+        $role       = Auth::User()->activeRole();
+        $Rutas      = '';
+        $id_user    = Auth::id();
         
         
         if($role==1){
-            $Rutas = '';
-        }else{
-            $id_user = Auth::id();
             
+            if($id_user==10){            
+                $Rutas = " AND VENDEDOR IN ( 'F02','F14','F08','F06','F07','F13' ) ";
+            }
+    
+            if($id_user==16){            
+                $Rutas = " AND VENDEDOR IN ( 'F04','F10','F09','F05','F19','F20','F03','F11' ) ";
+            } 
+        }else{            
             $data_ruta = Reporteria::get_rutas_group($id_user);
             $Rutas = " AND VENDEDOR IN ( ".$data_ruta['ruta']." ) ";
-
-            
         }
         
         
