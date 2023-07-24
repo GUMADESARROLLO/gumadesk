@@ -15,8 +15,14 @@
 
  
   <li class="nav-item dropdown"><a class="nav-link pe-0" id="navbarDropdownUser" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <div class="avatar avatar-xl">
-        <img class="rounded-circle" src="{{ asset('images/user/avatar-4.jpg') }}" />
+   
+      <div class="d-flex align-items-center position-relative">
+        <div class="flex-1">
+          <h6 class="mb-0 fw-semi-bold"><div class="stretched-link text-900">{{Session::get('name_session')}}</div></h6>
+        </div>
+        <div class="avatar avatar-xl ms-3">
+          <img class="rounded-circle" src="{{ asset('images/user/avatar-4.jpg') }}"   />
+        </div>
       </div>
     </a>
     <div class="dropdown-menu dropdown-menu-end py-0" aria-labelledby="navbarDropdownUser">

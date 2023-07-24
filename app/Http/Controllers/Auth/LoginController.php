@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\DB;
+use App\Models\Usuario;
 
 class LoginController extends Controller
 {
@@ -78,12 +79,23 @@ class LoginController extends Controller
 
         $user = $request->username;//obtener el username
         $queryResult = DB::table('users')->where('username', $user)->pluck('id');// consulta para obtener el id del usuario a logearse de existir el username
+        
+        
 
         if (!$queryResult->isEmpty()) {//si queryResult no esta vacio existe el usuario
             if ($this->attemptLogin($request)) {
+                $Info_usuario = Usuario::find($queryResult);
                 $rol = DB::table('usuario_rol')->where('usuario_id', $queryResult)->pluck('rol_id');
                 
-                $request->session()->put('rol', $rol[0]);
+                foreach($Info_usuario as $user){
+                    $request->session()->put('name_session', $user->nombre);
+                    $request->session()->put('rol', $user->id_rol);
+                }
+         
+
+           
+                
+               // $request->session()->put('rol', $rol[0]);
 
                 return $this->sendLoginResponse($request);
             }
