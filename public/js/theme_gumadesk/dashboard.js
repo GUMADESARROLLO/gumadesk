@@ -416,10 +416,18 @@ function RangeStat(D1,D2){
     var tt_bar_privado = 0;
     var tt_bar_mayorista = 0;
 
+    
+    var vIDUser     = $('#id_user').text();
+    var ttTituloMod = (vIDUser == 16) ? "PROYECTO FERNANDO" : "PROYECTO 1. LIC. ESPERANZA";
+
+
+
     if ( $("#id_spinner_load").hasClass('invisible') ) {
         $("#id_spinner_load").removeClass('invisible');
         $("#id_spinner_load").addClass('visible');
     }
+
+
 
 
     var dta_aportes_mercados = []
@@ -442,10 +450,11 @@ function RangeStat(D1,D2){
                 ],
             }
         };
-      
+
+    
     $.getJSON("api/"+D1 + "/"+D2, function(json) {
         table_header += '<th colspan="16" class="bg-linkedin text-100"> FERNANDO</th>';   
-        table_headerPro02 += '<th colspan="5" class="bg-linkedin text-100"> PROYECTO 1. LIC. ESPERANZA</th>';   
+        table_headerPro02 += '<th colspan="5" class="bg-linkedin text-100"> '+ttTituloMod+'</th>';   
         $.each(json, function(i, item) {
             if(jQuery.type(item.VENDEDOR) !== "undefined"){
     

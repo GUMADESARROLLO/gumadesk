@@ -11,7 +11,8 @@
               <h6 class="mb-0 mt-2 d-flex align-items-center">Total Venta Acumulado
                 <span class="ms-1 text-400" data-bs-toggle="tooltip" data-bs-placement="top" title="-">
                   <span class="far fa-question-circle" data-fa-transform="shrink-1"></span>
-                </span>
+                </span>              
+                <span id="id_user" style="display:none">{{ Auth::id()}}</span>
               </h6>
             </div>
             <div class="card-body d-flex flex-column justify-content-end">

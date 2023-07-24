@@ -217,7 +217,7 @@ class Reporteria extends Model
         $rVendedor      = DB::connection('sqlsrv')->select($sql_vendedor);
 
         $SAC_into_vendedor = array(
-            ["RUTA" => "F03","SAC" => "AURA","ZONA" => "MGA ABAJO NORTE"],
+            ["RUTA" => "F03","SAC" => "AURA","ZONA" => "MGA ABAJO"],
             ["RUTA" => "F05","SAC" => "AURA","ZONA" => "MGA ARRIBA"],            
             ["RUTA" => "F21","SAC" => "AURA","ZONA" => "N/D"],   
         
@@ -229,14 +229,14 @@ class Reporteria extends Model
             ["RUTA" => "F07","SAC" => "YESSICA","ZONA" => "MYA-GDA"],
             ["RUTA" => "F23","SAC" => "YESSICA","ZONA" => "SUR ORIENTE"],
         
-            ["RUTA" => "F09","SAC" => "REYNA","ZONA" => "EST-NS-MAD"],
+            ["RUTA" => "F09","SAC" => "REYNA","ZONA" => "Santo Tomas - RAAS"],
             ["RUTA" => "F10","SAC" => "REYNA","ZONA" => "MAT-JIN"],
             ["RUTA" => "F22","SAC" => "REYNA","ZONA" => "N/D"],
             ["RUTA" => "F08","SAC" => "REYNA","ZONA" => "CAR-RIV"],
             
             
-            ["RUTA" => "F11","SAC" => "YORLENI","ZONA" => "CHON-RSJ-RAAS"],
-            ["RUTA" => "F20","SAC" => "YORLENI","ZONA" => "BOACO- RAAN"],           
+            ["RUTA" => "F11","SAC" => "YORLENI","ZONA" => "Boaco - Juigalpa"],
+            ["RUTA" => "F20","SAC" => "YORLENI","ZONA" => "Río Blanco - RAAN."],           
         
             ["RUTA" => "F02","SAC" => "ALEJANDRA","ZONA" => "INSTIT"],
             ["RUTA" => "F04","SAC" => "ALEJANDRA","ZONA" => "MCDO/MAYORISTAS"],

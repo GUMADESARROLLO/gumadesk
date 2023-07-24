@@ -13,7 +13,7 @@
                 <div class="position-relative p-4 pt-md-5 pb-md-7 light">
                   <div class="bg-holder bg-auth-card-shape" style="background-image:url({{ asset('images/theme_gumadesk/half-circle.png') }});"></div>
                   <div class="z-index-1 position-relative"><a class="link-light mb-4 font-sans-serif fs-4 d-inline-block fw-bolder" href="./">GumaStats</a>
-                    <p class="opacity-75 text-white">Estadisticas generalas de los segmentos de mercado de la empresa.</p>
+                    <p class="opacity-75 text-white">Estadísticas generales de los segmentos de mercado de la empresa.</p>
                   </div>
                 </div>
                 <div class="mt-3 mb-4 mt-md-4 mb-md-5 light">
