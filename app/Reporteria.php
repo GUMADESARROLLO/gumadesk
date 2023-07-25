@@ -221,7 +221,7 @@ class Reporteria extends Model
             ["RUTA" => "F05","SAC" => "AURA","ZONA" => "MGA ARRIBA"],            
             ["RUTA" => "F21","SAC" => "AURA","ZONA" => "N/D"],   
         
-            ["RUTA" => "F19","SAC" => "NADIESKA","ZONA" => "OCCIDENTE"],
+            ["RUTA" => "F19","SAC" => "NADIESKA","ZONA" => "Santo Tomas - RAAS"],
             ["RUTA" => "F06","SAC" => "NADIESKA","ZONA" => "LEON"],
             ["RUTA" => "F14","SAC" => "NADIESKA","ZONA" => "CHINANDEGA"],
             ["RUTA" => "F13","SAC" => "NADIESKA","ZONA" => "MGA ABAJO SUR"],            
@@ -229,7 +229,7 @@ class Reporteria extends Model
             ["RUTA" => "F07","SAC" => "YESSICA","ZONA" => "MYA-GDA"],
             ["RUTA" => "F23","SAC" => "YESSICA","ZONA" => "SUR ORIENTE"],
         
-            ["RUTA" => "F09","SAC" => "REYNA","ZONA" => "Santo Tomas - RAAS"],
+            ["RUTA" => "F09","SAC" => "REYNA","ZONA" => "Esteli - Somoto"],
             ["RUTA" => "F10","SAC" => "REYNA","ZONA" => "MAT-JIN"],
             ["RUTA" => "F22","SAC" => "REYNA","ZONA" => "N/D"],
             ["RUTA" => "F08","SAC" => "REYNA","ZONA" => "CAR-RIV"],

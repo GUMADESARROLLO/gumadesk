@@ -84,19 +84,17 @@ class LoginController extends Controller
 
         if (!$queryResult->isEmpty()) {//si queryResult no esta vacio existe el usuario
             if ($this->attemptLogin($request)) {
+
+                $User = Usuario::find($queryResult[0]);        
+                $roles = $User->roles;
+
+                $request->session()->put('name_session', $User->nombre);
+                $request->session()->put('name_rol', $roles[0]->descripcion);
+                $request->session()->put('rol', $roles[0]->id);
+
                 $Info_usuario = Usuario::find($queryResult);
                 $rol = DB::table('usuario_rol')->where('usuario_id', $queryResult)->pluck('rol_id');
                 
-                foreach($Info_usuario as $user){
-                    $request->session()->put('name_session', $user->nombre);
-                    $request->session()->put('rol', $user->id_rol);
-                }
-         
-
-           
-                
-               // $request->session()->put('rol', $rol[0]);
-
                 return $this->sendLoginResponse($request);
             }
         }
@@ -106,8 +104,8 @@ class LoginController extends Controller
         auth()->logout();
         return redirect('/');
     }
-    public function showLoginForm()//para no afectar al metodo showLoginForm del trait AuthenticatesUsers, el metodo debe de sobre escribirse en el controlador
+    public function showLoginForm()
     {
-        return view('auth.login');// envia variable al MOD
+        return view('auth.login');
     }
 }

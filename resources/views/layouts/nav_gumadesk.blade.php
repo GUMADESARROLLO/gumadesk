@@ -19,6 +19,7 @@
       <div class="d-flex align-items-center position-relative">
         <div class="flex-1">
           <h6 class="mb-0 fw-semi-bold"><div class="stretched-link text-900">{{Session::get('name_session')}}</div></h6>
+        <p class="text-500 fs--2 mb-0">{{ Session::get('name_rol') }}</p>
         </div>
         <div class="avatar avatar-xl ms-3">
           <img class="rounded-circle" src="{{ asset('images/user/avatar-4.jpg') }}"   />
