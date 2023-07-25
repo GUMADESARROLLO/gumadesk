@@ -181,7 +181,9 @@
                 <li class="nav-item" role="presentation"><a class="nav-link py-3 mb-0 active" id="crm-deals-tab" data-bs-toggle="tab" href="#crm-deals" role="tab" aria-controls="crm-deals" aria-selected="false">CANAL FARMACIA</a></li>  
                 @if( Session::get('rol') == '1' )
                 <li class="nav-item" role="presentation"><a class="nav-link py-3 mb-0" id="crm-revenue-tab" data-bs-toggle="tab" href="#crm-revenue" role="tab" aria-controls="crm-revenue" aria-selected="true">ALCANCE POR CANAL</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link py-3 mb-0" id="crm-users-tab" data-bs-toggle="tab" href="#crm-users" role="tab" aria-controls="crm-users" aria-selected="false">PY 1: Lic. ESPERANZA C.</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link py-3 mb-0" id="crm-users-tab" data-bs-toggle="tab" href="#crm-users" role="tab" aria-controls="crm-users" aria-selected="false">
+                  {{ (Auth::id()== 16) ? 'PY: FERNANDO' : 'PY 1: Lic. ESPERANZA C.'  }}
+                </a></li>
                 @endif
               </ul>
             </div>
