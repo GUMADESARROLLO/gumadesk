@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Reporteria;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 
 class EstadisticasController extends Controller{
 
@@ -17,8 +19,18 @@ class EstadisticasController extends Controller{
     }
 
     public function getData($d1,$d2){
-        $obj = Reporteria::getData($d1,$d2);
-        return response()->json($obj);
+        // $obj = Reporteria::getData($d1,$d2);
+        // return response()->json($obj);
+
+        $Key = 'stat_getData'.$d1."_".$d2;
+        $cached = Redis::get($Key);
+        if ($cached) {
+            $obj = $cached;
+        } else {
+            $obj = json_encode(Reporteria::getData($d1,$d2));
+            Redis::setex($Key, 900, $obj); 
+    }
+    return response()->json(json_decode($obj));
     }
     public function ActualizarDiaHabiles($val)
     {
