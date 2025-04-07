@@ -340,17 +340,35 @@ var labelRange = startOfMonth + " to " + endOfMonth;
 
 $('#id_range_select').val(labelRange);
 
+request_api(startOfMonth,endOfMonth);
 
-RangeStat(startOfMonth,endOfMonth)
 
 $('#id_range_select').change(function () {
     Fechas = $(this).val().split("to");
     if(Object.keys(Fechas).length >= 2 ){
-        RangeStat(Fechas[0],Fechas[1]);
+        request_api(Fechas[0],Fechas[1]);
     } 
 });
 
-function RangeStat(D1,D2){
+async function request_api( D1,D2 ) {
+    try {
+        
+        if ( $("#id_spinner_load").hasClass('invisible') ) {
+            $("#id_spinner_load").removeClass('invisible');
+            $("#id_spinner_load").addClass('visible');
+        }
+
+        const response = await $.getJSON(`api/${D1}/${D2}`);
+
+        calc_dashboard(response);
+
+    } catch (error) {
+        console.error("Error al obtener los datos:", error);
+    }
+}
+
+
+function calc_dashboard(json) {
     var table_header    = '';
     var table_headerPro02    = '';
 
@@ -422,15 +440,7 @@ function RangeStat(D1,D2){
 
 
 
-    if ( $("#id_spinner_load").hasClass('invisible') ) {
-        $("#id_spinner_load").removeClass('invisible');
-        $("#id_spinner_load").addClass('visible');
-    }
-
-
-
-
-    var dta_aportes_mercados = []
+        var dta_aportes_mercados = []
         var dta_ventas_mercados = {
             dataset: {
                 CanalFarmacia: [
@@ -452,9 +462,10 @@ function RangeStat(D1,D2){
         };
 
     
-    $.getJSON("api/"+D1 + "/"+D2, function(json) {
+
         table_header += '<th colspan="16" class="bg-linkedin text-100"> FERNANDO</th>';   
         table_headerPro02 += '<th colspan="5" class="bg-linkedin text-100"> '+ttTituloMod+'</th>';   
+
         $.each(json, function(i, item) {
             if(jQuery.type(item.VENDEDOR) !== "undefined"){
     
@@ -603,47 +614,47 @@ function RangeStat(D1,D2){
 
    
 
-          $( "#id_dias_habiles" ).on( "click", function() {
-              Swal.fire({
-                title: 'Dias Facturados',
-                text: "Ingrese la cantidad",
-                input: 'text',
-                inputPlaceholder: 'Digite la cantidad',
-                target: document.getElementById('mdlMatPrima'),
-                inputAttributes: {
-                    id: 'cantidad',
-                    required: 'true',
-                    onkeypress: 'soloNumeros(event.keyCode, event, $(this).val())'
-                },
-                showCancelButton: true,
-                confirmButtonText: 'Guardar',
-                showLoaderOnConfirm: true,
-                inputValue: 0,
-                inputValidator: (value) => {
-                    if (!value) {
-                        return 'Digita la cantidad por favor';
-                    }
-                    value = value.replace(/[',]+/g, '');
-                    if (isNaN(value)) {
-                        return 'Formato incorrecto';
-                    } else {
-                        $.ajax({
-                            url: "ActualizarDiaHabiles/"+value,
-                            type: 'get',
-                            async: true,
-                            success: function(response) {
-                                Swal.fire("Exito!", "Guardado exitosamente", "success");
-                            },
-                            error: function(response) {
-                                Swal.fire("Oops", "No se ha podido guardar!", "error");
-                            }
-                        }).done(function(data) {
-                            RangeStat(startOfMonth,endOfMonth)
-                        });
-                    }
+        $( "#id_dias_habiles" ).on( "click", function() {
+            Swal.fire({
+            title: 'Dias Facturados',
+            text: "Ingrese la cantidad",
+            input: 'text',
+            inputPlaceholder: 'Digite la cantidad',
+            target: document.getElementById('mdlMatPrima'),
+            inputAttributes: {
+                id: 'cantidad',
+                required: 'true',
+                onkeypress: 'soloNumeros(event.keyCode, event, $(this).val())'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Guardar',
+            showLoaderOnConfirm: true,
+            inputValue: 0,
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'Digita la cantidad por favor';
                 }
-            })
-          });
+                value = value.replace(/[',]+/g, '');
+                if (isNaN(value)) {
+                    return 'Formato incorrecto';
+                } else {
+                    $.ajax({
+                        url: "ActualizarDiaHabiles/"+value,
+                        type: 'get',
+                        async: true,
+                        success: function(response) {
+                            Swal.fire("Exito!", "Guardado exitosamente", "success");
+                        },
+                        error: function(response) {
+                            Swal.fire("Oops", "No se ha podido guardar!", "error");
+                        }
+                    }).done(function(data) {
+                        RangeStat(startOfMonth,endOfMonth)
+                    });
+                }
+            }
+        })
+        });
         /* -------------------------------------------------------------------------- */
         /*                           INICIO RESUMEN FARMACIA                          */
         /* -------------------------------------------------------------------------- */
@@ -822,7 +833,9 @@ function RangeStat(D1,D2){
             $("#id_spinner_load").addClass('invisible');
         }
     
-    });
+    
 }
+
+
 
 
