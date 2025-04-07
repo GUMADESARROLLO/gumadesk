@@ -55,7 +55,7 @@ class Promocion extends Model{
             DB::transaction(function () use ($request) {
 
                 $Titulo     = $request->input('PromoName');
-                $RutaCode   = $request->input('RutaCode');
+                //$RutaCode   = $request->input('RutaCode');
                 $PromoIni   = date('Y-m-d', strtotime($request->input('PromoIni')));
                 $PromoEnd   = date('Y-m-d', strtotime($request->input('PromoEnd')));
                 $Estado     = 1;
@@ -67,7 +67,7 @@ class Promocion extends Model{
                 $promo->fecha_ini   =   $PromoIni;
                 $promo->fecha_end   =   $PromoEnd;  
                 $promo->estado      =   $Estado;  
-                $promo->Ruta        =   $RutaCode;       
+                //$promo->Ruta        =   $RutaCode;       
                 $promo->save();             
                 
                 return redirect()->to('Promocion')->send();

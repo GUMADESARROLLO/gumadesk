@@ -22,14 +22,15 @@ class EstadisticasController extends Controller{
         // $obj = Reporteria::getData($d1,$d2);
         // return response()->json($obj);
 
-        $Key = 'stat_getData'.$d1."_".$d2;
-        $cached = Redis::get($Key);
-        if ($cached) {
-            $obj = $cached;
-        } else {
-            $obj = json_encode(Reporteria::getData($d1,$d2));
-            Redis::setex($Key, 900, $obj); 
-    }
+        // $Key = 'stat_getData'.$d1."_".$d2;
+        // $cached = Redis::get($Key);
+        // if ($cached) {
+        //     $obj = $cached;
+        // } else {
+        //     $obj = json_encode(Reporteria::getData($d1,$d2));
+        //     Redis::setex($Key, 900, $obj); 
+        // }
+        $obj = json_encode(Reporteria::getData($d1,$d2));
     return response()->json(json_decode($obj));
     }
     public function ActualizarDiaHabiles($val)
