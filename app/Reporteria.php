@@ -139,7 +139,8 @@ class Reporteria extends Model
         $i=0;
         $sql_exec = '';
         $request = Request();
-        
+
+
 
         $sql_exec = "
         WITH 
@@ -161,7 +162,7 @@ class Reporteria extends Model
         VentaDia AS (
             SELECT VENDEDOR, SUM(VENTA_NETA) AS DiaActual
             FROM Softland.dbo.ANA_VentasTotales_MOD_Contabilidad_UMK
-            WHERE Fecha_de_factura = '$d2' AND CLIENTE_CODIGO NOT IN ( SELECT CLIENTE FROM PRODUCCION.dbo.tbl_cadena_de_farmacia)
+            WHERE Fecha_de_factura BETWEEN '$d2 00:00:00' AND '$d2 23:59:59' AND CLIENTE_CODIGO NOT IN ( SELECT CLIENTE FROM PRODUCCION.dbo.tbl_cadena_de_farmacia)
             GROUP BY VENDEDOR
         ),
         SKUs AS (
@@ -244,7 +245,7 @@ class Reporteria extends Model
                 END) AS SKU_TODOS
             FROM PedidosFiltrados
             ";
-            
+
 
    
             
