@@ -2,8 +2,6 @@
     var dtPedidos;
     $(document).ready(function() {
         
-
-        
         $('#InputBuscar').on('keyup', function() {
             var table = $('#tblPedidos').DataTable();
             table.search(this.value).draw();

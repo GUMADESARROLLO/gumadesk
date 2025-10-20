@@ -18,7 +18,8 @@ class Reporteria extends Model
         
         $UsrName = DB::table('users')->where('id', $Id)->pluck('username');
 
-        $datos_rutas = DB::table('sac_app.view_rutas')->where('id', $UsrName)->get();
+        $datos_rutas = DB::table('db_sac_app.view_rutas')->where('id', $UsrName)->get();
+        
 
         $json = array();
         $i = 0;
@@ -121,15 +122,15 @@ class Reporteria extends Model
         if($role==1){
             
             if($id_user==10){            
-                $Rutas = " AND VENDEDOR IN ( 'F02','F14','F08','F06','F07','F13' ) ";
+                $Rutas = " AND T0.VENDEDOR IN ( 'F02','F14','F08','F06','F07','F13' ) ";
             }
     
             if($id_user==16){            
-                $Rutas = " AND VENDEDOR IN ( 'F04','F10','F09','F05','F19','F20','F03','F11' ) ";
+                $Rutas = " AND T0.VENDEDOR IN ( 'F04','F10','F09','F05','F19','F20','F03','F11' ) ";
             } 
         }else{            
             $data_ruta = Reporteria::get_rutas_group($id_user);
-            $Rutas = " AND VENDEDOR IN ( ".$data_ruta['ruta']." ) ";
+            $Rutas = " AND T0.VENDEDOR IN ( ".$data_ruta['ruta']." ) ";
         }
         
         
@@ -326,18 +327,18 @@ class Reporteria extends Model
                 $data[$i]['NOMBRE']             = explode(' ', $key->NOMBRE)[0];
                 $data[$i]['NOMBRE_SAC']         = $key->SAC_NAME;
                 $data[$i]['RUTA_ZONA']          = $key->ZONA;                
-                $data[$i]['META_RUTA']          = 'C$ ' . number_format($key->META_RUTA,2);
-                $data[$i]['MesActual']          = 'C$ ' . number_format($key->MesActual, 2);                
+                $data[$i]['META_RUTA']          = 'C$ ' . number_format($key->META_RUTA,0);
+                $data[$i]['MesActual']          = 'C$ ' . number_format($key->MesActual, 0);                
                 $data[$i]['RUTA_CUMPLI']        = $CUMPL_EJECT.' %';
                 $data[$i]['CLIENTE']            = $key->CLIENTE;
                 $data[$i]['META_CLIENTE']       = $key->META_CLIENTE;                
                 $data[$i]['TENDENCIA']          = number_format($TENDENCIA,0) . " % ";
-                $data[$i]['CLIENTE_COBERTURA']  = ($key->META_CLIENTE=='0.00') ? number_format($key->META_CLIENTE,2) : number_format(($key->CLIENTE / $key->META_CLIENTE) * 100,0).' %' ;
+                $data[$i]['CLIENTE_COBERTURA']  = ($key->META_CLIENTE=='0.00') ? number_format($key->META_CLIENTE,0) : number_format(($key->CLIENTE / $key->META_CLIENTE) * 100,0).' %' ;
                 $data[$i]['SKU']                = $key->SKU;
-                $data[$i]['DS']                 = 'C$ ' . number_format($key->MesActual / $key->CLIENTE,2);                
-                $data[$i]['DiaActual']          = 'C$ ' . number_format($key->DiaActual, 2);                
-                $data[$i]['EJEC']               = 'C$ ' . number_format($key->EJEC, 2);
-                $data[$i]['SAC']                = 'C$ ' . number_format($key->SAC_VALUE, 2);
+                $data[$i]['DS']                 = 'C$ ' . number_format($key->MesActual / $key->CLIENTE,0);                
+                $data[$i]['DiaActual']          = 'C$ ' . number_format($key->DiaActual, 0);                
+                $data[$i]['EJEC']               = 'C$ ' . number_format($key->EJEC, 0);
+                $data[$i]['SAC']                = 'C$ ' . number_format($key->SAC_VALUE, 0);
                 
                 $i++;
             }
